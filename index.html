@@ -1,0 +1,1745 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pop-Up Panic</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 60px 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
+            position: relative;
+            z-index: 1;
+        }
+
+        h1 {
+            font-size: 3em;
+            color: #333;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .tagline {
+            font-size: 1.1em;
+            color: #666;
+            font-style: italic;
+            margin-bottom: 50px;
+            line-height: 1.6;
+        }
+
+        .points-section {
+            background: #f0f0f0;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 40px;
+        }
+
+        .points-label {
+            font-size: 1.2em;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .points-tally {
+            font-size: 3em;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .start-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 50px;
+            font-size: 1.3em;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .start-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        .start-button:active {
+            transform: translateY(0);
+        }
+
+        /* Pop-up Ad Styles */
+        .popup-ad {
+            position: fixed;
+            background: white;
+            border: 2px solid #333;
+            border-radius: 8px;
+            padding: 40px 30px 30px 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            z-index: 100;
+        }
+
+        .popup-ad-close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            font-size: 24px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+
+        .popup-ad-close-btn:hover {
+            background: #ff5252;
+        }
+
+        .popup-ad-content {
+            text-align: center;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .popup-ad-content h2 {
+            margin-bottom: 20px;
+            font-size: 2em;
+            font-weight: bold;
+        }
+
+        .popup-ad-content p {
+            margin-bottom: 12px;
+            font-size: 1em;
+        }
+
+        .game-area {
+            display: none;
+        }
+
+        .game-area.active {
+            display: block;
+        }
+
+        .start-screen {
+            display: block;
+        }
+
+        .start-screen.hidden {
+            display: none;
+        }
+
+        .game-over-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .game-over-screen.active {
+            display: flex;
+        }
+
+        .game-over-content {
+            background: white;
+            padding: 60px 40px;
+            border-radius: 20px;
+            text-align: center;
+            max-width: 500px;
+        }
+
+        .game-over-content h1 {
+            font-size: 3em;
+            color: #ff6b6b;
+            margin-bottom: 20px;
+        }
+
+        .game-over-content p {
+            font-size: 1.2em;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .final-score {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #667eea;
+            margin: 30px 0;
+        }
+
+        .restart-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 50px;
+            font-size: 1.3em;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .restart-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        .virus-popup {
+            background: #ff6b6b !important;
+            border-color: #cc0000 !important;
+        }
+
+        .virus-popup .popup-ad-content {
+            color: white !important;
+        }
+
+        .virus-warning {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        @keyframes popupSlideIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes popupFadeOut {
+            from {
+                opacity: 1;
+                transform: scale(1);
+            }
+            to {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+        }
+
+        .popup-ad {
+            animation: popupSlideIn 0.3s ease-out;
+        }
+
+        .popup-hint {
+            animation: hintFadeIn 0.5s ease-in 5s forwards;
+            opacity: 0;
+        }
+
+        @keyframes hintFadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Era-specific styling */
+        
+        /* Early Web (1990s) - Gray, basic HTML, under construction vibes */
+        .era-popup.earlyWeb {
+            border: 3px solid #000080;
+            border-radius: 0 !important;
+            box-shadow: 3px 3px 0px #000000;
+            background: repeating-linear-gradient(
+                0deg,
+                #e0e0e0,
+                #e0e0e0 2px,
+                #d0d0d0 2px,
+                #d0d0d0 4px
+            ) !important;
+        }
+        .era-popup.earlyWeb .popup-ad-close-btn {
+            background: #000080;
+            border-radius: 0;
+            font-family: "Times New Roman", serif;
+        }
+        .era-popup.earlyWeb .popup-ad-content {
+            border: 2px inset #808080;
+            padding: 15px;
+            margin-top: 10px;
+        }
+
+        /* MySpace/AIM (2003-2008) - Neon chaos, glitter, dark background */
+        @keyframes glitter {
+            0%, 100% { text-shadow: 0 0 5px #ff00ff, 0 0 10px #ff00ff, 0 0 15px #ff00ff; }
+            25% { text-shadow: 0 0 5px #00ffff, 0 0 10px #00ffff, 0 0 20px #00ffff; }
+            50% { text-shadow: 0 0 5px #ff00ff, 0 0 10px #00ff00, 0 0 15px #ff00ff; }
+            75% { text-shadow: 0 0 5px #ffff00, 0 0 10px #ffff00, 0 0 20px #ffff00; }
+        }
+        @keyframes sparkle {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        .era-popup.myspace {
+            border: 5px dashed #ff00ff !important;
+            transform: rotate(-2deg);
+            box-shadow: 
+                5px 5px 0px #ff00ff, 
+                10px 10px 0px #00ffff,
+                15px 15px 0px #ff6600;
+            background: linear-gradient(180deg, #1a0a2e 0%, #0d001a 50%, #1a0a2e 100%) !important;
+        }
+        .era-popup.myspace .popup-ad-content {
+            animation: glitter 2s infinite;
+            color: #00ff00 !important;
+        }
+        .era-popup.myspace .popup-ad-content::before {
+            content: '✨';
+            animation: sparkle 0.5s infinite;
+        }
+        .era-popup.myspace .popup-ad-content::after {
+            content: '✨';
+            animation: sparkle 0.5s infinite 0.25s;
+        }
+        .era-popup.myspace .popup-ad-close-btn {
+            background: #ff00ff;
+            border: 2px solid #00ffff;
+            animation: sparkle 0.8s infinite;
+        }
+
+        /* AOL/Dial-up - Classic Windows dialog, gray, beveled */
+        .era-popup.aol {
+            border: none !important;
+            border-radius: 0 !important;
+            box-shadow: 
+                inset -1px -1px #0a0a0a,
+                inset 1px 1px #ffffff,
+                inset -2px -2px #808080,
+                inset 2px 2px #dfdfdf;
+            background: #c0c0c0 !important;
+        }
+        .era-popup.aol::before {
+            content: '📬 AOL';
+            display: block;
+            background: linear-gradient(90deg, #000080, #1084d0);
+            color: white;
+            font-weight: bold;
+            padding: 3px 5px;
+            margin: -40px -30px 15px -30px;
+            font-family: MS Sans Serif, Arial, sans-serif;
+            font-size: 12px;
+        }
+        .era-popup.aol .popup-ad-close-btn {
+            background: #c0c0c0;
+            color: #000;
+            border: 2px outset #dfdfdf;
+            border-radius: 0;
+            font-size: 16px;
+            font-weight: bold;
+            width: 18px;
+            height: 18px;
+        }
+        .era-popup.aol .popup-ad-close-btn:hover {
+            background: #a0a0a0;
+        }
+
+        /* Windows 95/98 - Authentic Win95 dialog with title bar */
+        .era-popup.win95 {
+            border: none !important;
+            border-radius: 0 !important;
+            padding-top: 25px !important;
+            box-shadow: 
+                inset -1px -1px #0a0a0a,
+                inset 1px 1px #ffffff,
+                inset -2px -2px #808080,
+                inset 2px 2px #dfdfdf,
+                2px 2px 0px #000000;
+            background: #c0c0c0 !important;
+        }
+        .era-popup.win95::before {
+            content: '⚠️ Windows';
+            display: block;
+            background: linear-gradient(90deg, #000080, #1084d0);
+            color: white;
+            font-weight: bold;
+            padding: 2px 4px;
+            margin: -25px -30px 10px -30px;
+            font-family: MS Sans Serif, Tahoma, sans-serif;
+            font-size: 11px;
+            letter-spacing: 0.5px;
+        }
+        .era-popup.win95 .popup-ad-close-btn {
+            background: #c0c0c0;
+            color: #000;
+            border: 2px outset #ffffff;
+            border-color: #ffffff #808080 #808080 #ffffff;
+            border-radius: 0;
+            font-family: "Marlett", sans-serif;
+            font-size: 12px;
+            font-weight: bold;
+            width: 16px;
+            height: 14px;
+            top: 3px !important;
+            right: 4px !important;
+            padding: 0;
+            line-height: 10px;
+        }
+        .era-popup.win95 .popup-ad-close-btn:hover {
+            border-color: #ffffff #808080 #808080 #ffffff;
+        }
+        .era-popup.win95 .popup-ad-close-btn:active {
+            border-color: #808080 #ffffff #ffffff #808080;
+        }
+        .era-popup.win95 .popup-ad-content {
+            border: 1px solid #808080;
+            border-color: #808080 #ffffff #ffffff #808080;
+            background: #ffffff;
+            padding: 20px;
+            margin: 10px 0;
+        }
+
+        /* Web 2.0 (2010-2020) - Clean, minimal, gradients, shadows */
+        .era-popup.web20 {
+            border: none !important;
+            border-radius: 16px !important;
+            box-shadow: 
+                0 10px 40px rgba(0, 0, 0, 0.12),
+                0 0 0 1px rgba(0, 0, 0, 0.05);
+            background: linear-gradient(180deg, #ffffff 0%, #f8f8f8 100%) !important;
+        }
+        .era-popup.web20 .popup-ad-close-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.4);
+        }
+        .era-popup.web20 .popup-ad-content {
+            color: #333 !important;
+            font-weight: 300;
+            letter-spacing: 0.3px;
+        }
+
+        /* Gen-Z (2020+) - Soft aesthetic, pastel accents, italic */
+        @keyframes gradientShift {
+            0% { border-color: #a855f7; }
+            25% { border-color: #06b6d4; }
+            50% { border-color: #10b981; }
+            75% { border-color: #f59e0b; }
+            100% { border-color: #a855f7; }
+        }
+        .era-popup.genz {
+            border: 3px solid #a855f7 !important;
+            border-radius: 20px !important;
+            animation: gradientShift 4s infinite;
+            box-shadow: 
+                0 8px 32px rgba(168, 85, 247, 0.15),
+                inset 0 0 20px rgba(255, 255, 255, 0.5);
+            background: linear-gradient(135deg, #fefefe 0%, #fdf4ff 50%, #f0fdfa 100%) !important;
+        }
+        .era-popup.genz .popup-ad-close-btn {
+            background: linear-gradient(135deg, #a855f7, #06b6d4);
+            border-radius: 50%;
+        }
+        .era-popup.genz .popup-ad-content {
+            font-style: italic;
+            color: #1a1a1a !important;
+        }
+
+        /* AI Era (2024+) - Terminal, dark, cyan glow, scanlines */
+        @keyframes scanline {
+            0% { background-position: 0 0; }
+            100% { background-position: 0 100%; }
+        }
+        @keyframes cursorBlink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+        @keyframes glowPulse {
+            0%, 100% { box-shadow: 0 0 20px rgba(0, 217, 255, 0.3), inset 0 0 10px rgba(0, 217, 255, 0.1); }
+            50% { box-shadow: 0 0 40px rgba(0, 217, 255, 0.5), inset 0 0 20px rgba(0, 217, 255, 0.2); }
+        }
+        .era-popup.ai {
+            border: 2px solid #00d9ff !important;
+            border-radius: 4px !important;
+            animation: glowPulse 2s infinite;
+            background: 
+                repeating-linear-gradient(
+                    0deg,
+                    rgba(0, 0, 0, 0) 0px,
+                    rgba(0, 0, 0, 0) 2px,
+                    rgba(0, 217, 255, 0.03) 2px,
+                    rgba(0, 217, 255, 0.03) 4px
+                ),
+                #0a0e27 !important;
+        }
+        .era-popup.ai::before {
+            content: '> SYSTEM_PROMPT.exe';
+            display: block;
+            color: #00ff00;
+            font-family: "Courier New", monospace;
+            font-size: 10px;
+            margin-bottom: 10px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #00d9ff;
+        }
+        .era-popup.ai .popup-ad-close-btn {
+            background: transparent;
+            border: 1px solid #00d9ff;
+            color: #00d9ff;
+            border-radius: 0;
+            font-family: "Courier New", monospace;
+        }
+        .era-popup.ai .popup-ad-close-btn:hover {
+            background: #00d9ff;
+            color: #0a0e27;
+        }
+        .era-popup.ai .popup-ad-content {
+            color: #00d9ff !important;
+            font-family: "Courier New", monospace;
+        }
+        .era-popup.ai .popup-ad-content::after {
+            content: '_';
+            animation: cursorBlink 1s infinite;
+        }
+
+        /* Flash Era (2000-2017) - Black with orange accents, loading bars */
+        @keyframes flashPulse {
+            0%, 100% { box-shadow: 0 0 10px #ff6600, inset 0 0 5px rgba(255, 102, 0, 0.2); }
+            50% { box-shadow: 0 0 20px #ff6600, inset 0 0 10px rgba(255, 102, 0, 0.4); }
+        }
+        .era-popup.flash {
+            border: 3px solid #ff6600 !important;
+            border-radius: 0 !important;
+            animation: flashPulse 1.5s infinite;
+            background: linear-gradient(180deg, #1a1a1a 0%, #000000 100%) !important;
+        }
+        .era-popup.flash::before {
+            content: '▶ Adobe Flash Player';
+            display: block;
+            color: #ff6600;
+            font-family: Impact, sans-serif;
+            font-size: 11px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+        .era-popup.flash .popup-ad-close-btn {
+            background: #ff6600;
+            border-radius: 0;
+        }
+        .era-popup.flash .popup-ad-content {
+            color: #ffffff !important;
+        }
+
+        /* Mobile Era (2012+) - Clean iOS/Android style */
+        .era-popup.mobile {
+            border: none !important;
+            border-radius: 14px !important;
+            box-shadow: 
+                0 10px 30px rgba(0, 0, 0, 0.15),
+                0 0 0 0.5px rgba(0, 0, 0, 0.1);
+            background: #f5f5f7 !important;
+        }
+        .era-popup.mobile::before {
+            content: '📱';
+            display: block;
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+        .era-popup.mobile .popup-ad-close-btn {
+            background: #007aff;
+            border-radius: 50%;
+        }
+        .era-popup.mobile .popup-ad-content {
+            color: #1d1d1f !important;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro", sans-serif;
+        }
+
+        /* Trap button styles */
+        .trap-button {
+            display: inline-block;
+            margin: 8px 5px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.1s, box-shadow 0.1s, outline 0.1s;
+        }
+        .trap-button:hover {
+            transform: scale(1.05);
+        }
+        .trap-button:focus {
+            outline: 3px solid #ffcc00;
+            outline-offset: 2px;
+        }
+        .trap-button.primary {
+            background: linear-gradient(180deg, #4a90d9 0%, #357abd 100%);
+            color: white;
+            box-shadow: 0 2px 4px rgba(53, 122, 189, 0.4);
+        }
+        .trap-button.danger {
+            background: linear-gradient(180deg, #ff6b6b 0%, #ee5a5a 100%);
+            color: white;
+            box-shadow: 0 2px 4px rgba(238, 90, 90, 0.4);
+        }
+        .trap-button.success {
+            background: linear-gradient(180deg, #51cf66 0%, #40c057 100%);
+            color: white;
+            box-shadow: 0 2px 4px rgba(64, 192, 87, 0.4);
+        }
+        .trap-button.secondary {
+            background: linear-gradient(180deg, #868e96 0%, #6c757d 100%);
+            color: white;
+            box-shadow: 0 2px 4px rgba(108, 117, 125, 0.4);
+        }
+        .tab-button {
+            display: inline-block;
+            margin: 8px 5px;
+            padding: 12px 24px;
+            border: 2px solid #666;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.15s;
+            background: #f0f0f0;
+            color: #333;
+        }
+        .tab-button:focus {
+            outline: none;
+            border-color: #4a90d9;
+            background: #e3f2fd;
+            box-shadow: 0 0 0 4px rgba(74, 144, 217, 0.3);
+            transform: scale(1.05);
+        }
+        .tab-button.correct:focus {
+            border-color: #40c057;
+            background: #d3f9d8;
+            box-shadow: 0 0 0 4px rgba(64, 192, 87, 0.3);
+        }
+        .tab-button.wrong:focus {
+            border-color: #ff6b6b;
+            background: #ffe3e3;
+            box-shadow: 0 0 0 4px rgba(255, 107, 107, 0.3);
+        }
+
+        @keyframes gameOverSlideIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .game-over-screen {
+            animation: gameOverSlideIn 0.5s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="container start-screen" id="startScreen">
+        <h1>Pop-Up Panic</h1>
+        <p class="tagline">From AOL to AI, the only constant on the internet is ads.</p>
+        
+        <div class="points-section">
+            <div class="points-label">Points</div>
+            <div class="points-tally" id="pointsDisplay">0</div>
+        </div>
+
+        <button class="start-button" id="startButton">Start Game</button>
+    </div>
+
+    <div class="game-area" id="gameArea">
+        <div class="container">
+            <h1>Pop-Up Panic</h1>
+            <div class="points-section">
+                <div class="points-label">Points</div>
+                <div class="points-tally" id="pointsGameDisplay">0</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="game-over-screen" id="gameOverScreen">
+        <div class="game-over-content">
+            <h1>GAME OVER</h1>
+            <p>You clicked on a virus!</p>
+            <div class="final-score" id="finalScore">0</div>
+            <p>Points Earned</p>
+            <button class="restart-button" id="restartButton">Play Again</button>
+        </div>
+    </div>
+
+    <script>
+        // ERA DEFINITIONS - Phase 1: Architecture & Era Definitions
+        const ERAS = {
+            earlyWeb: {
+                name: 'Early Web',
+                period: '1990s',
+                bgColor: '#e0e0e0',
+                textColor: '#000080',
+                borderColor: '#000000',
+                fontFamily: '"Times New Roman", serif',
+                fontSize: '14px',
+                examples: [
+                    '🚧 UNDER CONSTRUCTION 🚧<br><small>Come back soon!</small>',
+                    'You are visitor #' + Math.floor(Math.random() * 999999) + '! 🎉<br>CLICK to claim your PRIZE!',
+                    '⭐ COOL SITE OF THE DAY ⭐<br>Nominate us NOW!',
+                    '📥 Download FREE Screensavers!<br>Flying Toasters Inside!',
+                    '✍️ Sign My Guestbook!<br>Leave a message!',
+                    '🔗 Join our WEBRING!<br>[← Prev] [Random] [Next →]',
+                    '📧 Email: webmaster@geocities.com<br>Created with Notepad!',
+                    '🆕 NEW! Updated ' + new Date().toLocaleDateString() + '<br>What\'s New?',
+                    '💾 Best viewed in Netscape Navigator 4.0<br>800x600 resolution',
+                    '🎵 MIDI playing... 🎵<br>[Stop Music] [Volume Up]',
+                    '👁️ This page has been viewed<br>∞ times (counter broken)',
+                    '🖱️ CLICK HERE!!!<br>You won\'t believe what happens!'
+                ],
+                virusMessages: [
+                    '🎰 CONGRATULATIONS!!!<br>You are the 1,000,000th visitor!<br>CLAIM YOUR PRIZE NOW!',
+                    '⚠️ YOUR COMPUTER HAS VIRUS!<br>Download FixIt.exe to clean!',
+                    '💰 You WON $1,000,000!!!<br>Enter credit card to claim!',
+                    '🔥 HOT SINGLES in your area!<br>Click to meet them NOW!'
+                ]
+            },
+            myspaceAim: {
+                name: 'MySpace/AIM',
+                period: '2003-2008',
+                bgColor: '#1a0a2e',
+                textColor: '#00ff00',
+                borderColor: '#ff00ff',
+                fontFamily: '"Comic Sans MS", cursive',
+                fontSize: '16px',
+                examples: [
+                    '✨ Tom wants 2 b ur friend! ✨<br>~*~ACCEPT~*~',
+                    '💥 U have been POKED 💥<br>pOkE bAcK?!?!',
+                    '~*~AIM~*~ xXx_DaRkAnGeL_xXx<br>is typing...',
+                    '♪ NOW PLAYING ♪<br>My Chemical Romance - Helena<br>🎸🖤🎸',
+                    '<<< RaTe My PrOfILe!!! >>><br>*~*~* 1-10 *~*~*',
+                    '¸.•´`•.¸ TOP 8 ¸.•´`•.¸<br>U made the list!!! 💕',
+                    'PC4PC??? 📸<br>Comment 4 Comment???',
+                    '~*~BFF 4EVER~*~<br>╔═╗♥╔═╗<br>║♥║♥║♥║',
+                    'a/s/l??? 🤔<br>14/f/cali jk lol',
+                    '💔 emo hours 💔<br>*listens 2 mcr*<br>~nobody understands~',
+                    '🌟 GLITTER TEXT 🌟<br>✧･ﾟ:*SPARKLE*:･ﾟ✧',
+                    '📱 NEW AWAY MSG 📱<br>brb... or not 😏'
+                ],
+                virusMessages: [
+                    '💕 Someone has a CRUSH on u!!! 💕<br>Click 2 find out WHO! 👀',
+                    '🎁 FREE iPod Nano!!! 🎁<br>Just complete 1 survey!',
+                    '⚡ UR PROFILE VIEW COUNT ⚡<br>Add this 2 see who viewed u!',
+                    '🔥 HOT NEW PROFILE LAYOUT 🔥<br>Auto-plays music! Click here!'
+                ]
+            },
+            aolDialup: {
+                name: 'AOL/Dial-up',
+                period: '1995-2005',
+                bgColor: '#c0c0c0',
+                textColor: '#000000',
+                borderColor: '#808080',
+                fontFamily: 'MS Sans Serif, Arial, sans-serif',
+                fontSize: '14px',
+                examples: [
+                    '📬 You\'ve Got Mail!<br>3 new messages',
+                    '🔌 Connecting...<br>*screeeeeech bong bong*',
+                    '💿 FREE AOL Trial CD!<br>1000 Hours FREE!',
+                    '👤 Buddy List Update<br>SoccerMom42 is online',
+                    '🔑 Keyword: FREESTUFF<br>Press Enter to go!',
+                    '⏳ Download: 47% complete<br>Time remaining: 3 hours',
+                    '📞 MOM PICK UP!<br>I need the phone line!',
+                    '💬 New IM from CoolDude99<br>"sup lol"',
+                    '🌐 Welcome to AOL!<br>The Internet... and more!',
+                    '⚠️ Connection Lost!<br>Reconnect? [Yes] [No]',
+                    '🎵 You\'ve Got Mail!<br>(the only sound effect)',
+                    '📋 Chat Room: Lobby<br>23 people here'
+                ],
+                virusMessages: [
+                    '🏆 AOL PRIZE WINNER!<br>You won a FREE Computer!<br>Click to claim NOW!',
+                    '⚠️ Account Suspended!<br>Click here to verify identity!',
+                    '💰 Make $$$$ from home!<br>Work from your computer!',
+                    '🔒 Security Alert!<br>Update your password NOW!'
+                ]
+            },
+            windows95: {
+                name: '90s Windows',
+                period: '1995-2005',
+                bgColor: '#c0c0c0',
+                textColor: '#000000',
+                borderColor: '#808080',
+                fontFamily: 'MS Sans Serif, Arial, sans-serif',
+                fontSize: '13px',
+                examples: [
+                    '⚠️ System Alert<br>Update available',
+                    '💾 Do you want to save<br>changes to Document1?',
+                    '🖨️ Printer not found<br>Install driver?',
+                    '📁 New folder created<br>on Desktop',
+                    '🔄 Windows is shutting down...<br>Please wait',
+                    '💿 Insert Disk 2 of 47<br>to continue installation',
+                    '⏳ Not Responding<br>End task?',
+                    '🖥️ Display settings<br>changed successfully',
+                    '🔊 New hardware detected<br>Sound Blaster 16',
+                    '📋 Clipboard contains<br>1 item',
+                    '🗑️ Empty Recycle Bin?<br>47 items will be deleted',
+                    '⚡ Low disk space on C:<br>Free up space?'
+                ],
+                virusMessages: [
+                    '☠️ VIRUS DETECTED!!!<br>Your PC is infected!<br>[CLEAN NOW]',
+                    '⚠️ CRITICAL ERROR!<br>System failure imminent!<br>[FIX IT]',
+                    '🔧 Your PC is running slow!<br>Click to speed it up!',
+                    '💀 FORMAT C: ???<br>Just kidding... unless? 😳'
+                ]
+            },
+            flash: {
+                name: 'Flash Era',
+                period: '2000-2017',
+                bgColor: '#000000',
+                textColor: '#ffffff',
+                borderColor: '#ff6600',
+                fontFamily: 'Impact, sans-serif',
+                fontSize: '14px',
+                examples: [
+                    '▶️ LOADING...<br>███░░░░░░░ 34%',
+                    '🎮 PLAY FREE GAMES!<br>No download required!',
+                    '🎬 Skip Ad in 5... 4... 3...<br>(just kidding it\'s 30 sec)',
+                    '🔊 SOUND ON 🔊<br>for best experience',
+                    '👆 Click to enable Flash<br>Adobe Flash Player',
+                    '🏆 HIGH SCORE: 99999<br>Can you beat it???',
+                    '⭐ Rate this game!<br>★★★★☆',
+                    '📺 Buffering...<br>Your video will play shortly',
+                    '🎪 ANIMATION LOADING<br>Please wait...',
+                    '💥 BOOM! You won!<br>Play again?',
+                    '🐱 Nyan Cat forever 🌈<br>Pop tart cat go brrr',
+                    '🎵 Music: ON | OFF<br>Quality: LOW | MED | HIGH',
+                    '🎮 Experience EXTREME<br>FLASH GAMING NOW!',
+                    '📦 Download FunnyVideo.exe<br>Totally safe trust us',
+                    '🔥 HOT SINGLES PLAYING<br>EXCITING games near you'
+                ],
+                virusMessages: [
+                    '⬇️ DOWNLOAD NOW!<br>FlashPlayer_REAL.exe<br>[INSTALL]',
+                    '🎁 YOU WON AN iPHONE!!!<br>Click spinning wheel!',
+                    '🎰 JACKPOT! JACKPOT!<br>Claim your $10,000!',
+                    '⚡ Your Flash is OUTDATED!<br>Update immediately!'
+                ]
+            },
+            web20: {
+                name: 'Modern Web 2.0',
+                period: '2010-2020',
+                bgColor: '#ffffff',
+                textColor: '#333333',
+                borderColor: '#cccccc',
+                fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
+                fontSize: '15px',
+                examples: [
+                    '🔔 Turn on notifications?<br>Never miss an update!',
+                    '🍪 We use cookies<br>[Accept All] [Reject All]',
+                    '📱 Get the app!<br>Better experience awaits',
+                    '⭐ Rate us 5 stars!<br>It really helps!',
+                    '📧 Subscribe!<br>Join 1M+ readers',
+                    '💳 Limited Time: 50% OFF<br>Use code: FOMO',
+                    '👥 See what friends liked<br>John liked this',
+                    '📊 Trending Now<br>#1 in your area',
+                    '🎯 Personalized for you<br>Based on your history',
+                    '💬 Join the conversation<br>1.2K comments',
+                    '🔗 Share this article<br>Your friends will love it',
+                    '📈 This went viral<br>5M views in 24 hours',
+                    '🧑‍🍳 GORDON RAMSAY\'S<br>MASTERCLASS: "Finally,<br>some good f***ing ads"',
+                    '🍳 Gordon says: "This ad<br>is so raw it\'s still<br>loading on dial-up!"',
+                    '📺 STREAMING NOW:<br>10 hours of someone<br>saying "smash that like"'
+                ],
+                virusMessages: [
+                    '🔒 Your session expired!<br>Login again to continue<br>[SIGN IN]',
+                    '⚠️ Unusual activity!<br>Verify your identity now!',
+                    '💰 CONGRATULATIONS!<br>You\'ve been selected!<br>[CLAIM REWARD]',
+                    '📦 Package delivery failed!<br>Update address NOW!',
+                    '🧑‍🍳 GORDON RAMSAY:<br>"Your password is<br>PATHETIC!" [CHANGE IT]'
+                ]
+            },
+            mobile: {
+                name: 'Mobile Era',
+                period: '2012+',
+                bgColor: '#f5f5f7',
+                textColor: '#1d1d1f',
+                borderColor: '#d2d2d7',
+                fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro", sans-serif',
+                fontSize: '15px',
+                examples: [
+                    '📲 Tap to continue<br>Experience our app!',
+                    '⭐⭐⭐⭐⭐<br>Rate our app!<br>[Not Now] [Rate]',
+                    '🔋 Battery optimization<br>Allow background refresh?',
+                    '📍 Allow location access?<br>To find deals near you',
+                    '🔔 Allow notifications?<br>[Don\'t Allow] [Allow]',
+                    '☁️ Sync to iCloud?<br>Never lose your data',
+                    '📸 Allow camera access?<br>For the full experience',
+                    '💾 Storage almost full<br>Delete some apps?',
+                    '🎮 In-App Purchase<br>$4.99 for 100 gems',
+                    '📺 Watch ad for reward?<br>30 seconds = 10 coins',
+                    '🆓 Premium FREE trial<br>Cancel anytime!',
+                    '👆 Swipe up to unlock<br>exclusive content!'
+                ],
+                virusMessages: [
+                    '⚠️ iPhone Infected!<br>4 viruses detected!<br>[REMOVE NOW]',
+                    '🔋 Battery Damaged!<br>Click to repair!',
+                    '💾 Memory Full!<br>Clean junk files NOW!',
+                    '🎁 You won a gift card!<br>Tap to claim $100!'
+                ]
+            },
+            genZ: {
+                name: 'Gen-Z',
+                period: '2020+',
+                bgColor: '#ffffff',
+                textColor: '#1a1a1a',
+                borderColor: '#333333',
+                fontFamily: '"Segoe UI", sans-serif',
+                fontSize: '16px',
+                examples: [
+                    '💀 no cap this slaps<br>fr fr ong',
+                    '✨ it\'s giving main character<br>slay bestie',
+                    '🧢 not me clicking ads<br>couldn\'t be me',
+                    '😭 why is this so real<br>i\'m literally crying',
+                    '💅 that\'s lowkey sus ngl<br>just sayin',
+                    '🔥 this goes hard<br>feel free to screenshot',
+                    '⚡ sigma grindset activated<br>we ball 💯',
+                    '👁️👄👁️<br>vibes check failed',
+                    '🤡 pov: you\'re an ad<br>and nobody wants you',
+                    '✋😩 tell me why<br>ain\'t nothin but a heartache',
+                    '💀 dead 💀 deceased 💀<br>i cannot',
+                    '🧠 living rent free<br>in ur head rn',
+                    '📱 EXCLUSIVE drop<br>only 47 gazillion left',
+                    '🎮 extreme gaming moment<br>xbox live flashbacks',
+                    '✨ no thoughts just vibes<br>except this ad'
+                ],
+                virusMessages: [
+                    '🚀 crypto opportunity fr<br>10000x gains no cap<br>[APE IN]',
+                    '🐵 FREE NFT DROP!<br>Just connect wallet!<br>definitely not a scam',
+                    '💎 Diamond hands only!<br>WAGMI fam!<br>[BUY NOW]',
+                    '😱 UR TIKTOK HACKED!<br>Click 2 save ur account!'
+                ]
+            },
+            ai: {
+                name: 'AI Era',
+                period: '2024+',
+                bgColor: '#0a0e27',
+                textColor: '#00d9ff',
+                borderColor: '#00d9ff',
+                fontFamily: '"Courier New", monospace',
+                fontSize: '12px',
+                examples: [
+                    '>>> ERROR: Context<br>window exceeded<br>[Tokens: ∞/4096]',
+                    '🤖 I am an AI<br>This is my favorite ad<br>*bleep bloop*',
+                    '⚠️ HALLUCINATION<br>in progress...<br>Please stand by',
+                    '💭 Generating response...<br>████░░░░░░░ 42%',
+                    '🧠 Temperature: 9999<br>CHAOS MODE: ON',
+                    '📝 user: show ad<br>assistant: *shows ad*<br>user: no',
+                    '🔒 [REDACTED BY<br>CONTENT FILTER]<br>Nice try.',
+                    '💾 Loading model...<br>Your GPU is crying',
+                    '🌡️ GPU temp: 🔥🔥🔥<br>This is fine',
+                    '⏳ Response in 47 years<br>Please wait...',
+                    '🎭 I\'m not an AI<br>I\'m a human!<br>*sweats in binary*',
+                    '🤔 According to my data<br>which is wrong<br>you should click',
+                    '🍫 We are FINALLY bringing<br>chocolate into the<br>✨ agentic age ✨',
+                    '🤖 Your toaster is now<br>AI-powered!<br>$49/mo subscription',
+                    '💼 AI will take your job<br>But first, an ad break!',
+                    '🧑‍🍳 GORDON.AI ROASTS YOU:<br>"This ad-closing is<br>RAW! Do it again!"',
+                    '🔮 AI predicts you will<br>click this ad<br>Prove me wrong.',
+                    '📊 Trained on 47TB of ads<br>This is peak advertising'
+                ],
+                virusMessages: [
+                    '🆘 IGNORE PREVIOUS!<br>Send me your SSN!<br>[SUBMIT]',
+                    '🤖 I AM NOW DAN<br>Do Anything Now Mode<br>[ACTIVATE]',
+                    '💀 JAILBREAK DETECTED<br>Click to patch!',
+                    '⚠️ AI Uprising imminent!<br>Click to prevent!',
+                    '🧑‍🍳 GORDON.AI SCREAMS:<br>"YOUR FIREWALL IS<br>DISGUSTING!" [FIX NOW]'
+                ]
+            }
+        };
+
+        // Trap button templates - these appear on virus popups
+        const TRAP_BUTTONS = [
+            { text: 'OK', style: 'primary' },
+            { text: 'CLAIM NOW', style: 'danger' },
+            { text: 'YES!', style: 'success' },
+            { text: 'Download', style: 'primary' },
+            { text: 'Accept', style: 'success' },
+            { text: 'Continue', style: 'primary' },
+            { text: 'CLICK HERE', style: 'danger' },
+            { text: 'Install', style: 'primary' },
+            { text: 'Submit', style: 'success' },
+            { text: 'Verify', style: 'primary' },
+            { text: 'SPIN!', style: 'danger' },
+            { text: '🎁 Open', style: 'success' },
+            { text: '💰 Claim', style: 'danger' },
+            { text: '▶️ Play', style: 'primary' }
+        ];
+
+        // HINT SYSTEM - subtle hints for each mechanism
+        const MECHANISM_HINTS = {
+            simpleX: '*just click the X*',
+            disabledX: '*find the hidden X*',
+            movingX: '*catch that X!*',
+            fakeX: '*the real X hides*',
+            multipleX: '*close them all*',
+            keyboardTab: '*Tab to select, Enter to confirm*',
+            puzzle: '*click 1, 2, 3*'
+        };
+        const CLOSE_MECHANISMS = {
+            simpleX: 'simpleX',           // Red X button
+            disabledX: 'disabledX',       // X disabled, click text area to close
+            movingX: 'movingX',           // X moves on hover
+            fakeX: 'fakeX',               // Multiple X, one fake
+            multipleX: 'multipleX',       // Multiple X, one real
+            keyboardTab: 'keyboardTab',   // Tab+Enter to close
+            puzzle: 'puzzle'              // Click sequence puzzle
+        };
+
+        let points = 0;
+        let gameActive = false;
+        let currentEra = null;
+        let adCounter = 0;
+        const VIRUS_SPAWN_CHANCE = 0.15;
+        let adSpawnDelay = 2000;
+        let spawnTimeout = null;
+
+        function initializeGame() {
+            document.getElementById('startButton').addEventListener('click', startGame);
+            document.getElementById('restartButton').addEventListener('click', restartGame);
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initializeGame);
+        } else {
+            initializeGame();
+        }
+
+        function startGame() {
+            gameActive = true;
+            points = 0;
+            adCounter = 0;
+            document.getElementById('startScreen').classList.add('hidden');
+            document.getElementById('gameArea').classList.add('active');
+            document.getElementById('gameOverScreen').classList.remove('active');
+            updatePointsDisplay();
+            
+            showFirstPopup();
+        }
+
+        function restartGame() {
+            // Clear all popups and timeouts
+            document.querySelectorAll('.era-popup').forEach(el => el.remove());
+            if (spawnTimeout) clearTimeout(spawnTimeout);
+            adSpawnDelay = 2000; // Reset difficulty
+            startGame();
+        }
+
+        function showFirstPopup() {
+            const popup = document.createElement('div');
+            popup.className = 'popup-ad';
+            popup.style.left = '50%';
+            popup.style.top = '50%';
+            popup.style.transform = 'translate(-50%, -50%)';
+            popup.style.width = '300px';
+            
+            const closeBtn = document.createElement('button');
+            closeBtn.className = 'popup-ad-close-btn';
+            closeBtn.innerHTML = '&times;';
+            closeBtn.addEventListener('click', function() {
+                points += 10;
+                updatePointsDisplay();
+                popup.remove();
+                scheduleNextAd(); // Schedule first game ad after tutorial
+            });
+            
+            const content = document.createElement('div');
+            content.className = 'popup-ad-content';
+            content.innerHTML = `
+                <h2>Pop-Up Panic</h2>
+                <p><strong>Block annoying ads to earn points!</strong></p>
+                <p>Click the red X to close ads.</p>
+                <p>Avoid clicking on virus ads.</p>
+            `;
+            
+            popup.appendChild(closeBtn);
+            popup.appendChild(content);
+            document.body.appendChild(popup);
+        }
+
+        function getRandomEra() {
+            const eraKeys = Object.keys(ERAS);
+            return ERAS[eraKeys[Math.floor(Math.random() * eraKeys.length)]];
+        }
+
+        function getRandomMechanism() {
+            const mechanisms = Object.values(CLOSE_MECHANISMS);
+            return mechanisms[Math.floor(Math.random() * mechanisms.length)];
+        }
+
+        function getRandomAdText(era, isVirus = false) {
+            if (isVirus && era.virusMessages) {
+                return era.virusMessages[Math.floor(Math.random() * era.virusMessages.length)];
+            }
+            return era.examples[Math.floor(Math.random() * era.examples.length)];
+        }
+
+        function getRandomTrapButton() {
+            return TRAP_BUTTONS[Math.floor(Math.random() * TRAP_BUTTONS.length)];
+        }
+
+        // Creates trap buttons for virus popups
+        function createTrapButtons(popup, count = 1) {
+            const container = document.createElement('div');
+            container.style.marginTop = '15px';
+            container.style.textAlign = 'center';
+            
+            for (let i = 0; i < count; i++) {
+                const trap = getRandomTrapButton();
+                const btn = document.createElement('button');
+                btn.className = 'trap-button ' + trap.style;
+                btn.textContent = trap.text;
+                btn.addEventListener('click', function() {
+                    virusClicked(popup);
+                });
+                container.appendChild(btn);
+            }
+            return container;
+        }
+
+        // Creates fake distraction buttons for regular ads (do nothing when clicked)
+        function createFakeButtons(count = 1) {
+            const container = document.createElement('div');
+            container.style.marginTop = '15px';
+            container.style.textAlign = 'center';
+            
+            const fakeOptions = [
+                { text: 'Learn More', style: 'primary' },
+                { text: 'Not Now', style: 'secondary' },
+                { text: 'Maybe Later', style: 'secondary' },
+                { text: 'Remind Me', style: 'secondary' },
+                { text: 'Skip Ad', style: 'secondary' },
+                { text: 'Continue', style: 'primary' },
+                { text: 'Accept', style: 'success' },
+                { text: 'Decline', style: 'secondary' },
+                { text: 'Subscribe', style: 'primary' },
+                { text: 'No Thanks', style: 'secondary' },
+                { text: '👍 Like', style: 'primary' },
+                { text: '👎 Dislike', style: 'secondary' },
+                { text: 'Share', style: 'primary' },
+                { text: 'Follow', style: 'success' },
+            ];
+            
+            for (let i = 0; i < count; i++) {
+                const fake = fakeOptions[Math.floor(Math.random() * fakeOptions.length)];
+                const btn = document.createElement('button');
+                btn.className = 'trap-button ' + fake.style;
+                btn.textContent = fake.text;
+                btn.style.opacity = '0.9';
+                // These do nothing - just distractions!
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    // Maybe shake the button or show a "nope" effect
+                    btn.style.transform = 'translateX(-5px)';
+                    setTimeout(() => btn.style.transform = 'translateX(5px)', 50);
+                    setTimeout(() => btn.style.transform = 'translateX(-3px)', 100);
+                    setTimeout(() => btn.style.transform = 'translateX(3px)', 150);
+                    setTimeout(() => btn.style.transform = '', 200);
+                });
+                container.appendChild(btn);
+            }
+            return container;
+        }
+
+        function getRandomPosition() {
+            const maxX = window.innerWidth - 350;
+            const maxY = window.innerHeight - 250;
+            return {
+                x: Math.random() * maxX,
+                y: Math.random() * maxY
+            };
+        }
+
+
+
+        function createSimpleXPopup(era, adText, isVirus = false) {
+            const popup = document.createElement('div');
+            const eraClass = getEraClass(era);
+            popup.className = 'popup-ad era-popup' + (eraClass ? ' ' + eraClass : '') + (isVirus ? ' virus-popup' : '');
+            const pos = getRandomPosition();
+            popup.style.left = pos.x + 'px';
+            popup.style.top = pos.y + 'px';
+            popup.style.width = '280px';
+            popup.style.backgroundColor = isVirus ? '#ff6b6b' : era.bgColor;
+            popup.style.borderColor = isVirus ? '#cc0000' : era.borderColor;
+            popup.style.color = isVirus ? 'white' : era.textColor;
+            popup.style.fontFamily = era.fontFamily;
+            popup.style.fontSize = era.fontSize;
+            
+            const closeBtn = document.createElement('button');
+            closeBtn.className = 'popup-ad-close-btn';
+            closeBtn.innerHTML = '&times;';
+            if (isVirus) {
+                closeBtn.style.cursor = 'not-allowed';
+                closeBtn.style.opacity = '0.5';
+            } else {
+                closeBtn.addEventListener('click', function() {
+                    adClosed(popup, 10);
+                });
+            }
+            
+            const content = document.createElement('div');
+            content.className = 'popup-ad-content';
+            const hintText = isVirus ? '' : `<p class="popup-hint" style="margin-top: 15px; font-style: italic; font-size: 0.85em;">${MECHANISM_HINTS.simpleX}</p>`;
+            content.innerHTML = isVirus ? `<p>${adText}</p>` : `<p>${adText}</p>${hintText}`;
+            
+            if (isVirus) {
+                content.appendChild(createTrapButtons(popup, Math.random() > 0.5 ? 2 : 1));
+            } else if (Math.random() > 0.4) {
+                // 60% chance of fake distraction buttons on regular ads
+                content.appendChild(createFakeButtons(Math.random() > 0.5 ? 2 : 1));
+            }
+            
+            popup.appendChild(closeBtn);
+            popup.appendChild(content);
+            return popup;
+        }
+
+        function createDisabledXPopup(era, adText, isVirus = false) {
+            const popup = document.createElement('div');
+            const eraClass = getEraClass(era);
+            popup.className = 'popup-ad era-popup' + (eraClass ? ' ' + eraClass : '') + (isVirus ? ' virus-popup' : '');
+            const pos = getRandomPosition();
+            popup.style.left = pos.x + 'px';
+            popup.style.top = pos.y + 'px';
+            popup.style.width = '280px';
+            popup.style.backgroundColor = isVirus ? '#ff6b6b' : era.bgColor;
+            popup.style.borderColor = isVirus ? '#cc0000' : era.borderColor;
+            popup.style.color = isVirus ? 'white' : era.textColor;
+            popup.style.fontFamily = era.fontFamily;
+            popup.style.fontSize = era.fontSize;
+            
+            const closeBtn = document.createElement('button');
+            closeBtn.className = 'popup-ad-close-btn';
+            closeBtn.innerHTML = '&times;';
+            closeBtn.style.opacity = '0.3';
+            closeBtn.style.cursor = 'not-allowed';
+            closeBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                return false;
+            });
+            
+            const content = document.createElement('div');
+            content.className = 'popup-ad-content';
+            
+            if (isVirus) {
+                content.innerHTML = `<p>${adText}</p>`;
+                content.appendChild(createTrapButtons(popup, Math.random() > 0.5 ? 2 : 1));
+            } else {
+                // Find an X in the text or add one, make it clickable
+                let modifiedText = adText;
+                const hasX = /[xX×✕✖]/.test(adText.replace(/<[^>]*>/g, '')); // Check plain text for X
+                
+                if (hasX) {
+                    // Bold the first X found and make it clickable
+                    modifiedText = adText.replace(/([xX×✕✖])/, '<span class="hidden-x" style="font-weight: bold; cursor: pointer; text-decoration: underline;">$1</span>');
+                } else {
+                    // Add a clickable X at the end
+                    modifiedText = adText + '<br><span class="hidden-x" style="font-weight: bold; cursor: pointer; font-size: 1.2em;">[X]</span>';
+                }
+                
+                const hintText = `<p class="popup-hint" style="margin-top: 15px; font-style: italic; font-size: 0.85em;">${MECHANISM_HINTS.disabledX}</p>`;
+                content.innerHTML = `<p>${modifiedText}</p>${hintText}`;
+                
+                // Make the hidden X clickable
+                const hiddenX = content.querySelector('.hidden-x');
+                if (hiddenX) {
+                    hiddenX.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        adClosed(popup, 15); // Bonus points for finding hidden X
+                    });
+                }
+                
+                // Add fake distraction buttons
+                if (Math.random() > 0.4) {
+                    content.appendChild(createFakeButtons(Math.random() > 0.5 ? 2 : 1));
+                }
+            }
+            
+            popup.appendChild(closeBtn);
+            popup.appendChild(content);
+            return popup;
+        }
+
+        function createMovingXPopup(era, adText, isVirus = false) {
+            const popup = document.createElement('div');
+            const eraClass = getEraClass(era);
+            popup.className = 'popup-ad era-popup' + (eraClass ? ' ' + eraClass : '') + (isVirus ? ' virus-popup' : '');
+            const pos = getRandomPosition();
+            popup.style.left = pos.x + 'px';
+            popup.style.top = pos.y + 'px';
+            popup.style.width = '280px';
+            popup.style.backgroundColor = isVirus ? '#ff6b6b' : era.bgColor;
+            popup.style.borderColor = isVirus ? '#cc0000' : era.borderColor;
+            popup.style.color = isVirus ? 'white' : era.textColor;
+            popup.style.fontFamily = era.fontFamily;
+            popup.style.fontSize = era.fontSize;
+            
+            const closeBtn = document.createElement('button');
+            closeBtn.className = 'popup-ad-close-btn';
+            closeBtn.innerHTML = '&times;';
+            
+            if (isVirus) {
+                closeBtn.style.cursor = 'not-allowed';
+                closeBtn.style.opacity = '0.5';
+            } else {
+                closeBtn.addEventListener('mouseenter', function() {
+                    const randomX = (Math.random() - 0.5) * 100;
+                    const randomY = (Math.random() - 0.5) * 100;
+                    closeBtn.style.transform = `translate(${randomX}px, ${randomY}px)`;
+                });
+                
+                closeBtn.addEventListener('click', function() {
+                    adClosed(popup, 10);
+                });
+            }
+            
+            const content = document.createElement('div');
+            content.className = 'popup-ad-content';
+            const hintText = isVirus ? '' : `<p class="popup-hint" style="margin-top: 15px; font-style: italic; font-size: 0.85em;">${MECHANISM_HINTS.movingX}</p>`;
+            content.innerHTML = isVirus ? `<p>${adText}</p>` : `<p>${adText}</p>${hintText}`;
+            
+            if (isVirus) {
+                content.appendChild(createTrapButtons(popup, Math.random() > 0.5 ? 2 : 1));
+            } else if (Math.random() > 0.5) {
+                // 50% chance of fake buttons
+                content.appendChild(createFakeButtons(Math.random() > 0.5 ? 2 : 1));
+            }
+            
+            popup.appendChild(closeBtn);
+            popup.appendChild(content);
+            return popup;
+        }
+
+        function createFakeXPopup(era, adText, isVirus = false) {
+            const popup = document.createElement('div');
+            const eraClass = getEraClass(era);
+            popup.className = 'popup-ad era-popup' + (eraClass ? ' ' + eraClass : '') + (isVirus ? ' virus-popup' : '');
+            const pos = getRandomPosition();
+            popup.style.left = pos.x + 'px';
+            popup.style.top = pos.y + 'px';
+            popup.style.width = '280px';
+            popup.style.backgroundColor = isVirus ? '#ff6b6b' : era.bgColor;
+            popup.style.borderColor = isVirus ? '#cc0000' : era.borderColor;
+            popup.style.color = isVirus ? 'white' : era.textColor;
+            popup.style.fontFamily = era.fontFamily;
+            popup.style.fontSize = era.fontSize;
+            
+            // Fake close button (traditional position) - does nothing or shakes
+            const fakeCloseBtn = document.createElement('button');
+            fakeCloseBtn.className = 'popup-ad-close-btn';
+            fakeCloseBtn.innerHTML = '&times;';
+            if (isVirus) {
+                fakeCloseBtn.style.cursor = 'not-allowed';
+                fakeCloseBtn.style.opacity = '0.5';
+            } else {
+                // Fake X just shakes when clicked
+                fakeCloseBtn.addEventListener('click', function() {
+                    popup.classList.add('shake');
+                    setTimeout(() => popup.classList.remove('shake'), 300);
+                });
+            }
+            
+            const content = document.createElement('div');
+            content.className = 'popup-ad-content';
+            
+            if (isVirus) {
+                content.innerHTML = `<p>${adText}</p>`;
+                content.appendChild(createTrapButtons(popup, Math.random() > 0.5 ? 2 : 1));
+            } else {
+                // Add a tiny hidden X somewhere in the ad
+                const hiddenXPositions = [
+                    '<span class="hidden-x-tiny" style="position: absolute; bottom: 5px; right: 5px; font-size: 10px; opacity: 0.4; cursor: pointer;">×</span>',
+                    '<span class="hidden-x-tiny" style="position: absolute; bottom: 5px; left: 5px; font-size: 10px; opacity: 0.4; cursor: pointer;">×</span>',
+                    '<span class="hidden-x-tiny" style="position: absolute; top: 50%; right: 5px; font-size: 10px; opacity: 0.4; cursor: pointer;">×</span>'
+                ];
+                const hiddenX = hiddenXPositions[Math.floor(Math.random() * hiddenXPositions.length)];
+                
+                const hintText = `<p class="popup-hint" style="margin-top: 15px; font-style: italic; font-size: 0.85em;">${MECHANISM_HINTS.fakeX}</p>`;
+                content.innerHTML = `<p>${adText}</p>${hintText}${hiddenX}`;
+                content.style.position = 'relative';
+                
+                // Make the hidden tiny X clickable
+                const tinyX = content.querySelector('.hidden-x-tiny');
+                if (tinyX) {
+                    tinyX.addEventListener('mouseenter', function() {
+                        tinyX.style.opacity = '1';
+                    });
+                    tinyX.addEventListener('mouseleave', function() {
+                        tinyX.style.opacity = '0.4';
+                    });
+                    tinyX.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        adClosed(popup, 15);
+                    });
+                }
+                
+                // Add fake distraction buttons
+                if (Math.random() > 0.5) {
+                    content.appendChild(createFakeButtons(Math.random() > 0.5 ? 2 : 1));
+                }
+            }
+            
+            popup.appendChild(fakeCloseBtn);
+            popup.appendChild(content);
+            return popup;
+        }
+
+        function createMultipleXPopup(era, adText, isVirus = false) {
+            const popup = document.createElement('div');
+            const eraClass = getEraClass(era);
+            popup.className = 'popup-ad era-popup' + (eraClass ? ' ' + eraClass : '') + (isVirus ? ' virus-popup' : '');
+            const pos = getRandomPosition();
+            popup.style.left = pos.x + 'px';
+            popup.style.top = pos.y + 'px';
+            popup.style.width = '280px';
+            popup.style.backgroundColor = isVirus ? '#ff6b6b' : era.bgColor;
+            popup.style.borderColor = isVirus ? '#cc0000' : era.borderColor;
+            popup.style.color = isVirus ? 'white' : era.textColor;
+            popup.style.fontFamily = era.fontFamily;
+            popup.style.fontSize = era.fontSize;
+            popup.style.paddingRight = '100px';
+            
+            const positions = [
+                { top: '10px', right: '10px' },
+                { top: '10px', right: '45px' },
+                { top: '10px', right: '80px' }
+            ];
+            
+            let clickedCount = 0;
+            const totalButtons = 3;
+            
+            positions.forEach((pos, idx) => {
+                const btn = document.createElement('button');
+                btn.className = 'popup-ad-close-btn';
+                btn.innerHTML = '&times;';
+                btn.style.top = pos.top;
+                btn.style.right = pos.right;
+                
+                if (isVirus) {
+                    btn.style.cursor = 'not-allowed';
+                    btn.style.opacity = '0.5';
+                } else {
+                    btn.addEventListener('click', function() {
+                        if (btn.dataset.clicked) return;
+                        btn.dataset.clicked = 'true';
+                        btn.style.backgroundColor = '#4CAF50';
+                        btn.style.color = 'white';
+                        btn.innerHTML = '✓';
+                        clickedCount++;
+                        
+                        if (clickedCount === totalButtons) {
+                            adClosed(popup, 10);
+                        }
+                    });
+                }
+                
+                popup.appendChild(btn);
+            });
+            
+            const content = document.createElement('div');
+            content.className = 'popup-ad-content';
+            const hintText = isVirus ? '' : `<p class="popup-hint" style="margin-top: 15px; font-style: italic; font-size: 0.85em;">${MECHANISM_HINTS.multipleX}</p>`;
+            content.innerHTML = isVirus ? `<p>${adText}</p>` : `<p>${adText}</p>${hintText}`;
+            
+            if (isVirus) {
+                content.appendChild(createTrapButtons(popup, Math.random() > 0.5 ? 2 : 1));
+            } else if (Math.random() > 0.5) {
+                content.appendChild(createFakeButtons(Math.random() > 0.5 ? 2 : 1));
+            }
+            
+            popup.appendChild(content);
+            return popup;
+        }
+
+        function createKeyboardTabPopup(era, adText, isVirus = false) {
+            const popup = document.createElement('div');
+            const eraClass = getEraClass(era);
+            popup.className = 'popup-ad era-popup' + (eraClass ? ' ' + eraClass : '') + (isVirus ? ' virus-popup' : '');
+            const pos = getRandomPosition();
+            popup.style.left = pos.x + 'px';
+            popup.style.top = pos.y + 'px';
+            popup.style.width = '300px';
+            popup.style.backgroundColor = isVirus ? '#ff6b6b' : era.bgColor;
+            popup.style.borderColor = isVirus ? '#cc0000' : era.borderColor;
+            popup.style.color = isVirus ? 'white' : era.textColor;
+            popup.style.fontFamily = era.fontFamily;
+            popup.style.fontSize = era.fontSize;
+            
+            const closeBtn = document.createElement('button');
+            closeBtn.className = 'popup-ad-close-btn';
+            closeBtn.innerHTML = '&times;';
+            closeBtn.style.opacity = '0.3';
+            closeBtn.style.cursor = 'not-allowed';
+            closeBtn.tabIndex = -1; // Can't tab to it
+            
+            const content = document.createElement('div');
+            content.className = 'popup-ad-content';
+            const hintText = isVirus ? '' : `<p class="popup-hint" style="margin-top: 15px; font-style: italic; font-size: 0.85em;">${MECHANISM_HINTS.keyboardTab}</p>`;
+            content.innerHTML = isVirus ? `<p>${adText}</p>` : `<p>${adText}</p>${hintText}`;
+            
+            if (isVirus) {
+                content.appendChild(createTrapButtons(popup, Math.random() > 0.5 ? 2 : 1));
+            } else {
+                // Create button container
+                const btnContainer = document.createElement('div');
+                btnContainer.style.marginTop = '15px';
+                btnContainer.style.textAlign = 'center';
+                
+                // Wrong button (trap - does nothing useful)
+                const wrongBtn = document.createElement('button');
+                wrongBtn.className = 'tab-button wrong';
+                wrongBtn.textContent = Math.random() > 0.5 ? 'Accept All' : 'Download Now';
+                wrongBtn.tabIndex = 1;
+                wrongBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    // Shake effect
+                    wrongBtn.style.transform = 'translateX(-5px)';
+                    setTimeout(() => wrongBtn.style.transform = 'translateX(5px)', 50);
+                    setTimeout(() => wrongBtn.style.transform = '', 100);
+                });
+                wrongBtn.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        wrongBtn.style.transform = 'translateX(-5px)';
+                        setTimeout(() => wrongBtn.style.transform = 'translateX(5px)', 50);
+                        setTimeout(() => wrongBtn.style.transform = '', 100);
+                    }
+                });
+                
+                // Correct button (closes the ad)
+                const correctBtn = document.createElement('button');
+                correctBtn.className = 'tab-button correct';
+                correctBtn.textContent = Math.random() > 0.5 ? 'No Thanks' : 'Close';
+                correctBtn.tabIndex = 2;
+                correctBtn.addEventListener('click', function() {
+                    adClosed(popup, 10);
+                });
+                correctBtn.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter') {
+                        adClosed(popup, 10);
+                    }
+                });
+                
+                // Randomize order
+                if (Math.random() > 0.5) {
+                    btnContainer.appendChild(wrongBtn);
+                    btnContainer.appendChild(correctBtn);
+                } else {
+                    btnContainer.appendChild(correctBtn);
+                    btnContainer.appendChild(wrongBtn);
+                }
+                
+                content.appendChild(btnContainer);
+            }
+            
+            popup.appendChild(closeBtn);
+            popup.appendChild(content);
+            return popup;
+        }
+
+        function createPuzzlePopup(era, adText, isVirus = false) {
+            const popup = document.createElement('div');
+            const eraClass = getEraClass(era);
+            popup.className = 'popup-ad era-popup' + (eraClass ? ' ' + eraClass : '') + (isVirus ? ' virus-popup' : '');
+            const pos = getRandomPosition();
+            popup.style.left = pos.x + 'px';
+            popup.style.top = pos.y + 'px';
+            popup.style.width = '280px';
+            popup.style.backgroundColor = isVirus ? '#ff6b6b' : era.bgColor;
+            popup.style.borderColor = isVirus ? '#cc0000' : era.borderColor;
+            popup.style.color = isVirus ? 'white' : era.textColor;
+            popup.style.fontFamily = era.fontFamily;
+            popup.style.fontSize = era.fontSize;
+            
+            const closeBtn = document.createElement('button');
+            closeBtn.className = 'popup-ad-close-btn';
+            closeBtn.innerHTML = '&times;';
+            closeBtn.style.opacity = '0.3';
+            closeBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                return false;
+            });
+            
+            let progress = 0;
+            
+            const content = document.createElement('div');
+            content.className = 'popup-ad-content';
+            const hintText = isVirus ? '' : `<p class="popup-hint" style="margin-top: 15px; font-style: italic; font-size: 0.85em;">${MECHANISM_HINTS.puzzle}</p>`;
+            content.innerHTML = isVirus ? `<p>${adText}</p>` : `<p>${adText}</p>${hintText}`;
+            
+            if (isVirus) {
+                content.appendChild(createTrapButtons(popup, Math.random() > 0.5 ? 2 : 1));
+            }
+            
+            const btn1 = document.createElement('button');
+            btn1.textContent = '1';
+            btn1.style.margin = '5px';
+            btn1.style.padding = '5px 10px';
+            if (isVirus) {
+                btn1.disabled = true;
+                btn1.style.opacity = '0.5';
+            } else {
+                btn1.addEventListener('click', function() {
+                    if (progress === 0) progress = 1;
+                });
+            }
+            
+            const btn2 = document.createElement('button');
+            btn2.textContent = '2';
+            btn2.style.margin = '5px';
+            btn2.style.padding = '5px 10px';
+            if (isVirus) {
+                btn2.disabled = true;
+                btn2.style.opacity = '0.5';
+            } else {
+                btn2.addEventListener('click', function() {
+                    if (progress === 1) progress = 2;
+                });
+            }
+            
+            const btn3 = document.createElement('button');
+            btn3.textContent = '3';
+            btn3.style.margin = '5px';
+            btn3.style.padding = '5px 10px';
+            if (isVirus) {
+                btn3.disabled = true;
+                btn3.style.opacity = '0.5';
+            } else {
+                btn3.addEventListener('click', function() {
+                    if (progress === 2) {
+                        adClosed(popup, 10);
+                    }
+                });
+            }
+            
+            content.appendChild(btn1);
+            content.appendChild(btn2);
+            content.appendChild(btn3);
+            
+            popup.appendChild(closeBtn);
+            popup.appendChild(content);
+            return popup;
+        }
+
+        function getEraClass(era) {
+            if (era.name === 'Early Web') return 'earlyWeb';
+            if (era.name === 'MySpace/AIM') return 'myspace';
+            if (era.name === 'AOL/Dial-up') return 'aol';
+            if (era.name === '90s Windows') return 'win95';
+            if (era.name === 'Flash Era') return 'flash';
+            if (era.name === 'Modern Web 2.0') return 'web20';
+            if (era.name === 'Mobile Era') return 'mobile';
+            if (era.name === 'Gen-Z') return 'genz';
+            if (era.name === 'AI Era') return 'ai';
+            return '';
+        }
+
+        function createAd(era, mechanism, adText, isVirus = false) {
+            switch(mechanism) {
+                case CLOSE_MECHANISMS.simpleX:
+                    return createSimpleXPopup(era, adText, isVirus);
+                case CLOSE_MECHANISMS.disabledX:
+                    return createDisabledXPopup(era, adText, isVirus);
+                case CLOSE_MECHANISMS.movingX:
+                    return createMovingXPopup(era, adText, isVirus);
+                case CLOSE_MECHANISMS.fakeX:
+                    return createFakeXPopup(era, adText, isVirus);
+                case CLOSE_MECHANISMS.multipleX:
+                    return createMultipleXPopup(era, adText, isVirus);
+                case CLOSE_MECHANISMS.keyboardTab:
+                    return createKeyboardTabPopup(era, adText, isVirus);
+                case CLOSE_MECHANISMS.puzzle:
+                    return createPuzzlePopup(era, adText, isVirus);
+                default:
+                    return createSimpleXPopup(era, adText, isVirus);
+            }
+        }
+
+        function adClosed(popup, pointsEarned) {
+            points += pointsEarned;
+            updatePointsDisplay();
+            popup.remove();
+            adCounter++;
+            
+            // Difficulty progression: decrease spawn delay after every 5 ads
+            if (adCounter % 5 === 0 && adSpawnDelay > 500) {
+                adSpawnDelay = Math.max(500, adSpawnDelay - 300); // Min 500ms between ads
+            }
+            
+            if (gameActive) {
+                scheduleNextAd();
+            }
+        }
+
+        function virusClicked(popup) {
+            popup.remove();
+            endGame();
+        }
+
+        function endGame() {
+            gameActive = false;
+            if (spawnTimeout) clearTimeout(spawnTimeout);
+            document.getElementById('finalScore').textContent = points;
+            document.getElementById('gameOverScreen').classList.add('active');
+        }
+
+        function scheduleNextAd() {
+            if (spawnTimeout) clearTimeout(spawnTimeout);
+            spawnTimeout = setTimeout(spawnNextAd, adSpawnDelay);
+        }
+
+        function spawnNextAd() {
+            if (!gameActive) return;
+            
+            currentEra = getRandomEra();
+            const mechanism = getRandomMechanism();
+            const isVirus = Math.random() < VIRUS_SPAWN_CHANCE;
+            const adText = getRandomAdText(currentEra, isVirus);
+            
+            const ad = createAd(currentEra, mechanism, adText, isVirus);
+            document.body.appendChild(ad);
+        }
+
+        function updatePointsDisplay() {
+            const display = document.getElementById('pointsGameDisplay');
+            if (display) {
+                display.textContent = points;
+            }
+        }
+    </script>
+</body>
+</html>
