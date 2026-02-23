@@ -1010,7 +1010,8 @@
             puzzle: '*click 1, 2, 3*',
             holdX: '*hold it down*',
             doubleClick: '*double tap*',
-            typeX: '*type the letter*'
+            typeX: '*type the letter*',
+            declineBtn: '*just say no*'
         };
         const CLOSE_MECHANISMS = {
             simpleX: 'simpleX',           // Red X button
@@ -1022,8 +1023,33 @@
             puzzle: 'puzzle',             // Click sequence puzzle
             holdX: 'holdX',               // Hold X for 1 second
             doubleClick: 'doubleClick',   // Double-click X
-            typeX: 'typeX'                // Type 'x' key to close
+            typeX: 'typeX',               // Type 'x' key to close
+            declineBtn: 'declineBtn'      // Click decline button (no X)
         };
+        
+        // Personality button pairs - [accept (trap), decline (close)]
+        const BUTTON_PAIRS = [
+            { accept: 'Yeah bruh', decline: 'Nah I\'m good' },
+            { accept: 'LET\'S GOOO', decline: 'I\'ll pass' },
+            { accept: 'Sign me up!', decline: 'No thanks bestie' },
+            { accept: 'YOLO 🎉', decline: 'Maybe later' },
+            { accept: 'Bet 💯', decline: 'I\'m broke' },
+            { accept: 'Take my money!', decline: 'Keep your scam' },
+            { accept: 'OMG YES', decline: 'Hard pass' },
+            { accept: 'Subscribe!', decline: 'Unsubscribe from life' },
+            { accept: 'I\'m in!', decline: 'I\'m out' },
+            { accept: 'DO IT', decline: 'Don\'t do it' },
+            { accept: 'Claim Now!', decline: 'Claim sanity instead' },
+            { accept: 'FREE?! 😍', decline: 'Nothing is free' },
+            { accept: 'Click here!', decline: 'Click away' },
+            { accept: 'Accept All', decline: 'Reject reality' },
+            { accept: 'Download 📥', decline: 'Download trust issues' },
+            { accept: 'Join Now', decline: 'Join the resistance' },
+            { accept: 'Get Started', decline: 'Get lost' },
+            { accept: 'Learn More', decline: 'Learn less' },
+            { accept: 'Try Free!', decline: 'Try touching grass' },
+            { accept: 'Activate!', decline: 'Deactivate interest' }
+        ];
 
         let points = 0;
         let gameActive = false;
@@ -1839,6 +1865,90 @@
             return popup;
         }
 
+        // DECLINE BUTTON - No X, click the sassy decline button to close
+        function createDeclineBtnPopup(era, adText, isVirus = false) {
+            const popup = document.createElement('div');
+            const eraClass = getEraClass(era);
+            popup.className = 'popup-ad era-popup' + (eraClass ? ' ' + eraClass : '') + (isVirus ? ' virus-popup' : '');
+            const pos = getRandomPosition();
+            popup.style.left = pos.x + 'px';
+            popup.style.top = pos.y + 'px';
+            popup.style.width = '300px';
+            popup.style.backgroundColor = isVirus ? '#ff6b6b' : era.bgColor;
+            popup.style.borderColor = isVirus ? '#cc0000' : era.borderColor;
+            popup.style.color = isVirus ? 'white' : era.textColor;
+            popup.style.fontFamily = era.fontFamily;
+            popup.style.fontSize = era.fontSize;
+            
+            // NO X button for this mechanic!
+            
+            const content = document.createElement('div');
+            content.className = 'popup-ad-content';
+            
+            // Pick random button pair
+            const pair = BUTTON_PAIRS[Math.floor(Math.random() * BUTTON_PAIRS.length)];
+            
+            if (isVirus) {
+                content.innerHTML = `<p>${adText}</p>`;
+                content.appendChild(createTrapButtons(popup, Math.random() > 0.5 ? 2 : 1));
+            } else {
+                const hintText = `<p class="popup-hint" style="margin-top: 15px; font-style: italic; font-size: 0.85em;">${MECHANISM_HINTS.declineBtn}</p>`;
+                content.innerHTML = `<p>${adText}</p>${hintText}`;
+                
+                // Button container
+                const btnContainer = document.createElement('div');
+                btnContainer.style.marginTop = '15px';
+                btnContainer.style.display = 'flex';
+                btnContainer.style.gap = '10px';
+                btnContainer.style.justifyContent = 'center';
+                btnContainer.style.flexWrap = 'wrap';
+                
+                // Accept button (TRAP - shakes)
+                const acceptBtn = document.createElement('button');
+                acceptBtn.textContent = pair.accept;
+                acceptBtn.style.padding = '8px 16px';
+                acceptBtn.style.fontSize = '14px';
+                acceptBtn.style.cursor = 'pointer';
+                acceptBtn.style.backgroundColor = '#4CAF50';
+                acceptBtn.style.color = 'white';
+                acceptBtn.style.border = 'none';
+                acceptBtn.style.borderRadius = '4px';
+                acceptBtn.style.fontWeight = 'bold';
+                acceptBtn.addEventListener('click', function() {
+                    popup.classList.add('shake');
+                    setTimeout(() => popup.classList.remove('shake'), 300);
+                });
+                
+                // Decline button (CLOSES the ad)
+                const declineBtn = document.createElement('button');
+                declineBtn.textContent = pair.decline;
+                declineBtn.style.padding = '8px 16px';
+                declineBtn.style.fontSize = '14px';
+                declineBtn.style.cursor = 'pointer';
+                declineBtn.style.backgroundColor = '#666';
+                declineBtn.style.color = 'white';
+                declineBtn.style.border = 'none';
+                declineBtn.style.borderRadius = '4px';
+                declineBtn.addEventListener('click', function() {
+                    adClosed(popup, 10);
+                });
+                
+                // Randomize order
+                if (Math.random() > 0.5) {
+                    btnContainer.appendChild(acceptBtn);
+                    btnContainer.appendChild(declineBtn);
+                } else {
+                    btnContainer.appendChild(declineBtn);
+                    btnContainer.appendChild(acceptBtn);
+                }
+                
+                content.appendChild(btnContainer);
+            }
+            
+            popup.appendChild(content);
+            return popup;
+        }
+
         function getEraClass(era) {
             if (era.name === 'Early Web') return 'earlyWeb';
             if (era.name === 'MySpace/AIM') return 'myspace';
@@ -1874,6 +1984,8 @@
                     return createDoubleClickPopup(era, adText, isVirus);
                 case CLOSE_MECHANISMS.typeX:
                     return createTypeXPopup(era, adText, isVirus);
+                case CLOSE_MECHANISMS.declineBtn:
+                    return createDeclineBtnPopup(era, adText, isVirus);
                 default:
                     return createSimpleXPopup(era, adText, isVirus);
             }
