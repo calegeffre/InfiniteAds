@@ -1001,22 +1001,28 @@
 
         // HINT SYSTEM - subtle hints for each mechanism
         const MECHANISM_HINTS = {
-            simpleX: '*just click the X*',
-            disabledX: '*find the hidden X*',
+            simpleX: '*click the X*',
+            disabledX: '*find the (x) in the te(x)t*',
             movingX: '*catch that X!*',
             fakeX: '*the real X hides*',
             multipleX: '*close them all*',
             keyboardTab: '*Tab to select, Enter to confirm*',
-            puzzle: '*click 1, 2, 3*'
+            puzzle: '*click 1, 2, 3*',
+            holdX: '*hold it down*',
+            doubleClick: '*double tap*',
+            typeX: '*type the letter*'
         };
         const CLOSE_MECHANISMS = {
             simpleX: 'simpleX',           // Red X button
-            disabledX: 'disabledX',       // X disabled, click text area to close
+            disabledX: 'disabledX',       // (x) hidden in text
             movingX: 'movingX',           // X moves on hover
-            fakeX: 'fakeX',               // Multiple X, one fake
-            multipleX: 'multipleX',       // Multiple X, one real
+            fakeX: 'fakeX',               // Fake X, real one hidden
+            multipleX: 'multipleX',       // Click all X buttons
             keyboardTab: 'keyboardTab',   // Tab+Enter to close
-            puzzle: 'puzzle'              // Click sequence puzzle
+            puzzle: 'puzzle',             // Click sequence puzzle
+            holdX: 'holdX',               // Hold X for 1 second
+            doubleClick: 'doubleClick',   // Double-click X
+            typeX: 'typeX'                // Type 'x' key to close
         };
 
         let points = 0;
@@ -1024,7 +1030,7 @@
         let currentEra = null;
         let adCounter = 0;
         const VIRUS_SPAWN_CHANCE = 0.15;
-        let adSpawnDelay = 2000;
+        let adSpawnDelay = 1200; // Start faster
         let spawnTimeout = null;
 
         function initializeGame() {
@@ -1054,7 +1060,7 @@
             // Clear all popups and timeouts
             document.querySelectorAll('.era-popup').forEach(el => el.remove());
             if (spawnTimeout) clearTimeout(spawnTimeout);
-            adSpawnDelay = 2000; // Reset difficulty
+            adSpawnDelay = 1200; // Reset difficulty
             startGame();
         }
 
@@ -1242,16 +1248,7 @@
             popup.style.fontFamily = era.fontFamily;
             popup.style.fontSize = era.fontSize;
             
-            const closeBtn = document.createElement('button');
-            closeBtn.className = 'popup-ad-close-btn';
-            closeBtn.innerHTML = '&times;';
-            closeBtn.style.opacity = '0.3';
-            closeBtn.style.cursor = 'not-allowed';
-            closeBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                return false;
-            });
-            
+            // No X button at all for this mechanic
             const content = document.createElement('div');
             content.className = 'popup-ad-content';
             
@@ -1259,35 +1256,61 @@
                 content.innerHTML = `<p>${adText}</p>`;
                 content.appendChild(createTrapButtons(popup, Math.random() > 0.5 ? 2 : 1));
             } else {
-                // Find an X in the text or add one, make it clickable
-                let modifiedText = adText;
-                const hasX = /[xX×✕✖]/.test(adText.replace(/<[^>]*>/g, '')); // Check plain text for X
+                // Words that naturally contain X - we'll hide the (x) in them
+                const xWords = [
+                    { word: 'e(x)tra', display: 'extra' },
+                    { word: 'e(x)clusive', display: 'exclusive' },
+                    { word: 'e(x)perience', display: 'experience' },
+                    { word: 'e(x)citing', display: 'exciting' },
+                    { word: 'e(x)perts', display: 'experts' },
+                    { word: 'ne(x)t', display: 'next' },
+                    { word: 'te(x)t', display: 'text' },
+                    { word: 'bo(x)', display: 'box' },
+                    { word: 'mi(x)', display: 'mix' },
+                    { word: 'ma(x)imum', display: 'maximum' },
+                    { word: 'rela(x)', display: 'relax' },
+                    { word: 'fi(x)', display: 'fix' }
+                ];
+                const chosen = xWords[Math.floor(Math.random() * xWords.length)];
                 
-                if (hasX) {
-                    // Bold the first X found and make it clickable
-                    modifiedText = adText.replace(/([xX×✕✖])/, '<span class="hidden-x" style="font-weight: bold; cursor: pointer; text-decoration: underline;">$1</span>');
-                } else {
-                    // Add a clickable X at the end
-                    modifiedText = adText + '<br><span class="hidden-x" style="font-weight: bold; cursor: pointer; font-size: 1.2em;">[X]</span>';
-                }
+                // Create the ad text with the hidden (x)
+                const hiddenXHtml = `<span class="hidden-x-paren" style="cursor: pointer; color: inherit;">${chosen.word.replace('(x)', '<span class="clickable-x" style="font-weight: bold;">(x)</span>')}</span>`;
+                
+                const messages = [
+                    `Click for ${hiddenXHtml} savings!`,
+                    `An ${hiddenXHtml} offer just for you!`,
+                    `Get ${hiddenXHtml} content now!`,
+                    `This ${hiddenXHtml} deal won't last!`,
+                    `Unlock ${hiddenXHtml} features!`,
+                    `Don't mi(x) this up! Click the <span class="hidden-x-paren" style="cursor: pointer;"><span class="clickable-x" style="font-weight: bold;">(x)</span></span>`,
+                    `Time to rela(x)... find the <span class="hidden-x-paren" style="cursor: pointer;"><span class="clickable-x" style="font-weight: bold;">(x)</span></span>`,
+                    `Fi(x) your life! Click <span class="hidden-x-paren" style="cursor: pointer;"><span class="clickable-x" style="font-weight: bold;">(x)</span></span>`
+                ];
+                const message = messages[Math.floor(Math.random() * messages.length)];
                 
                 const hintText = `<p class="popup-hint" style="margin-top: 15px; font-style: italic; font-size: 0.85em;">${MECHANISM_HINTS.disabledX}</p>`;
-                content.innerHTML = `<p>${modifiedText}</p>${hintText}`;
+                content.innerHTML = `<p>${message}</p>${hintText}`;
                 
-                // Make the hidden X clickable
-                const hiddenX = content.querySelector('.hidden-x');
-                if (hiddenX) {
-                    hiddenX.addEventListener('click', function(e) {
+                // Make all (x) clickable
+                content.querySelectorAll('.clickable-x').forEach(x => {
+                    x.style.cursor = 'pointer';
+                    x.addEventListener('mouseenter', () => { x.style.color = '#ff0000'; });
+                    x.addEventListener('mouseleave', () => { x.style.color = 'inherit'; });
+                    x.addEventListener('click', function(e) {
                         e.stopPropagation();
-                        adClosed(popup, 15); // Bonus points for finding hidden X
+                        adClosed(popup, 15);
                     });
-                }
+                });
                 
                 // Add fake distraction buttons
                 if (Math.random() > 0.4) {
                     content.appendChild(createFakeButtons(Math.random() > 0.5 ? 2 : 1));
                 }
             }
+            
+            popup.appendChild(content);
+            return popup;
+        }
             
             popup.appendChild(closeBtn);
             popup.appendChild(content);
@@ -1655,6 +1678,172 @@
             return popup;
         }
 
+        // HOLD X - Hold the X button for 1 second to close
+        function createHoldXPopup(era, adText, isVirus = false) {
+            const popup = document.createElement('div');
+            const eraClass = getEraClass(era);
+            popup.className = 'popup-ad era-popup' + (eraClass ? ' ' + eraClass : '') + (isVirus ? ' virus-popup' : '');
+            const pos = getRandomPosition();
+            popup.style.left = pos.x + 'px';
+            popup.style.top = pos.y + 'px';
+            popup.style.width = '280px';
+            popup.style.backgroundColor = isVirus ? '#ff6b6b' : era.bgColor;
+            popup.style.borderColor = isVirus ? '#cc0000' : era.borderColor;
+            popup.style.color = isVirus ? 'white' : era.textColor;
+            popup.style.fontFamily = era.fontFamily;
+            popup.style.fontSize = era.fontSize;
+            
+            const closeBtn = document.createElement('button');
+            closeBtn.className = 'popup-ad-close-btn';
+            closeBtn.innerHTML = '&times;';
+            
+            if (isVirus) {
+                closeBtn.style.cursor = 'not-allowed';
+                closeBtn.style.opacity = '0.5';
+            } else {
+                let holdTimer = null;
+                let progress = 0;
+                
+                closeBtn.style.transition = 'background-color 1s linear';
+                
+                closeBtn.addEventListener('mousedown', function() {
+                    closeBtn.style.backgroundColor = '#4CAF50';
+                    holdTimer = setTimeout(() => {
+                        adClosed(popup, 15);
+                    }, 1000);
+                });
+                
+                closeBtn.addEventListener('mouseup', function() {
+                    if (holdTimer) clearTimeout(holdTimer);
+                    closeBtn.style.backgroundColor = '';
+                });
+                
+                closeBtn.addEventListener('mouseleave', function() {
+                    if (holdTimer) clearTimeout(holdTimer);
+                    closeBtn.style.backgroundColor = '';
+                });
+            }
+            
+            const content = document.createElement('div');
+            content.className = 'popup-ad-content';
+            const hintText = isVirus ? '' : `<p class="popup-hint" style="margin-top: 15px; font-style: italic; font-size: 0.85em;">${MECHANISM_HINTS.holdX}</p>`;
+            content.innerHTML = isVirus ? `<p>${adText}</p>` : `<p>${adText}</p>${hintText}`;
+            
+            if (isVirus) {
+                content.appendChild(createTrapButtons(popup, Math.random() > 0.5 ? 2 : 1));
+            } else if (Math.random() > 0.5) {
+                content.appendChild(createFakeButtons(Math.random() > 0.5 ? 2 : 1));
+            }
+            
+            popup.appendChild(closeBtn);
+            popup.appendChild(content);
+            return popup;
+        }
+
+        // DOUBLE CLICK - Double-click the X to close
+        function createDoubleClickPopup(era, adText, isVirus = false) {
+            const popup = document.createElement('div');
+            const eraClass = getEraClass(era);
+            popup.className = 'popup-ad era-popup' + (eraClass ? ' ' + eraClass : '') + (isVirus ? ' virus-popup' : '');
+            const pos = getRandomPosition();
+            popup.style.left = pos.x + 'px';
+            popup.style.top = pos.y + 'px';
+            popup.style.width = '280px';
+            popup.style.backgroundColor = isVirus ? '#ff6b6b' : era.bgColor;
+            popup.style.borderColor = isVirus ? '#cc0000' : era.borderColor;
+            popup.style.color = isVirus ? 'white' : era.textColor;
+            popup.style.fontFamily = era.fontFamily;
+            popup.style.fontSize = era.fontSize;
+            
+            const closeBtn = document.createElement('button');
+            closeBtn.className = 'popup-ad-close-btn';
+            closeBtn.innerHTML = '&times;';
+            
+            if (isVirus) {
+                closeBtn.style.cursor = 'not-allowed';
+                closeBtn.style.opacity = '0.5';
+            } else {
+                // Single click just shakes
+                closeBtn.addEventListener('click', function(e) {
+                    popup.classList.add('shake');
+                    setTimeout(() => popup.classList.remove('shake'), 300);
+                });
+                
+                closeBtn.addEventListener('dblclick', function() {
+                    adClosed(popup, 12);
+                });
+            }
+            
+            const content = document.createElement('div');
+            content.className = 'popup-ad-content';
+            const hintText = isVirus ? '' : `<p class="popup-hint" style="margin-top: 15px; font-style: italic; font-size: 0.85em;">${MECHANISM_HINTS.doubleClick}</p>`;
+            content.innerHTML = isVirus ? `<p>${adText}</p>` : `<p>${adText}</p>${hintText}`;
+            
+            if (isVirus) {
+                content.appendChild(createTrapButtons(popup, Math.random() > 0.5 ? 2 : 1));
+            } else if (Math.random() > 0.5) {
+                content.appendChild(createFakeButtons(Math.random() > 0.5 ? 2 : 1));
+            }
+            
+            popup.appendChild(closeBtn);
+            popup.appendChild(content);
+            return popup;
+        }
+
+        // TYPE X - Press 'x' key while popup is focused to close
+        function createTypeXPopup(era, adText, isVirus = false) {
+            const popup = document.createElement('div');
+            const eraClass = getEraClass(era);
+            popup.className = 'popup-ad era-popup' + (eraClass ? ' ' + eraClass : '') + (isVirus ? ' virus-popup' : '');
+            const pos = getRandomPosition();
+            popup.style.left = pos.x + 'px';
+            popup.style.top = pos.y + 'px';
+            popup.style.width = '280px';
+            popup.style.backgroundColor = isVirus ? '#ff6b6b' : era.bgColor;
+            popup.style.borderColor = isVirus ? '#cc0000' : era.borderColor;
+            popup.style.color = isVirus ? 'white' : era.textColor;
+            popup.style.fontFamily = era.fontFamily;
+            popup.style.fontSize = era.fontSize;
+            
+            // No X button - you type it!
+            const content = document.createElement('div');
+            content.className = 'popup-ad-content';
+            
+            if (isVirus) {
+                content.innerHTML = `<p>${adText}</p>`;
+                content.appendChild(createTrapButtons(popup, Math.random() > 0.5 ? 2 : 1));
+            } else {
+                const hintText = `<p class="popup-hint" style="margin-top: 15px; font-style: italic; font-size: 0.85em;">${MECHANISM_HINTS.typeX}</p>`;
+                const typePrompt = `<p style="text-align: center; font-size: 1.5em; margin-top: 10px;">Press <kbd style="background: #333; color: #fff; padding: 2px 8px; border-radius: 3px;">X</kbd></p>`;
+                content.innerHTML = `<p>${adText}</p>${typePrompt}${hintText}`;
+                
+                // Listen for 'x' key
+                const keyHandler = function(e) {
+                    if (e.key.toLowerCase() === 'x') {
+                        document.removeEventListener('keydown', keyHandler);
+                        adClosed(popup, 12);
+                    }
+                };
+                document.addEventListener('keydown', keyHandler);
+                
+                // Clean up listener if popup is removed another way
+                const observer = new MutationObserver(function(mutations) {
+                    if (!document.body.contains(popup)) {
+                        document.removeEventListener('keydown', keyHandler);
+                        observer.disconnect();
+                    }
+                });
+                observer.observe(document.body, { childList: true, subtree: true });
+                
+                if (Math.random() > 0.5) {
+                    content.appendChild(createFakeButtons(Math.random() > 0.5 ? 2 : 1));
+                }
+            }
+            
+            popup.appendChild(content);
+            return popup;
+        }
+
         function getEraClass(era) {
             if (era.name === 'Early Web') return 'earlyWeb';
             if (era.name === 'MySpace/AIM') return 'myspace';
@@ -1684,6 +1873,12 @@
                     return createKeyboardTabPopup(era, adText, isVirus);
                 case CLOSE_MECHANISMS.puzzle:
                     return createPuzzlePopup(era, adText, isVirus);
+                case CLOSE_MECHANISMS.holdX:
+                    return createHoldXPopup(era, adText, isVirus);
+                case CLOSE_MECHANISMS.doubleClick:
+                    return createDoubleClickPopup(era, adText, isVirus);
+                case CLOSE_MECHANISMS.typeX:
+                    return createTypeXPopup(era, adText, isVirus);
                 default:
                     return createSimpleXPopup(era, adText, isVirus);
             }
@@ -1696,8 +1891,8 @@
             adCounter++;
             
             // Difficulty progression: decrease spawn delay after every 5 ads
-            if (adCounter % 5 === 0 && adSpawnDelay > 500) {
-                adSpawnDelay = Math.max(500, adSpawnDelay - 300); // Min 500ms between ads
+            if (adCounter % 5 === 0 && adSpawnDelay > 400) {
+                adSpawnDelay = Math.max(400, adSpawnDelay - 200); // Min 400ms between ads
             }
             
             if (gameActive) {
