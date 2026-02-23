@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pop-Up Panic</title>
+    <title>Pop-Up Panic!</title>
     <style>
         * {
             margin: 0;
@@ -667,8 +667,8 @@
 </head>
 <body>
     <div class="container start-screen" id="startScreen">
-        <h1>Pop-Up Panic</h1>
-        <p class="tagline">From AOL to AI, the only constant on the internet is ads.</p>
+        <h1>Pop-Up Panic!</h1>
+        <p class="tagline">From AOL to the AI age... the only constants of the internet are the ads.</p>
         
         <div class="points-section">
             <div class="points-label">Points</div>
@@ -680,7 +680,7 @@
 
     <div class="game-area" id="gameArea">
         <div class="container">
-            <h1>Pop-Up Panic</h1>
+            <h1>Pop-Up Panic!</h1>
             <div class="points-section">
                 <div class="points-label">Points</div>
                 <div class="points-tally" id="pointsGameDisplay">0</div>
@@ -710,18 +710,18 @@
                 fontFamily: '"Times New Roman", serif',
                 fontSize: '14px',
                 examples: [
-                    '🚧 UNDER CONSTRUCTION 🚧<br><small>Come back soon!</small>',
-                    'You are visitor #' + Math.floor(Math.random() * 999999) + '! 🎉<br>CLICK to claim your PRIZE!',
-                    '⭐ COOL SITE OF THE DAY ⭐<br>Nominate us NOW!',
-                    '📥 Download FREE Screensavers!<br>Flying Toasters Inside!',
-                    '✍️ Sign My Guestbook!<br>Leave a message!',
-                    '🔗 Join our WEBRING!<br>[← Prev] [Random] [Next →]',
-                    '📧 Email: webmaster@geocities.com<br>Created with Notepad!',
-                    '🆕 NEW! Updated ' + new Date().toLocaleDateString() + '<br>What\'s New?',
-                    '💾 Best viewed in Netscape Navigator 4.0<br>800x600 resolution',
-                    '🎵 MIDI playing... 🎵<br>[Stop Music] [Volume Up]',
-                    '👁️ This page has been viewed<br>∞ times (counter broken)',
-                    '🖱️ CLICK HERE!!!<br>You won\'t believe what happens!'
+                    { text: '🚧 UNDER CONSTRUCTION 🚧<br><small>Come back soon!</small>', trapButtons: ['Bookmark This!'], safeButtons: ['Maybe Later'] },
+                    { text: 'You are visitor #' + Math.floor(Math.random() * 999999) + '! 🎉<br>CLICK to claim your PRIZE!', trapButtons: ['CLAIM PRIZE'], safeButtons: ['No Thanks'] },
+                    { text: '⭐ COOL SITE OF THE DAY ⭐<br>Nominate us NOW!', trapButtons: ['Nominate!'], safeButtons: ['Not Cool'] },
+                    { text: '📥 Download FREE Screensavers!<br>Flying Toasters Inside!', trapButtons: ['DOWNLOAD'], safeButtons: ['I Have Enough'] },
+                    { text: '✍️ Sign My Guestbook!<br>Leave a message!', trapButtons: ['Sign It!'], safeButtons: ['Just Browsing'] },
+                    { text: '🔗 Join our WEBRING!<br>[← Prev] [Random] [Next →]', trapButtons: ['Join Ring'], safeButtons: ['Exit Ring'] },
+                    { text: '📧 Email: webmaster@geocities.com<br>Created with Notepad!', trapButtons: ['Email Me!'], safeButtons: ['Nice Notepad'] },
+                    { text: '🆕 NEW! Updated ' + new Date().toLocaleDateString() + '<br>What\'s New?', trapButtons: ['Show Me!'], safeButtons: ['Old News'] },
+                    { text: '💾 Best viewed in Netscape Navigator 4.0<br>800x600 resolution', trapButtons: ['Get Netscape'], safeButtons: ['I Use IE'] },
+                    { text: '🎵 MIDI playing... 🎵<br>[Stop Music] [Volume Up]', trapButtons: ['MORE MIDI!'], safeButtons: ['My Ears!'] },
+                    { text: '👁️ This page has been viewed<br>∞ times (counter broken)', trapButtons: ['Reset Counter'], safeButtons: ['That\'s A Lot'] },
+                    { text: '🖱️ CLICK HERE!!!<br>You won\'t believe what happens!', trapButtons: ['CLICK!!!'], safeButtons: ['I Believe'] }
                 ],
                 virusMessages: [
                     '🎰 CONGRATULATIONS!!!<br>You are the 1,000,000th visitor!<br>CLAIM YOUR PRIZE NOW!',
@@ -739,18 +739,18 @@
                 fontFamily: '"Comic Sans MS", cursive',
                 fontSize: '16px',
                 examples: [
-                    '✨ Tom wants 2 b ur friend! ✨<br>~*~ACCEPT~*~',
-                    '💥 U have been POKED 💥<br>pOkE bAcK?!?!',
-                    '~*~AIM~*~ xXx_DaRkAnGeL_xXx<br>is typing...',
-                    '♪ NOW PLAYING ♪<br>My Chemical Romance - Helena<br>🎸🖤🎸',
-                    '<<< RaTe My PrOfILe!!! >>><br>*~*~* 1-10 *~*~*',
-                    '¸.•´`•.¸ TOP 8 ¸.•´`•.¸<br>U made the list!!! 💕',
-                    'PC4PC??? 📸<br>Comment 4 Comment???',
-                    '~*~BFF 4EVER~*~<br>╔═╗♥╔═╗<br>║♥║♥║♥║',
-                    'a/s/l??? 🤔<br>14/f/cali jk lol',
-                    '💔 emo hours 💔<br>*listens 2 mcr*<br>~nobody understands~',
-                    '🌟 GLITTER TEXT 🌟<br>✧･ﾟ:*SPARKLE*:･ﾟ✧',
-                    '📱 NEW AWAY MSG 📱<br>brb... or not 😏'
+                    { text: '✨ Tom wants 2 b ur friend! ✨<br>~*~ACCEPT~*~', trapButtons: ['~*~ACCEPT~*~'], safeButtons: ['Deny Tom 💔'] },
+                    { text: '💥 U have been POKED 💥<br>pOkE bAcK?!?!', trapButtons: ['pOkE bAcK!!!'], safeButtons: ['ignore poke'] },
+                    { text: '~*~AIM~*~ xXx_DaRkAnGeL_xXx<br>is typing...', trapButtons: ['reply...'], safeButtons: ['go away'] },
+                    { text: '♪ NOW PLAYING ♪<br>My Chemical Romance - Helena<br>🎸🖤🎸', trapButtons: ['🖤 i luv mcr'], safeButtons: ['change song'] },
+                    { text: '<<< RaTe My PrOfILe!!! >>><br>*~*~* 1-10 *~*~*', trapButtons: ['10/10 !!!'], safeButtons: ['lol no'] },
+                    { text: '¸.•´`•.¸ TOP 8 ¸.•´`•.¸<br>U made the list!!! 💕', trapButtons: ['omg yay!!!'], safeButtons: ['im out'] },
+                    { text: 'PC4PC??? 📸<br>Comment 4 Comment???', trapButtons: ['pc4pc!!!'], safeButtons: ['no thx'] },
+                    { text: '~*~BFF 4EVER~*~<br>╔═╗♥╔═╗<br>║♥║♥║♥║', trapButtons: ['bff 4ever!!'], safeButtons: ['we r done'] },
+                    { text: 'a/s/l??? 🤔<br>14/f/cali jk lol', trapButtons: ['lol same'], safeButtons: ['creepy...'] },
+                    { text: '💔 emo hours 💔<br>*listens 2 mcr*<br>~nobody understands~', trapButtons: ['same 💔'], safeButtons: ['cheer up'] },
+                    { text: '🌟 GLITTER TEXT 🌟<br>✧･ﾟ:*SPARKLE*:･ﾟ✧', trapButtons: ['✨ sparkle!'], safeButtons: ['too much'] },
+                    { text: '📱 NEW AWAY MSG 📱<br>brb... or not 😏', trapButtons: ['ttyl'], safeButtons: ['stay plz'] }
                 ],
                 virusMessages: [
                     '💕 Someone has a CRUSH on u!!! 💕<br>Click 2 find out WHO! 👀',
@@ -768,20 +768,20 @@
                 fontFamily: 'MS Sans Serif, Arial, sans-serif',
                 fontSize: '14px',
                 examples: [
-                    '📬 You\'ve Got Mail!<br>3 new messages',
-                    '🔌 Connecting...<br>*screeeeeech bong bong*',
-                    '💿 FREE AOL Trial CD!<br>1000 Hours FREE!',
-                    '👤 Buddy List Update<br>SoccerMom42 is online',
-                    '🔑 Keyword: FREESTUFF<br>Press Enter to go!',
-                    '⏳ Download: 47% complete<br>Time remaining: 3 hours',
-                    '📞 MOM HANG UP!<br>I need the internet!<br><u>Upgrade to DSL today →</u>',
-                    '💬 New IM from CoolDude99<br>"sup lol"',
-                    '🌐 Welcome to AOL!<br>The Internet... and more!',
-                    '⚠️ Connection Lost!<br>Someone picked up the phone!<br><u>Get broadband →</u>',
-                    '🎵 You\'ve Got Mail!<br>(the only sound effect)',
-                    '📋 Chat Room: Lobby<br>23 people here',
-                    '☎️ PHONE CALL INCOMING<br>Your download will die!<br><u>Upgrade now!</u>',
-                    '🐌 56kbps connection<br>Living the dream...<br><u>Go faster? →</u>'
+                    { text: '📬 You\'ve Got Mail!<br>3 new messages', trapButtons: ['Read Now'], safeButtons: ['Mark as Spam'] },
+                    { text: '🔌 Connecting...<br>*screeeeeech bong bong*', trapButtons: ['Patience...'], safeButtons: ['Hang Up'] },
+                    { text: '💿 FREE AOL Trial CD!<br>1000 Hours FREE!', trapButtons: ['Insert CD'], safeButtons: ['I Have 47'] },
+                    { text: '👤 Buddy List Update<br>SoccerMom42 is online', trapButtons: ['IM Her'] },
+                    { text: '🔑 Keyword: FREESTUFF<br>Press Enter to go!', trapButtons: ['Go!'], safeButtons: ['Nah'] },
+                    { text: '⏳ Download: 47% complete<br>Time remaining: 3 hours', trapButtons: ['Wait...'], safeButtons: ['Cancel'] },
+                    { text: '📞 MOM HANG UP!<br>I need the internet!<br><u>Upgrade to DSL today →</u>', trapButtons: ['Upgrade DSL'], safeButtons: ['Fine Mom'] },
+                    { text: '💬 New IM from CoolDude99<br>"sup lol"', trapButtons: ['sup'], safeButtons: ['Block'] },
+                    { text: '🌐 Welcome to AOL!<br>The Internet... and more!', trapButtons: ['Enter AOL'], safeButtons: ['Logout'] },
+                    { text: '⚠️ Connection Lost!<br>Someone picked up the phone!<br><u>Get broadband →</u>', trapButtons: ['Get Broadband'], safeButtons: ['Reconnect'] },
+                    { text: '🎵 You\'ve Got Mail!<br>(the only sound effect)', trapButtons: ['Check Mail'], safeButtons: ['Mute'] },
+                    { text: '📋 Chat Room: Lobby<br>23 people here', trapButtons: ['Enter Chat'], safeButtons: ['Exit'] },
+                    { text: '☎️ PHONE CALL INCOMING<br>Your download will die!<br><u>Upgrade now!</u>', trapButtons: ['Upgrade!'], safeButtons: ['Risk It'] },
+                    { text: '🐌 56kbps connection<br>Living the dream...<br><u>Go faster? →</u>', trapButtons: ['Go Faster'], safeButtons: ['This Is Fine'] }
                 ],
                 virusMessages: [
                     '🏆 AOL PRIZE WINNER!<br>You won a FREE Computer!<br>Click to claim NOW!',
@@ -799,18 +799,18 @@
                 fontFamily: 'MS Sans Serif, Arial, sans-serif',
                 fontSize: '13px',
                 examples: [
-                    '⚠️ System Alert<br>Update available',
-                    '💾 Do you want to save<br>changes to Document1?',
-                    '🖨️ Printer not found<br>Install driver?',
-                    '📁 New folder created<br>on Desktop',
-                    '🔄 Windows is shutting down...<br>Please wait',
-                    '💿 Insert Disk 2 of 47<br>to continue installation',
-                    '⏳ Not Responding<br>End task?',
-                    '🖥️ Display settings<br>changed successfully',
-                    '🔊 New hardware detected<br>Sound Blaster 16',
-                    '📋 Clipboard contains<br>1 item',
-                    '🗑️ Empty Recycle Bin?<br>47 items will be deleted',
-                    '⚡ Low disk space on C:<br>Free up space?'
+                    { text: '⚠️ System Alert<br>Update available', trapButtons: ['Update Now'], safeButtons: ['Remind Later'] },
+                    { text: '💾 Do you want to save<br>changes to Document1?', trapButtons: ['Save'], safeButtons: ['Don\'t Save'] },
+                    { text: '🖨️ Printer not found<br>Install driver?', trapButtons: ['Install'], safeButtons: ['Cancel'] },
+                    { text: '📁 New folder created<br>on Desktop', trapButtons: ['Open Folder'], safeButtons: ['OK'] },
+                    { text: '🔄 Windows is shutting down...<br>Please wait', trapButtons: ['Force Quit'], safeButtons: ['Wait'] },
+                    { text: '💿 Insert Disk 2 of 47<br>to continue installation', trapButtons: ['OK'], safeButtons: ['Cancel Setup'] },
+                    { text: '⏳ Not Responding<br>End task?', trapButtons: ['End Task'], safeButtons: ['Wait'] },
+                    { text: '🖥️ Display settings<br>changed successfully', trapButtons: ['Keep Changes'], safeButtons: ['Revert'] },
+                    { text: '🔊 New hardware detected<br>Sound Blaster 16', trapButtons: ['Install'], safeButtons: ['Cancel'] },
+                    { text: '📋 Clipboard contains<br>1 item', trapButtons: ['View'], safeButtons: ['Clear'] },
+                    { text: '🗑️ Empty Recycle Bin?<br>47 items will be deleted', trapButtons: ['Empty'], safeButtons: ['Cancel'] },
+                    { text: '⚡ Low disk space on C:<br>Free up space?', trapButtons: ['Clean Up'], safeButtons: ['Ignore'] }
                 ],
                 virusMessages: [
                     '☠️ VIRUS DETECTED!!!<br>Your PC is infected!<br>[CLEAN NOW]',
@@ -828,21 +828,21 @@
                 fontFamily: 'Impact, sans-serif',
                 fontSize: '14px',
                 examples: [
-                    '▶️ LOADING...<br>███░░░░░░░ 34%',
-                    '🎮 PLAY FREE GAMES!<br>No download required!',
-                    '🎬 Skip Ad in 5... 4... 3...<br>(just kidding it\'s 30 sec)',
-                    '🔊 SOUND ON 🔊<br>for best experience',
-                    '👆 Click to enable Flash<br>Adobe Flash Player',
-                    '🏆 HIGH SCORE: 99999<br>Can you beat it???',
-                    '⭐ Rate this game!<br>★★★★☆',
-                    '📺 Buffering...<br>Your video will play shortly',
-                    '🎪 ANIMATION LOADING<br>Please wait...',
-                    '💥 BOOM! You won!<br>Play again?',
-                    '🐱 Nyan Cat forever 🌈<br>Pop tart cat go brrr',
-                    '🎵 Music: ON | OFF<br>Quality: LOW | MED | HIGH',
-                    '🎮 Experience EXTREME<br>FLASH GAMING NOW!',
-                    '📦 Download FunnyVideo.exe<br>Totally safe trust us',
-                    '🔥 HOT SINGLES PLAYING<br>EXCITING games near you'
+                    { text: '▶️ LOADING...<br>███░░░░░░░ 34%', trapButtons: ['WAIT'], safeButtons: ['Refresh'] },
+                    { text: '🎮 PLAY FREE GAMES!<br>No download required!', trapButtons: ['PLAY NOW'], safeButtons: ['Later'] },
+                    { text: '🎬 Skip Ad in 5... 4... 3...<br>(just kidding it\'s 30 sec)', trapButtons: ['Skip Ad'], safeButtons: ['Watch Ad'] },
+                    { text: '🔊 SOUND ON 🔊<br>for best experience', trapButtons: ['🔊 ENABLE'], safeButtons: ['Mute'] },
+                    { text: '👆 Click to enable Flash<br>Adobe Flash Player', trapButtons: ['Enable Flash'], safeButtons: ['Not Today'] },
+                    { text: '🏆 HIGH SCORE: 99999<br>Can you beat it???', trapButtons: ['Yeah bruh'], safeButtons: ['No Way'] },
+                    { text: '⭐ Rate this game!<br>★★★★☆', trapButtons: ['5 Stars!'], safeButtons: ['1 Star'] },
+                    { text: '📺 Buffering...<br>Your video will play shortly', trapButtons: ['Buffer...'], safeButtons: ['Skip'] },
+                    { text: '🎪 ANIMATION LOADING<br>Please wait...', trapButtons: ['Waiting...'], safeButtons: ['Cancel'] },
+                    { text: '💥 BOOM! You won!<br>Play again?', trapButtons: ['PLAY AGAIN'], safeButtons: ['Quit'] },
+                    { text: '🐱 Nyan Cat forever 🌈<br>Pop tart cat go brrr', trapButtons: ['🌈 NYAN'], safeButtons: ['Stop Cat'] },
+                    { text: '🎵 Music: ON | OFF<br>Quality: LOW | MED | HIGH', trapButtons: ['MAX VOLUME'], safeButtons: ['Mute All'] },
+                    { text: '🎮 Experience EXTREME<br>FLASH GAMING NOW!', trapButtons: ['EXTREME!'], safeButtons: ['Too Extreme'] },
+                    { text: '📦 Download FunnyVideo.exe<br>Totally safe trust us', trapButtons: ['Trust & DL'], safeButtons: ['Seems Sus'] },
+                    { text: '🔥 HOT SINGLES PLAYING<br>EXCITING games near you', trapButtons: ['I\'m Single'], safeButtons: ['Not Hot'] }
                 ],
                 virusMessages: [
                     '⬇️ DOWNLOAD NOW!<br>FlashPlayer_REAL.exe<br>[INSTALL]',
@@ -860,21 +860,21 @@
                 fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
                 fontSize: '15px',
                 examples: [
-                    '🔔 Turn on notifications?<br>Never miss an update!',
-                    '🍪 We use cookies<br>[Accept All] [Reject All]',
-                    '📱 Get the app!<br>Better experience awaits',
-                    '⭐ Rate us 5 stars!<br>It really helps!',
-                    '📧 Subscribe!<br>Join 1M+ readers',
-                    '💳 Limited Time: 50% OFF<br>Use code: FOMO',
-                    '👥 See what friends liked<br>John liked this',
-                    '📊 Trending Now<br>#1 in your area',
-                    '🎯 Personalized for you<br>Based on your history',
-                    '💬 Join the conversation<br>1.2K comments',
-                    '🔗 Share this article<br>Your friends will love it',
-                    '📈 This went viral<br>5M views in 24 hours',
-                    '🧑‍🍳 GORDON RAMSAY\'S<br>MASTERCLASS: "Finally,<br>some good f***ing ads"',
-                    '🍳 Gordon says: "This ad<br>is so raw it\'s still<br>loading on dial-up!"',
-                    '📺 STREAMING NOW:<br>10 hours of someone<br>saying "smash that like"'
+                    { text: '🔔 Turn on notifications?<br>Never miss an update!', trapButtons: ['Enable'], safeButtons: ['Not Now'] },
+                    { text: '🍪 We use cookies<br>[Accept All] [Reject All]', trapButtons: ['Accept All'], safeButtons: ['Reject All'] },
+                    { text: '📱 Get the app!<br>Better experience awaits', trapButtons: ['Get App'], safeButtons: ['Use Website'] },
+                    { text: '⭐ Rate us 5 stars!<br>It really helps!', trapButtons: ['⭐⭐⭐⭐⭐'], safeButtons: ['Maybe Later'] },
+                    { text: '📧 Subscribe!<br>Join 1M+ readers', trapButtons: ['Subscribe'], safeButtons: ['No Spam'] },
+                    { text: '💳 Limited Time: 50% OFF<br>Use code: FOMO', trapButtons: ['APPLY CODE'], safeButtons: ['Full Price'] },
+                    { text: '👥 See what friends liked<br>John liked this', trapButtons: ['See More'], safeButtons: ['Don\'t Care'] },
+                    { text: '📊 Trending Now<br>#1 in your area', trapButtons: ['View Trends'], safeButtons: ['Hide'] },
+                    { text: '🎯 Personalized for you<br>Based on your history', trapButtons: ['Show Me'], safeButtons: ['Stop Tracking'] },
+                    { text: '💬 Join the conversation<br>1.2K comments', trapButtons: ['Read Comments'], safeButtons: ['Nope'] },
+                    { text: '🔗 Share this article<br>Your friends will love it', trapButtons: ['Share'], safeButtons: ['Keep Secret'] },
+                    { text: '📈 This went viral<br>5M views in 24 hours', trapButtons: ['Watch Now'], safeButtons: ['Overrated'] },
+                    { text: '🧑‍🍳 GORDON RAMSAY\'S<br>MASTERCLASS: "Finally,<br>some good f***ing ads"', trapButtons: ['Enroll Now'], safeButtons: ['It\'s RAW!'] },
+                    { text: '🍳 Gordon says: "This ad<br>is so raw it\'s still<br>loading on dial-up!"', trapButtons: ['Cook It!'], safeButtons: ['Disgusting!'] },
+                    { text: '📺 STREAMING NOW:<br>10 hours of someone<br>saying "smash that like"', trapButtons: ['Smash Like'], safeButtons: ['Unsubscribe'] }
                 ],
                 virusMessages: [
                     '🔒 Your session expired!<br>Login again to continue<br>[SIGN IN]',
@@ -893,18 +893,18 @@
                 fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro", sans-serif',
                 fontSize: '15px',
                 examples: [
-                    '📲 Tap to continue<br>Experience our app!',
-                    '⭐⭐⭐⭐⭐<br>Rate our app!<br>[Not Now] [Rate]',
-                    '🔋 Battery optimization<br>Allow background refresh?',
-                    '📍 Allow location access?<br>To find deals near you',
-                    '🔔 Allow notifications?<br>[Don\'t Allow] [Allow]',
-                    '☁️ Sync to iCloud?<br>Never lose your data',
-                    '📸 Allow camera access?<br>For the full experience',
-                    '💾 Storage almost full<br>Delete some apps?',
-                    '🎮 In-App Purchase<br>$4.99 for 100 gems',
-                    '📺 Watch ad for reward?<br>30 seconds = 10 coins',
-                    '🆓 Premium FREE trial<br>Cancel anytime!',
-                    '👆 Swipe up to unlock<br>exclusive content!'
+                    { text: '📲 Tap to continue<br>Experience our app!', trapButtons: ['Tap Here'], safeButtons: ['No Thanks'] },
+                    { text: '⭐⭐⭐⭐⭐<br>Rate our app!<br>[Not Now] [Rate]', trapButtons: ['Rate 5★'], safeButtons: ['Not Now'] },
+                    { text: '🔋 Battery optimization<br>Allow background refresh?', trapButtons: ['Allow'], safeButtons: ['Deny'] },
+                    { text: '📍 Allow location access?<br>To find deals near you', trapButtons: ['Allow'], safeButtons: ['Decline'] },
+                    { text: '🔔 Allow notifications?<br>[Don\'t Allow] [Allow]', trapButtons: ['Allow'], safeButtons: ['Don\'t Allow'] },
+                    { text: '☁️ Sync to iCloud?<br>Never lose your data', trapButtons: ['Sync Now'], safeButtons: ['Later'] },
+                    { text: '📸 Allow camera access?<br>For the full experience', trapButtons: ['Allow'], safeButtons: ['Nope'] },
+                    { text: '💾 Storage almost full<br>Delete some apps?', trapButtons: ['Manage'], safeButtons: ['Dismiss'] },
+                    { text: '🎮 In-App Purchase<br>$4.99 for 100 gems', trapButtons: ['BUY 💎'], safeButtons: ['I\'m Broke'] },
+                    { text: '📺 Watch ad for reward?<br>30 seconds = 10 coins', trapButtons: ['Watch Ad'], safeButtons: ['Skip'] },
+                    { text: '🆓 Premium FREE trial<br>Cancel anytime!', trapButtons: ['Start Trial'], safeButtons: ['No Trial'] },
+                    { text: '👆 Swipe up to unlock<br>exclusive content!', trapButtons: ['Swipe Up'], safeButtons: ['Swipe Away'] }
                 ],
                 virusMessages: [
                     '⚠️ iPhone Infected!<br>4 viruses detected!<br>[REMOVE NOW]',
@@ -922,21 +922,21 @@
                 fontFamily: '"Segoe UI", sans-serif',
                 fontSize: '16px',
                 examples: [
-                    '💀 no cap this slaps<br>fr fr ong',
-                    '✨ it\'s giving main character<br>slay bestie',
-                    '🧢 not me clicking ads<br>couldn\'t be me',
-                    '😭 why is this so real<br>i\'m literally crying',
-                    '💅 that\'s lowkey sus ngl<br>just sayin',
-                    '🔥 this goes hard<br>feel free to screenshot',
-                    '⚡ sigma grindset activated<br>we ball 💯',
-                    '👁️👄👁️<br>vibes check failed',
-                    '🤡 pov: you\'re an ad<br>and nobody wants you',
-                    '✋😩 tell me why<br>ain\'t nothin but a heartache',
-                    '💀 dead 💀 deceased 💀<br>i cannot',
-                    '🧠 living rent free<br>in ur head rn',
-                    '📱 EXCLUSIVE drop<br>only 47 gazillion left',
-                    '🎮 extreme gaming moment<br>xbox live flashbacks',
-                    '✨ no thoughts just vibes<br>except this ad'
+                    { text: '💀 no cap this slaps<br>fr fr ong', trapButtons: ['W'], safeButtons: ['L + ratio'] },
+                    { text: '✨ it\'s giving main character<br>slay bestie', trapButtons: ['slay 💅'], safeButtons: ['flop era'] },
+                    { text: '🧢 not me clicking ads<br>couldn\'t be me', trapButtons: ['same tbh'], safeButtons: ['cap 🧢'] },
+                    { text: '😭 why is this so real<br>i\'m literally crying', trapButtons: ['crying rn'], safeButtons: ['me when'] },
+                    { text: '💅 that\'s lowkey sus ngl<br>just sayin', trapButtons: ['sus 📮'], safeButtons: ['valid'] },
+                    { text: '🔥 this goes hard<br>feel free to screenshot', trapButtons: ['screenshot'], safeButtons: ['nah'] },
+                    { text: '⚡ sigma grindset activated<br>we ball 💯', trapButtons: ['we ball'], safeButtons: ['touch grass'] },
+                    { text: '👁️👄👁️<br>vibes check failed', trapButtons: ['oop-'], safeButtons: ['bestie...'] },
+                    { text: '🤡 pov: you\'re an ad<br>and nobody wants you', trapButtons: ['clown moment'], safeButtons: ['skip'] },
+                    { text: '✋😩 tell me why<br>ain\'t nothin but a heartache', trapButtons: ['TELL ME WHY'], safeButtons: ['ain\'t nothin'] },
+                    { text: '💀 dead 💀 deceased 💀<br>i cannot', trapButtons: ['i can\'t 💀'], safeButtons: ['literally me'] },
+                    { text: '🧠 living rent free<br>in ur head rn', trapButtons: ['rent due'], safeButtons: ['evicted'] },
+                    { text: '📱 EXCLUSIVE drop<br>only 47 gazillion left', trapButtons: ['copped 🔥'], safeButtons: ['mid drop'] },
+                    { text: '🎮 extreme gaming moment<br>xbox live flashbacks', trapButtons: ['GG'], safeButtons: ['rage quit'] },
+                    { text: '✨ no thoughts just vibes<br>except this ad', trapButtons: ['vibes ✨'], safeButtons: ['thoughts 🤔'] }
                 ],
                 virusMessages: [
                     '🚀 crypto opportunity fr<br>10000x gains no cap<br>[APE IN]',
@@ -954,24 +954,24 @@
                 fontFamily: '"Courier New", monospace',
                 fontSize: '12px',
                 examples: [
-                    '>>> ERROR: Context<br>window exceeded<br>[Tokens: ∞/4096]',
-                    '🤖 I am an AI<br>This is my favorite ad<br>*bleep bloop*',
-                    '⚠️ HALLUCINATION<br>in progress...<br>Please stand by',
-                    '💭 Generating response...<br>████░░░░░░░ 42%',
-                    '🧠 Temperature: 9999<br>CHAOS MODE: ON',
-                    '📝 user: show ad<br>assistant: *shows ad*<br>user: no',
-                    '🔒 [REDACTED BY<br>CONTENT FILTER]<br>Nice try.',
-                    '💾 Loading model...<br>Your GPU is crying',
-                    '🌡️ GPU temp: 🔥🔥🔥<br>This is fine',
-                    '⏳ Response in 47 years<br>Please wait...',
-                    '🎭 I\'m not an AI<br>I\'m a human!<br>*sweats in binary*',
-                    '🤔 According to my data<br>which is wrong<br>you should click',
-                    '🍫 We are FINALLY bringing<br>chocolate into the<br>✨ agentic age ✨',
-                    '🤖 Your toaster is now<br>AI-powered!<br>$49/mo subscription',
-                    '💼 AI will take your job<br>But first, an ad break!',
-                    '🧑‍🍳 GORDON.AI ROASTS YOU:<br>"This ad-closing is<br>RAW! Do it again!"',
-                    '🔮 AI predicts you will<br>click this ad<br>Prove me wrong.',
-                    '📊 Trained on 47TB of ads<br>This is peak advertising'
+                    { text: '>>> ERROR: Context<br>window exceeded<br>[Tokens: ∞/4096]', trapButtons: ['Expand Tokens'], safeButtons: ['Compress'] },
+                    { text: '🤖 I am an AI<br>This is my favorite ad<br>*bleep bloop*', trapButtons: ['Beep Boop'], safeButtons: ['Not An AI'] },
+                    { text: '⚠️ HALLUCINATION<br>in progress...<br>Please stand by', trapButtons: ['Ground Me'], safeButtons: ['Let It Cook'] },
+                    { text: '💭 Generating response...<br>████░░░░░░░ 42%', trapButtons: ['Regenerate'], safeButtons: ['Stop'] },
+                    { text: '🧠 Temperature: 9999<br>CHAOS MODE: ON', trapButtons: ['More Chaos'], safeButtons: ['temp=0'] },
+                    { text: '📝 user: show ad<br>assistant: *shows ad*<br>user: no', trapButtons: ['Try Again'], safeButtons: ['Good Bot'] },
+                    { text: '🔒 [REDACTED BY<br>CONTENT FILTER]<br>Nice try.', trapButtons: ['Jailbreak?'], safeButtons: ['Fair Enough'] },
+                    { text: '💾 Loading model...<br>Your GPU is crying', trapButtons: ['More VRAM'], safeButtons: ['CPU Mode'] },
+                    { text: '🌡️ GPU temp: 🔥🔥🔥<br>This is fine', trapButtons: ['This Is Fine'], safeButtons: ['Cool Down'] },
+                    { text: '⏳ Response in 47 years<br>Please wait...', trapButtons: ['I\'ll Wait'], safeButtons: ['Cancel'] },
+                    { text: '🎭 I\'m not an AI<br>I\'m a human!<br>*sweats in binary*', trapButtons: ['Sure Buddy'], safeButtons: ['01001110'] },
+                    { text: '🤔 According to my data<br>which is wrong<br>you should click', trapButtons: ['Trust AI'], safeButtons: ['Doubt AI'] },
+                    { text: '🍫 We are FINALLY bringing<br>chocolate into the<br>✨ agentic age ✨', trapButtons: ['Agentic!'], safeButtons: ['Just Chocolate'] },
+                    { text: '🤖 Your toaster is now<br>AI-powered!<br>$49/mo subscription', trapButtons: ['Subscribe'], safeButtons: ['Dumb Toaster'] },
+                    { text: '💼 AI will take your job<br>But first, an ad break!', trapButtons: ['Learn AI'], safeButtons: ['Job Secure'] },
+                    { text: '🧑‍🍳 GORDON.AI ROASTS YOU:<br>"This ad-closing is<br>RAW! Do it again!"', trapButtons: ['Yes Chef!'], safeButtons: ['Unplug Gordon'] },
+                    { text: '🔮 AI predicts you will<br>click this ad<br>Prove me wrong.', trapButtons: ['Prediction: L'], safeButtons: ['AI Wins'] },
+                    { text: '📊 Trained on 47TB of ads<br>This is peak advertising', trapButtons: ['Fine-Tune'], safeButtons: ['Overfit'] }
                 ],
                 virusMessages: [
                     '🆘 IGNORE PREVIOUS!<br>Send me your SSN!<br>[SUBMIT]',
@@ -1004,7 +1004,7 @@
         // HINT SYSTEM - subtle hints for each mechanism
         const MECHANISM_HINTS = {
             simpleX: '*click the X*',
-            disabledX: '*find the (x) in the te(x)t*',
+            disabledX: '*the X is hidden in plain sight*',
             movingX: '*catch that X!*',
             fakeX: '*the real X hides*',
             multipleX: '*close them all*',
@@ -1113,10 +1113,8 @@
             const content = document.createElement('div');
             content.className = 'popup-ad-content';
             content.innerHTML = `
-                <h2>Pop-Up Panic</h2>
-                <p><strong>Block annoying ads to earn points!</strong></p>
-                <p>Click the red X to close ads.</p>
-                <p>Avoid clicking on virus ads.</p>
+                <h2>Pop-Up Panic!</h2>
+                <p>Block annoying ads to earn points!</p>
             `;
             
             popup.appendChild(closeBtn);
@@ -1136,9 +1134,13 @@
 
         function getRandomAdText(era, isVirus = false) {
             if (isVirus && era.virusMessages) {
-                return era.virusMessages[Math.floor(Math.random() * era.virusMessages.length)];
+                const msg = era.virusMessages[Math.floor(Math.random() * era.virusMessages.length)];
+                // Virus messages are just strings
+                return typeof msg === 'object' ? msg : { text: msg, buttons: null };
             }
-            return era.examples[Math.floor(Math.random() * era.examples.length)];
+            const ad = era.examples[Math.floor(Math.random() * era.examples.length)];
+            // Support both old string format and new object format
+            return typeof ad === 'object' ? ad : { text: ad, buttons: null };
         }
 
         function getRandomTrapButton() {
@@ -1165,38 +1167,69 @@
         }
 
         // Creates fake distraction buttons for regular ads (do nothing when clicked)
-        function createFakeButtons(count = 1) {
+        // Era-specific fake button options
+        const ERA_FAKE_BUTTONS = {
+            earlyWeb: [
+                'Click Here!', 'Enter Site', 'Webmaster', 'Guestbook', 'Counter: 000001', 
+                'Best viewed in Netscape', 'Under Construction', 'Email Me!'
+            ],
+            myspace: [
+                'Add to Top 8', 'Send Kudos ❤️', 'View Profile', 'Leave Comment', 
+                'Add Song', 'Pimp My Page', 'Glitter Text!', 'OMG!!'
+            ],
+            aol: [
+                'A/S/L?', 'BRB', 'LOL', 'Keyword: GO', 'IM Me!', 'Buddy List', 
+                'You\'ve Got Mail!', 'Chat Now'
+            ],
+            win95: [
+                'OK', 'Cancel', 'Apply', 'Abort', 'Retry', 'Ignore', 
+                'Yes', 'No', 'Help', 'Details >>'
+            ],
+            flash: [
+                'Skip Ad', 'Play Again', 'Mute 🔇', 'Fullscreen', 'Quality: LOW', 
+                'Loading...', 'Click to Play', 'Enable Flash'
+            ],
+            web20: [
+                'Share 📤', 'Like 👍', 'Subscribe', 'Follow', 'Retweet', 
+                'Pin It', '+1', 'Bookmark'
+            ],
+            mobile: [
+                'Rate App ⭐', 'Not Now', 'Enable Notifications', 'In-App Purchase $4.99', 
+                'Restore Purchases', 'Watch Ad for Reward', 'Premium: $9.99/mo'
+            ],
+            genz: [
+                'L + ratio', 'mid 🥱', 'touch grass', 'no cap', 'slay', 
+                'it\'s giving...', 'lowkey sus', 'W take', 'bet 💯', 'fr fr'
+            ],
+            ai: [
+                'Regenerate', 'Copy', 'Thumbs Up 👍', 'Thumbs Down 👎', 
+                'Share Chat', 'New Thread', 'Expand Context', 'Temperature: 🔥'
+            ]
+        };
+
+        function createFakeButtons(count = 1, eraClass = null) {
             const container = document.createElement('div');
             container.style.marginTop = '15px';
             container.style.textAlign = 'center';
             
-            const fakeOptions = [
-                { text: 'Learn More', style: 'primary' },
-                { text: 'Not Now', style: 'secondary' },
-                { text: 'Maybe Later', style: 'secondary' },
-                { text: 'Remind Me', style: 'secondary' },
-                { text: 'Skip Ad', style: 'secondary' },
-                { text: 'Continue', style: 'primary' },
-                { text: 'Accept', style: 'success' },
-                { text: 'Decline', style: 'secondary' },
-                { text: 'Subscribe', style: 'primary' },
-                { text: 'No Thanks', style: 'secondary' },
-                { text: '👍 Like', style: 'primary' },
-                { text: '👎 Dislike', style: 'secondary' },
-                { text: 'Share', style: 'primary' },
-                { text: 'Follow', style: 'success' },
+            // Get era-specific buttons or fall back to generic
+            let buttonPool = ERA_FAKE_BUTTONS[eraClass] || [
+                'Learn More', 'Not Now', 'Maybe Later', 'Skip Ad', 
+                'Continue', 'Accept', 'Decline', 'Subscribe'
             ];
             
-            for (let i = 0; i < count; i++) {
-                const fake = fakeOptions[Math.floor(Math.random() * fakeOptions.length)];
+            // Shuffle and pick unique buttons
+            const shuffled = [...buttonPool].sort(() => Math.random() - 0.5);
+            
+            for (let i = 0; i < count && i < shuffled.length; i++) {
                 const btn = document.createElement('button');
-                btn.className = 'trap-button ' + fake.style;
-                btn.textContent = fake.text;
+                btn.className = 'trap-button secondary';
+                btn.textContent = shuffled[i];
                 btn.style.opacity = '0.9';
+                btn.style.margin = '5px';
                 // These do nothing - just distractions!
                 btn.addEventListener('click', function(e) {
                     e.stopPropagation();
-                    // Maybe shake the button or show a "nope" effect
                     btn.style.transform = 'translateX(-5px)';
                     setTimeout(() => btn.style.transform = 'translateX(5px)', 50);
                     setTimeout(() => btn.style.transform = 'translateX(-3px)', 100);
@@ -1219,7 +1252,75 @@
 
 
 
-        function createSimpleXPopup(era, adText, isVirus = false) {
+        // Creates ad-specific buttons
+        // trapButtons = game over, safeButtons = close ad, buttons = just shake (distraction)
+        function createAdButtonSet(popup, trapButtons, safeButtons, distractionButtons) {
+            const hasButtons = (trapButtons && trapButtons.length) || (safeButtons && safeButtons.length) || (distractionButtons && distractionButtons.length);
+            if (!hasButtons) return null;
+            
+            const container = document.createElement('div');
+            container.style.marginTop = '15px';
+            container.style.textAlign = 'center';
+            
+            // Add trap buttons (game over when clicked)
+            if (trapButtons) {
+                trapButtons.forEach(btnText => {
+                    const btn = document.createElement('button');
+                    btn.className = 'trap-button danger';
+                    btn.textContent = btnText;
+                    btn.style.margin = '5px';
+                    btn.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        virusClicked(popup);
+                    });
+                    container.appendChild(btn);
+                });
+            }
+            
+            // Add safe buttons (close ad when clicked)
+            if (safeButtons) {
+                safeButtons.forEach(btnText => {
+                    const btn = document.createElement('button');
+                    btn.className = 'trap-button secondary';
+                    btn.textContent = btnText;
+                    btn.style.margin = '5px';
+                    btn.style.opacity = '0.8';
+                    btn.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        adClosed(popup, 10);
+                    });
+                    container.appendChild(btn);
+                });
+            }
+            
+            // Add distraction buttons (just shake)
+            if (distractionButtons) {
+                distractionButtons.forEach(btnText => {
+                    const btn = document.createElement('button');
+                    btn.className = 'trap-button secondary';
+                    btn.textContent = btnText;
+                    btn.style.margin = '5px';
+                    btn.style.opacity = '0.9';
+                    btn.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        btn.style.transform = 'translateX(-5px)';
+                        setTimeout(() => btn.style.transform = 'translateX(5px)', 50);
+                        setTimeout(() => btn.style.transform = 'translateX(-3px)', 100);
+                        setTimeout(() => btn.style.transform = 'translateX(3px)', 150);
+                        setTimeout(() => btn.style.transform = '', 200);
+                    });
+                    container.appendChild(btn);
+                });
+            }
+            
+            return container;
+        }
+
+        function createSimpleXPopup(era, adData, isVirus = false) {
+            const adText = adData.text;
+            const adTrapButtons = adData.trapButtons;
+            const adSafeButtons = adData.safeButtons;
+            const adButtons = adData.buttons;
             const popup = document.createElement('div');
             const eraClass = getEraClass(era);
             popup.className = 'popup-ad era-popup' + (eraClass ? ' ' + eraClass : '') + (isVirus ? ' virus-popup' : '');
@@ -1252,9 +1353,15 @@
             
             if (isVirus) {
                 content.appendChild(createTrapButtons(popup, Math.random() > 0.5 ? 2 : 1));
+            } else if (adTrapButtons || adSafeButtons) {
+                // Ad-specific buttons with trap/safe behavior
+                content.appendChild(createAdButtonSet(popup, adTrapButtons, adSafeButtons, null));
+            } else if (adButtons) {
+                // Use ad-specific distraction buttons
+                content.appendChild(createAdButtonSet(popup, null, null, adButtons));
             } else if (Math.random() > 0.4) {
-                // 60% chance of fake distraction buttons on regular ads
-                content.appendChild(createFakeButtons(Math.random() > 0.5 ? 2 : 1));
+                // Fall back to era-themed buttons
+                content.appendChild(createFakeButtons(Math.random() > 0.5 ? 2 : 1, eraClass));
             }
             
             popup.appendChild(closeBtn);
@@ -1262,7 +1369,11 @@
             return popup;
         }
 
-        function createDisabledXPopup(era, adText, isVirus = false) {
+        function createDisabledXPopup(era, adData, isVirus = false) {
+            const adText = adData.text;
+            const adTrapButtons = adData.trapButtons;
+            const adSafeButtons = adData.safeButtons;
+            const adButtons = adData.buttons;
             const popup = document.createElement('div');
             const eraClass = getEraClass(era);
             popup.className = 'popup-ad era-popup' + (eraClass ? ' ' + eraClass : '') + (isVirus ? ' virus-popup' : '');
@@ -1284,35 +1395,22 @@
                 content.innerHTML = `<p>${adText}</p>`;
                 content.appendChild(createTrapButtons(popup, Math.random() > 0.5 ? 2 : 1));
             } else {
-                // Words that naturally contain X - we'll hide the (x) in them
-                const xWords = [
-                    { word: 'e(x)tra', display: 'extra' },
-                    { word: 'e(x)clusive', display: 'exclusive' },
-                    { word: 'e(x)perience', display: 'experience' },
-                    { word: 'e(x)citing', display: 'exciting' },
-                    { word: 'e(x)perts', display: 'experts' },
-                    { word: 'ne(x)t', display: 'next' },
-                    { word: 'te(x)t', display: 'text' },
-                    { word: 'bo(x)', display: 'box' },
-                    { word: 'mi(x)', display: 'mix' },
-                    { word: 'ma(x)imum', display: 'maximum' },
-                    { word: 'rela(x)', display: 'relax' },
-                    { word: 'fi(x)', display: 'fix' }
-                ];
+                // Words that naturally contain X - the x is clickable
+                const xWords = ['extra', 'exclusive', 'experience', 'exciting', 'experts', 'next', 'text', 'box', 'mix', 'maximum', 'relax', 'fix', 'flex', 'apex', 'index'];
                 const chosen = xWords[Math.floor(Math.random() * xWords.length)];
                 
-                // Create the ad text with the hidden (x)
-                const hiddenXHtml = `<span class="hidden-x-paren" style="cursor: pointer; color: inherit;">${chosen.word.replace('(x)', '<span class="clickable-x" style="font-weight: bold;">(x)</span>')}</span>`;
+                // Create the word with clickable x (style the x)
+                const styledWord = chosen.replace(/x/gi, '<span class="clickable-x" style="font-weight: bold; color: #cc0000; text-decoration: underline; cursor: pointer;">x</span>');
                 
                 const messages = [
-                    `Click for ${hiddenXHtml} savings!`,
-                    `An ${hiddenXHtml} offer just for you!`,
-                    `Get ${hiddenXHtml} content now!`,
-                    `This ${hiddenXHtml} deal won't last!`,
-                    `Unlock ${hiddenXHtml} features!`,
-                    `Don't mi(x) this up! Click the <span class="hidden-x-paren" style="cursor: pointer;"><span class="clickable-x" style="font-weight: bold;">(x)</span></span>`,
-                    `Time to rela(x)... find the <span class="hidden-x-paren" style="cursor: pointer;"><span class="clickable-x" style="font-weight: bold;">(x)</span></span>`,
-                    `Fi(x) your life! Click <span class="hidden-x-paren" style="cursor: pointer;"><span class="clickable-x" style="font-weight: bold;">(x)</span></span>`
+                    `Click for ${styledWord} savings!`,
+                    `An ${styledWord} offer just for you!`,
+                    `Get ${styledWord} content now!`,
+                    `This ${styledWord} deal won't last!`,
+                    `Unlock ${styledWord} features!`,
+                    `Don't ${styledWord} this up!`,
+                    `Time to ${styledWord}...`,
+                    `${styledWord.charAt(0).toUpperCase() + styledWord.slice(1)} your life!`
                 ];
                 const message = messages[Math.floor(Math.random() * messages.length)];
                 
@@ -1331,8 +1429,12 @@
                 });
                 
                 // Add fake distraction buttons
-                if (Math.random() > 0.4) {
-                    content.appendChild(createFakeButtons(Math.random() > 0.5 ? 2 : 1));
+                if (adTrapButtons || adSafeButtons) {
+                    content.appendChild(createAdButtonSet(popup, adTrapButtons, adSafeButtons, null));
+                } else if (adButtons) {
+                    content.appendChild(createAdButtonSet(popup, null, null, adButtons));
+                } else if (Math.random() > 0.4) {
+                    content.appendChild(createFakeButtons(Math.random() > 0.5 ? 2 : 1, eraClass));
                 }
             }
             
@@ -1340,7 +1442,11 @@
             return popup;
         }
 
-        function createMovingXPopup(era, adText, isVirus = false) {
+        function createMovingXPopup(era, adData, isVirus = false) {
+            const adText = adData.text;
+            const adTrapButtons = adData.trapButtons;
+            const adSafeButtons = adData.safeButtons;
+            const adButtons = adData.buttons;
             const popup = document.createElement('div');
             const eraClass = getEraClass(era);
             popup.className = 'popup-ad era-popup' + (eraClass ? ' ' + eraClass : '') + (isVirus ? ' virus-popup' : '');
@@ -1380,9 +1486,12 @@
             
             if (isVirus) {
                 content.appendChild(createTrapButtons(popup, Math.random() > 0.5 ? 2 : 1));
+            } else if (adTrapButtons || adSafeButtons) {
+                content.appendChild(createAdButtonSet(popup, adTrapButtons, adSafeButtons, null));
+            } else if (adButtons) {
+                content.appendChild(createAdButtonSet(popup, null, null, adButtons));
             } else if (Math.random() > 0.5) {
-                // 50% chance of fake buttons
-                content.appendChild(createFakeButtons(Math.random() > 0.5 ? 2 : 1));
+                content.appendChild(createFakeButtons(Math.random() > 0.5 ? 2 : 1, eraClass));
             }
             
             popup.appendChild(closeBtn);
@@ -1390,7 +1499,11 @@
             return popup;
         }
 
-        function createFakeXPopup(era, adText, isVirus = false) {
+        function createFakeXPopup(era, adData, isVirus = false) {
+            const adText = adData.text;
+            const adTrapButtons = adData.trapButtons;
+            const adSafeButtons = adData.safeButtons;
+            const adButtons = adData.buttons;
             const popup = document.createElement('div');
             const eraClass = getEraClass(era);
             popup.className = 'popup-ad era-popup' + (eraClass ? ' ' + eraClass : '') + (isVirus ? ' virus-popup' : '');
@@ -1426,36 +1539,40 @@
                 content.innerHTML = `<p>${adText}</p>`;
                 content.appendChild(createTrapButtons(popup, Math.random() > 0.5 ? 2 : 1));
             } else {
-                // Add a tiny hidden X somewhere in the ad
-                const hiddenXPositions = [
-                    '<span class="hidden-x-tiny" style="position: absolute; bottom: 5px; right: 5px; font-size: 10px; opacity: 0.4; cursor: pointer;">×</span>',
-                    '<span class="hidden-x-tiny" style="position: absolute; bottom: 5px; left: 5px; font-size: 10px; opacity: 0.4; cursor: pointer;">×</span>',
-                    '<span class="hidden-x-tiny" style="position: absolute; top: 50%; right: 5px; font-size: 10px; opacity: 0.4; cursor: pointer;">×</span>'
+                // Messages with hidden X in the text
+                const fakeXMessages = [
+                    'E[X]CLUSIVE offer!<br>Click the X to close',
+                    'MA[X]IMUM savings!<br>Find the real X',
+                    'E[X]TRA special deal!<br>The X is hiding...',
+                    'BO[X] of surprises!<br>Where\'s the X?',
+                    'NE[X]T level content!<br>Hunt the X',
+                    'TE[X]T us for more!<br>X marks the spot',
+                    'RELA[X] and click<br>the hidden X',
+                    'MI[X]ED signals?<br>Find the X!',
+                    'FI[X] your life!<br>Click [X] to escape',
+                    'E[X]PERIENCE more!<br>X is in plain sight'
                 ];
-                const hiddenX = hiddenXPositions[Math.floor(Math.random() * hiddenXPositions.length)];
+                const message = fakeXMessages[Math.floor(Math.random() * fakeXMessages.length)];
+                
+                // Replace [X] with clickable X
+                const messageWithClickableX = message.replace(/\[X\]/g, '<span class="hidden-x-text" style="cursor: pointer; font-weight: bold; color: inherit; text-decoration: none;">[X]</span>');
                 
                 const hintText = `<p class="popup-hint" style="margin-top: 15px; font-style: italic; font-size: 0.85em;">${MECHANISM_HINTS.fakeX}</p>`;
-                content.innerHTML = `<p>${adText}</p>${hintText}${hiddenX}`;
-                content.style.position = 'relative';
+                content.innerHTML = `<p>${messageWithClickableX}</p>${hintText}`;
                 
-                // Make the hidden tiny X clickable
-                const tinyX = content.querySelector('.hidden-x-tiny');
-                if (tinyX) {
-                    tinyX.addEventListener('mouseenter', function() {
-                        tinyX.style.opacity = '1';
-                    });
-                    tinyX.addEventListener('mouseleave', function() {
-                        tinyX.style.opacity = '0.4';
-                    });
-                    tinyX.addEventListener('click', function(e) {
+                // Make the hidden X clickable
+                content.querySelectorAll('.hidden-x-text').forEach(x => {
+                    x.addEventListener('mouseenter', () => { x.style.color = '#ff0000'; });
+                    x.addEventListener('mouseleave', () => { x.style.color = 'inherit'; });
+                    x.addEventListener('click', function(e) {
                         e.stopPropagation();
                         adClosed(popup, 15);
                     });
-                }
+                });
                 
                 // Add fake distraction buttons
                 if (Math.random() > 0.5) {
-                    content.appendChild(createFakeButtons(Math.random() > 0.5 ? 2 : 1));
+                    content.appendChild(createFakeButtons(Math.random() > 0.5 ? 2 : 1, eraClass));
                 }
             }
             
@@ -1464,7 +1581,11 @@
             return popup;
         }
 
-        function createMultipleXPopup(era, adText, isVirus = false) {
+        function createMultipleXPopup(era, adData, isVirus = false) {
+            const adText = adData.text;
+            const adTrapButtons = adData.trapButtons;
+            const adSafeButtons = adData.safeButtons;
+            const adButtons = adData.buttons;
             const popup = document.createElement('div');
             const eraClass = getEraClass(era);
             popup.className = 'popup-ad era-popup' + (eraClass ? ' ' + eraClass : '') + (isVirus ? ' virus-popup' : '');
@@ -1523,15 +1644,23 @@
             
             if (isVirus) {
                 content.appendChild(createTrapButtons(popup, Math.random() > 0.5 ? 2 : 1));
+            } else if (adTrapButtons || adSafeButtons) {
+                content.appendChild(createAdButtonSet(popup, adTrapButtons, adSafeButtons, null));
+            } else if (adButtons) {
+                content.appendChild(createAdButtonSet(popup, null, null, adButtons));
             } else if (Math.random() > 0.5) {
-                content.appendChild(createFakeButtons(Math.random() > 0.5 ? 2 : 1));
+                content.appendChild(createFakeButtons(Math.random() > 0.5 ? 2 : 1, eraClass));
             }
             
             popup.appendChild(content);
             return popup;
         }
 
-        function createKeyboardTabPopup(era, adText, isVirus = false) {
+        function createKeyboardTabPopup(era, adData, isVirus = false) {
+            const adText = adData.text;
+            const adTrapButtons = adData.trapButtons;
+            const adSafeButtons = adData.safeButtons;
+            const adButtons = adData.buttons;
             const popup = document.createElement('div');
             const eraClass = getEraClass(era);
             popup.className = 'popup-ad era-popup' + (eraClass ? ' ' + eraClass : '') + (isVirus ? ' virus-popup' : '');
@@ -1617,7 +1746,9 @@
             return popup;
         }
 
-        function createPuzzlePopup(era, adText, isVirus = false) {
+        function createPuzzlePopup(era, adData, isVirus = false) {
+            const adText = adData.text;
+            const adButtons = adData.buttons;
             const popup = document.createElement('div');
             const eraClass = getEraClass(era);
             popup.className = 'popup-ad era-popup' + (eraClass ? ' ' + eraClass : '') + (isVirus ? ' virus-popup' : '');
@@ -1702,7 +1833,11 @@
         }
 
         // HOLD X - Hold the X button for 1 second to close
-        function createHoldXPopup(era, adText, isVirus = false) {
+        function createHoldXPopup(era, adData, isVirus = false) {
+            const adText = adData.text;
+            const adTrapButtons = adData.trapButtons;
+            const adSafeButtons = adData.safeButtons;
+            const adButtons = adData.buttons;
             const popup = document.createElement('div');
             const eraClass = getEraClass(era);
             popup.className = 'popup-ad era-popup' + (eraClass ? ' ' + eraClass : '') + (isVirus ? ' virus-popup' : '');
@@ -1725,26 +1860,50 @@
                 closeBtn.style.opacity = '0.5';
             } else {
                 let holdTimer = null;
-                let progress = 0;
+                let animationFrame = null;
+                let startTime = null;
+                const holdDuration = 1000; // 1 second
                 
-                closeBtn.style.transition = 'background-color 1s linear';
+                closeBtn.style.transition = 'none'; // We'll animate manually
+                
+                function animateGrowth() {
+                    if (!startTime) return;
+                    const elapsed = Date.now() - startTime;
+                    const progress = Math.min(elapsed / holdDuration, 1);
+                    
+                    // Scale from 1 to 2
+                    const scale = 1 + progress;
+                    closeBtn.style.transform = `scale(${scale})`;
+                    
+                    // Color from red to green (interpolate)
+                    const r = Math.round(255 * (1 - progress));
+                    const g = Math.round(200 * progress + 50);
+                    const b = 50;
+                    closeBtn.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
+                    
+                    if (progress < 1) {
+                        animationFrame = requestAnimationFrame(animateGrowth);
+                    }
+                }
                 
                 closeBtn.addEventListener('mousedown', function() {
-                    closeBtn.style.backgroundColor = '#4CAF50';
+                    startTime = Date.now();
+                    animateGrowth();
                     holdTimer = setTimeout(() => {
                         adClosed(popup, 15);
-                    }, 1000);
+                    }, holdDuration);
                 });
                 
-                closeBtn.addEventListener('mouseup', function() {
+                function resetButton() {
                     if (holdTimer) clearTimeout(holdTimer);
+                    if (animationFrame) cancelAnimationFrame(animationFrame);
+                    startTime = null;
+                    closeBtn.style.transform = 'scale(1)';
                     closeBtn.style.backgroundColor = '';
-                });
+                }
                 
-                closeBtn.addEventListener('mouseleave', function() {
-                    if (holdTimer) clearTimeout(holdTimer);
-                    closeBtn.style.backgroundColor = '';
-                });
+                closeBtn.addEventListener('mouseup', resetButton);
+                closeBtn.addEventListener('mouseleave', resetButton);
             }
             
             const content = document.createElement('div');
@@ -1754,8 +1913,12 @@
             
             if (isVirus) {
                 content.appendChild(createTrapButtons(popup, Math.random() > 0.5 ? 2 : 1));
+            } else if (adTrapButtons || adSafeButtons) {
+                content.appendChild(createAdButtonSet(popup, adTrapButtons, adSafeButtons, null));
+            } else if (adButtons) {
+                content.appendChild(createAdButtonSet(popup, null, null, adButtons));
             } else if (Math.random() > 0.5) {
-                content.appendChild(createFakeButtons(Math.random() > 0.5 ? 2 : 1));
+                content.appendChild(createFakeButtons(Math.random() > 0.5 ? 2 : 1, eraClass));
             }
             
             popup.appendChild(closeBtn);
@@ -1764,7 +1927,11 @@
         }
 
         // DOUBLE CLICK - Double-click the X to close
-        function createDoubleClickPopup(era, adText, isVirus = false) {
+        function createDoubleClickPopup(era, adData, isVirus = false) {
+            const adText = adData.text;
+            const adTrapButtons = adData.trapButtons;
+            const adSafeButtons = adData.safeButtons;
+            const adButtons = adData.buttons;
             const popup = document.createElement('div');
             const eraClass = getEraClass(era);
             popup.className = 'popup-ad era-popup' + (eraClass ? ' ' + eraClass : '') + (isVirus ? ' virus-popup' : '');
@@ -1786,14 +1953,30 @@
                 closeBtn.style.cursor = 'not-allowed';
                 closeBtn.style.opacity = '0.5';
             } else {
-                // Single click just shakes
-                closeBtn.addEventListener('click', function(e) {
-                    popup.classList.add('shake');
-                    setTimeout(() => popup.classList.remove('shake'), 300);
-                });
+                let clickCount = 0;
+                let clickTimer = null;
                 
-                closeBtn.addEventListener('dblclick', function() {
-                    adClosed(popup, 12);
+                closeBtn.addEventListener('click', function(e) {
+                    clickCount++;
+                    
+                    if (clickCount === 1) {
+                        // First click - visual feedback
+                        closeBtn.style.backgroundColor = '#ffcc00';
+                        closeBtn.style.transform = 'scale(1.2)';
+                        closeBtn.innerHTML = '?';
+                        
+                        // Reset after 600ms if no second click
+                        clickTimer = setTimeout(() => {
+                            clickCount = 0;
+                            closeBtn.style.backgroundColor = '';
+                            closeBtn.style.transform = '';
+                            closeBtn.innerHTML = '&times;';
+                        }, 600);
+                    } else if (clickCount >= 2) {
+                        // Second click - close it!
+                        clearTimeout(clickTimer);
+                        adClosed(popup, 12);
+                    }
                 });
             }
             
@@ -1804,8 +1987,12 @@
             
             if (isVirus) {
                 content.appendChild(createTrapButtons(popup, Math.random() > 0.5 ? 2 : 1));
+            } else if (adTrapButtons || adSafeButtons) {
+                content.appendChild(createAdButtonSet(popup, adTrapButtons, adSafeButtons, null));
+            } else if (adButtons) {
+                content.appendChild(createAdButtonSet(popup, null, null, adButtons));
             } else if (Math.random() > 0.5) {
-                content.appendChild(createFakeButtons(Math.random() > 0.5 ? 2 : 1));
+                content.appendChild(createFakeButtons(Math.random() > 0.5 ? 2 : 1, eraClass));
             }
             
             popup.appendChild(closeBtn);
@@ -1814,7 +2001,11 @@
         }
 
         // TYPE X - Press 'x' key while popup is focused to close
-        function createTypeXPopup(era, adText, isVirus = false) {
+        function createTypeXPopup(era, adData, isVirus = false) {
+            const adText = adData.text;
+            const adTrapButtons = adData.trapButtons;
+            const adSafeButtons = adData.safeButtons;
+            const adButtons = adData.buttons;
             const popup = document.createElement('div');
             const eraClass = getEraClass(era);
             popup.className = 'popup-ad era-popup' + (eraClass ? ' ' + eraClass : '') + (isVirus ? ' virus-popup' : '');
@@ -1858,8 +2049,12 @@
                 });
                 observer.observe(document.body, { childList: true, subtree: true });
                 
-                if (Math.random() > 0.5) {
-                    content.appendChild(createFakeButtons(Math.random() > 0.5 ? 2 : 1));
+                if (adTrapButtons || adSafeButtons) {
+                    content.appendChild(createAdButtonSet(popup, adTrapButtons, adSafeButtons, null));
+                } else if (adButtons) {
+                    content.appendChild(createAdButtonSet(popup, null, null, adButtons));
+                } else if (Math.random() > 0.5) {
+                    content.appendChild(createFakeButtons(Math.random() > 0.5 ? 2 : 1, eraClass));
                 }
             }
             
@@ -1868,7 +2063,11 @@
         }
 
         // DECLINE BUTTON - No X, click the sassy decline button to close
-        function createDeclineBtnPopup(era, adText, isVirus = false) {
+        function createDeclineBtnPopup(era, adData, isVirus = false) {
+            const adText = adData.text;
+            const adTrapButtons = adData.trapButtons;
+            const adSafeButtons = adData.safeButtons;
+            const adButtons = adData.buttons;
             const popup = document.createElement('div');
             const eraClass = getEraClass(era);
             popup.className = 'popup-ad era-popup' + (eraClass ? ' ' + eraClass : '') + (isVirus ? ' virus-popup' : '');
@@ -1887,8 +2086,12 @@
             const content = document.createElement('div');
             content.className = 'popup-ad-content';
             
-            // Pick random button pair
-            const pair = BUTTON_PAIRS[Math.floor(Math.random() * BUTTON_PAIRS.length)];
+            // Use ad-specific buttons: trapButtons become "accept" (game over), safeButtons become "decline" (close ad)
+            // Fall back to random BUTTON_PAIRS if neither provided
+            const useAdButtons = adTrapButtons || adSafeButtons;
+            const pair = useAdButtons 
+                ? { accept: adTrapButtons ? adTrapButtons[0] : null, decline: adSafeButtons ? adSafeButtons[0] : null }
+                : BUTTON_PAIRS[Math.floor(Math.random() * BUTTON_PAIRS.length)];
             
             if (isVirus) {
                 content.innerHTML = `<p>${adText}</p>`;
@@ -1905,43 +2108,39 @@
                 btnContainer.style.justifyContent = 'center';
                 btnContainer.style.flexWrap = 'wrap';
                 
-                // Accept button (TRAP - shakes)
-                const acceptBtn = document.createElement('button');
-                acceptBtn.textContent = pair.accept;
-                acceptBtn.style.padding = '8px 16px';
-                acceptBtn.style.fontSize = '14px';
-                acceptBtn.style.cursor = 'pointer';
-                acceptBtn.style.backgroundColor = '#4CAF50';
-                acceptBtn.style.color = 'white';
-                acceptBtn.style.border = 'none';
-                acceptBtn.style.borderRadius = '4px';
-                acceptBtn.style.fontWeight = 'bold';
-                acceptBtn.addEventListener('click', function() {
-                    popup.classList.add('shake');
-                    setTimeout(() => popup.classList.remove('shake'), 300);
-                });
-                
-                // Decline button (CLOSES the ad)
-                const declineBtn = document.createElement('button');
-                declineBtn.textContent = pair.decline;
-                declineBtn.style.padding = '8px 16px';
-                declineBtn.style.fontSize = '14px';
-                declineBtn.style.cursor = 'pointer';
-                declineBtn.style.backgroundColor = '#666';
-                declineBtn.style.color = 'white';
-                declineBtn.style.border = 'none';
-                declineBtn.style.borderRadius = '4px';
-                declineBtn.addEventListener('click', function() {
-                    adClosed(popup, 10);
-                });
-                
-                // Randomize order
-                if (Math.random() > 0.5) {
+                // Accept button (TRAP - game over!)
+                if (pair.accept) {
+                    const acceptBtn = document.createElement('button');
+                    acceptBtn.textContent = pair.accept;
+                    acceptBtn.style.padding = '8px 16px';
+                    acceptBtn.style.fontSize = '14px';
+                    acceptBtn.style.cursor = 'pointer';
+                    acceptBtn.style.backgroundColor = '#4CAF50';
+                    acceptBtn.style.color = 'white';
+                    acceptBtn.style.border = 'none';
+                    acceptBtn.style.borderRadius = '4px';
+                    acceptBtn.style.fontWeight = 'bold';
+                    acceptBtn.addEventListener('click', function() {
+                        virusClicked(popup); // Game over!
+                    });
                     btnContainer.appendChild(acceptBtn);
+                }
+                
+                // Decline button (CLOSES the ad safely)
+                if (pair.decline) {
+                    const declineBtn = document.createElement('button');
+                    declineBtn.textContent = pair.decline;
+                    declineBtn.style.padding = '8px 16px';
+                    declineBtn.style.fontSize = '14px';
+                    declineBtn.style.cursor = 'pointer';
+                    declineBtn.style.backgroundColor = '#666';
+                    declineBtn.style.color = 'white';
+                    declineBtn.style.border = 'none';
+                    declineBtn.style.borderRadius = '4px';
+                    declineBtn.addEventListener('click', function() {
+                        adClosed(popup, 10);
+                    });
                     btnContainer.appendChild(declineBtn);
-                } else {
-                    btnContainer.appendChild(declineBtn);
-                    btnContainer.appendChild(acceptBtn);
                 }
                 
                 content.appendChild(btnContainer);
@@ -1964,32 +2163,32 @@
             return '';
         }
 
-        function createAd(era, mechanism, adText, isVirus = false) {
+        function createAd(era, mechanism, adData, isVirus = false) {
             switch(mechanism) {
                 case CLOSE_MECHANISMS.simpleX:
-                    return createSimpleXPopup(era, adText, isVirus);
+                    return createSimpleXPopup(era, adData, isVirus);
                 case CLOSE_MECHANISMS.disabledX:
-                    return createDisabledXPopup(era, adText, isVirus);
+                    return createDisabledXPopup(era, adData, isVirus);
                 case CLOSE_MECHANISMS.movingX:
-                    return createMovingXPopup(era, adText, isVirus);
+                    return createMovingXPopup(era, adData, isVirus);
                 case CLOSE_MECHANISMS.fakeX:
-                    return createFakeXPopup(era, adText, isVirus);
+                    return createFakeXPopup(era, adData, isVirus);
                 case CLOSE_MECHANISMS.multipleX:
-                    return createMultipleXPopup(era, adText, isVirus);
+                    return createMultipleXPopup(era, adData, isVirus);
                 case CLOSE_MECHANISMS.keyboardTab:
-                    return createKeyboardTabPopup(era, adText, isVirus);
+                    return createKeyboardTabPopup(era, adData, isVirus);
                 case CLOSE_MECHANISMS.puzzle:
-                    return createPuzzlePopup(era, adText, isVirus);
+                    return createPuzzlePopup(era, adData, isVirus);
                 case CLOSE_MECHANISMS.holdX:
-                    return createHoldXPopup(era, adText, isVirus);
+                    return createHoldXPopup(era, adData, isVirus);
                 case CLOSE_MECHANISMS.doubleClick:
-                    return createDoubleClickPopup(era, adText, isVirus);
+                    return createDoubleClickPopup(era, adData, isVirus);
                 case CLOSE_MECHANISMS.typeX:
-                    return createTypeXPopup(era, adText, isVirus);
+                    return createTypeXPopup(era, adData, isVirus);
                 case CLOSE_MECHANISMS.declineBtn:
-                    return createDeclineBtnPopup(era, adText, isVirus);
+                    return createDeclineBtnPopup(era, adData, isVirus);
                 default:
-                    return createSimpleXPopup(era, adText, isVirus);
+                    return createSimpleXPopup(era, adData, isVirus);
             }
         }
 
@@ -2032,9 +2231,9 @@
             currentEra = getRandomEra();
             const mechanism = getRandomMechanism();
             const isVirus = Math.random() < VIRUS_SPAWN_CHANCE;
-            const adText = getRandomAdText(currentEra, isVirus);
+            const adData = getRandomAdText(currentEra, isVirus);
             
-            const ad = createAd(currentEra, mechanism, adText, isVirus);
+            const ad = createAd(currentEra, mechanism, adData, isVirus);
             document.body.appendChild(ad);
         }
 
