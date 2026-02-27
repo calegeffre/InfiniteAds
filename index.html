@@ -1158,7 +1158,7 @@
         let currentEra = null;
         let adCounter = 0;
         const VIRUS_SPAWN_CHANCE = 0.15;
-        let adSpawnDelay = 600; // Start faster
+        let adSpawnDelay = 400; // Start fast
         let spawnTimeout = null;
 
         function initializeGame() {
@@ -1188,7 +1188,7 @@
             // Clear all popups and timeouts
             document.querySelectorAll('.era-popup').forEach(el => el.remove());
             if (spawnTimeout) clearTimeout(spawnTimeout);
-            adSpawnDelay = 1200; // Reset difficulty
+            adSpawnDelay = 400; // Reset difficulty
             startGame();
         }
 
@@ -2336,8 +2336,8 @@
             adCounter++;
             
             // Difficulty progression: decrease spawn delay after every 5 ads
-            if (adCounter % 5 === 0 && adSpawnDelay > 400) {
-                adSpawnDelay = Math.max(400, adSpawnDelay - 200); // Min 400ms between ads
+            if (adCounter % 5 === 0 && adSpawnDelay > 200) {
+                adSpawnDelay = Math.max(200, adSpawnDelay - 50); // Min 200ms between ads
             }
             
             if (gameActive) {
