@@ -2372,6 +2372,11 @@
             
             const ad = createAd(currentEra, mechanism, adData, isVirus);
             document.body.appendChild(ad);
+            
+            // Always schedule next ad so virus popups don't halt the game
+            if (gameActive) {
+                scheduleNextAd();
+            }
         }
 
         function updatePointsDisplay() {
