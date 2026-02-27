@@ -2374,7 +2374,8 @@
             document.body.appendChild(ad);
             
             // Always schedule next ad so virus popups don't halt the game
-            if (gameActive) {
+            // For normal ads, only auto-spawn 25% of the time (the rest spawn on close)
+            if (gameActive && (isVirus || Math.random() < 0.25)) {
                 scheduleNextAd();
             }
         }
