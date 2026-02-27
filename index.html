@@ -651,6 +651,46 @@
             box-shadow: 0 0 0 4px rgba(255, 107, 107, 0.3);
         }
 
+        /* Alternative safe-close interaction styles */
+        .safe-link {
+            display: block;
+            margin-top: 12px;
+            font-size: 11px;
+            color: #888;
+            text-decoration: underline;
+            cursor: pointer;
+            text-align: center;
+            transition: color 0.2s;
+        }
+        .safe-link:hover {
+            color: #555;
+        }
+        .safe-small-text {
+            display: block;
+            margin-top: 14px;
+            font-size: 10px;
+            color: #aaa;
+            cursor: pointer;
+            text-align: center;
+            font-style: italic;
+        }
+        .safe-small-text:hover {
+            color: #666;
+            text-decoration: underline;
+        }
+        .safe-skip-arrow {
+            display: block;
+            margin-top: 10px;
+            font-size: 11px;
+            color: #999;
+            cursor: pointer;
+            text-align: right;
+            padding-right: 10px;
+        }
+        .safe-skip-arrow:hover {
+            color: #555;
+        }
+
         @keyframes gameOverSlideIn {
             from {
                 opacity: 0;
@@ -874,7 +914,10 @@
                     { text: '📈 This is trending NOW<br>8.4M views in 2 hours — see why!', trapButtons: ['Watch Viral Video!'], safeButtons: ['Overrated'] },
                     { text: '🧑‍🍳 GORDON RAMSAY\'S<br>MASTERCLASS: "Finally,<br>some good f***ing ads"', trapButtons: ['Enroll Now'], safeButtons: ['It\'s RAW!'] },
                     { text: '🍳 Gordon says: "This ad<br>is so raw it\'s still<br>loading on dial-up!"', trapButtons: ['Cook It!'], safeButtons: ['Disgusting!'] },
-                    { text: '📺 STREAMING NOW:<br>10 hours of someone<br>saying "smash that like"', trapButtons: ['Smash Like'], safeButtons: ['Unsubscribe'] }
+                    { text: '📺 STREAMING NOW:<br>10 hours of someone<br>saying "smash that like"', trapButtons: ['Smash Like'], safeButtons: ['Unsubscribe'] },
+                    { text: '🔔 You have 1,847 unread<br>notifications. 1,846 are<br>from LinkedIn.', trapButtons: ['Open LinkedIn'], safeButtons: ['mark all read'] },
+                    { text: '📊 Your data has been<br>sold to 47 companies<br>Here\'s a cookie banner!', trapButtons: ['Accept All'], safeButtons: ['pretend this helps'] },
+                    { text: '💼 Someone viewed<br>your LinkedIn profile!<br>jk it was a recruiter bot', trapButtons: ['Connect'], safeButtons: ['stay unemployed'] }
                 ],
                 virusMessages: [
                     '🔒 Your session has expired!<br>For your security, sign in again now<br>[SECURE SIGN IN]',
@@ -903,8 +946,11 @@
                     { text: '💾 Low storage alert!<br>Free up 4.7GB with one tap', trapButtons: ['Free Up Space! ✨'], safeButtons: ['Keep Junk'] },
                     { text: '🎮 Your friends are playing now!<br>Get 200 FREE coins to catch up!', trapButtons: ['Grab 200 FREE Coins! 💎'], safeButtons: ['Stay Behind'] },
                     { text: '📺 Watch just 1 ad (30 sec)<br>Earn 50 bonus coins + unlock level!', trapButtons: ['Watch & Earn! 🏆'], safeButtons: ['Skip'] },
-                    { text: '🆓 Premium FREE for 7 days!<br>No ads, all features — cancel anytime', trapButtons: ['Start My Free Trial! ✨'], safeButtons: ['Stay Limited'] },
-                    { text: '👆 Swipe up for VIP access!<br>Only 12 exclusive spots remaining!', trapButtons: ['Secure My VIP Spot!'], safeButtons: ['Miss Out'] }
+                    { text: '🆓 Premium FREE for 7 days!<br>No ads, all features — cancel anytime<br>(we dare you to find the button)', trapButtons: ['Start My Free Trial! ✨'], safeButtons: ['Stay Limited'] },
+                    { text: '👆 Swipe up for VIP access!<br>Only 12 exclusive spots remaining!', trapButtons: ['Secure My VIP Spot!'], safeButtons: ['Miss Out'] },
+                    { text: '🎰 Spin the wheel!<br>Win up to $0.03<br>in in-app currency!', trapButtons: ['SPIN!'], safeButtons: ['keep my dignity'] },
+                    { text: '👤 "Would you like to<br>merge your 47 duplicate<br>contacts named Mom?"', trapButtons: ['Merge All'], safeButtons: ['they\'re all valid'] },
+                    { text: '📲 Share your screen<br>time report?<br>7h 42m daily average', trapButtons: ['Share 😬'], safeButtons: ['hide the evidence'] }
                 ],
                 virusMessages: [
                     '⚠️ ALERT: iPhone Infected!<br>4 critical viruses found!<br>[REMOVE ALL FOR FREE]',
@@ -922,27 +968,66 @@
                 fontFamily: '"Segoe UI", sans-serif',
                 fontSize: '16px',
                 examples: [
-                    { text: '💀 no cap this deal slaps fr<br>limited drop only 47 left bestie', trapButtons: ['cop it fr 🔥'], safeButtons: ['L + ratio'] },
-                    { text: '✨ bestie ur literally glowing rn<br>this product said it\'s giving u a sign', trapButtons: ['it\'s a sign 💅'], safeButtons: ['flop era'] },
-                    { text: '🧢 wait you actually haven\'t tried this?<br>bro trust me u need it no cap', trapButtons: ['ok fine sending it'], safeButtons: ['cap 🧢'] },
-                    { text: '😭 POV: you\'re still paying full price<br>this discount ate and left no crumbs', trapButtons: ['grab the discount NOW'], safeButtons: ['stay broke'] },
-                    { text: '💅 lowkey this is the collab of the year<br>limited edition drop — ngl u need it', trapButtons: ['cop before it\'s gone'], safeButtons: ['mid drop'] },
-                    { text: '🔥 this goes SO hard bestie<br>ur feed is about to be unrecognizable', trapButtons: ['transform my feed!'], safeButtons: ['nah'] },
-                    { text: '⚡ sigma grindset = buy this now<br>ur future self will thank u 💯', trapButtons: ['sigma move 💯'], safeButtons: ['touch grass'] },
-                    { text: '👁️👄👁️<br>wait... this is actually so worth it tho', trapButtons: ['it IS worth it fr'], safeButtons: ['bestie...'] },
-                    { text: '🤡 pov: ur the only one who hasn\'t<br>redeemed this free offer yet 😬', trapButtons: ['redeem rn bestie'], safeButtons: ['skip'] },
-                    { text: '✋😩 okay but WHY is this so cheap<br>ain\'t no way this deal is still up', trapButtons: ['grab it before it\'s gone!'], safeButtons: ['leave it'] },
-                    { text: '💀 dead 💀 u haven\'t claimed this yet<br>the audacity... the free offer expires soon', trapButtons: ['claim it NOW 💀'], safeButtons: ['literally me'] },
-                    { text: '🧠 this is living rent free<br>in ur head for a reason bestie', trapButtons: ['ur right, claim it'], safeButtons: ['evicted'] },
-                    { text: '📱 EXCLUSIVE limited drop<br>only 47 gazillion left (hurry!!)', trapButtons: ['copped 🔥'], safeButtons: ['mid drop'] },
-                    { text: '🎮 ur literally the chosen one fr<br>this offer was generated just for u', trapButtons: ['accept my destiny'], safeButtons: ['rage quit'] },
-                    { text: '✨ main character energy activated<br>this deal was MADE for ur vibe', trapButtons: ['main character szn ✨'], safeButtons: ['npc behavior'] }
+                    // NFT / Crypto / BoredApe themed
+                    { text: '🐵 BORED APE #4269<br>Only 420.69 ETH<br>floor price is mooning', trapButtons: ['APE IN 🦍'], safeButtons: ['right click save'] },
+                    { text: '🖼️ This ad is an NFT<br>current bid: 0.001 ETH<br>minted on the blockchain fr', trapButtons: ['Place Bid'], safeButtons: ['screenshot this'] },
+                    { text: '💎🙌 DIAMOND HANDS ONLY<br>WAGMI if you click<br>paper hands keep scrolling', trapButtons: ['WAGMI 🚀'], safeButtons: ['paper hands 📄'] },
+                    { text: '🦧 ur not gonna make it<br>unless u mint this<br>definitely not a rugpull', trapButtons: ['MINT NOW'], safeButtons: ['ngmi anyway'] },
+                    { text: '🎨 AI-generated art NFT<br>drawn by a neural network<br>trained on vibes only', trapButtons: ['1 of 1 🎨'], safeButtons: ['ctrl+c ctrl+v'] },
+                    { text: '🐸 rare pepe NFT drop<br>only 10,000 left<br>(out of 10,000)', trapButtons: ['super rare!'], safeButtons: ['seen on google'] },
+                    { text: '🏴‍☠️ web3 is the future<br>trust me bro<br>*proceeds to rugpull*', trapButtons: ['trust bro'], safeButtons: ['web2 was fine'] },
+                    { text: '🪙 gm gm frens<br>new token just dropped<br>$SCAM up 9000% today', trapButtons: ['buy $SCAM'], safeButtons: ['gn gn'] },
+                    { text: '🐵 Mutant Ape says:<br>"join the yacht club"<br>minimum buy-in: ur savings', trapButtons: ['join yacht club'], safeButtons: ['i get seasick'] },
+                    { text: '🖼️ this pixel is worth<br>more than your car<br>blockchain verified ✅', trapButtons: ['outbid someone'], safeButtons: ['i like my car'] },
+                    { text: '💰 decentralized ad<br>no middleman, no refunds<br>gas fees: $847', trapButtons: ['pay gas ⛽'], safeButtons: ['centralize me'] },
+                    // TikTok trends
+                    { text: '📱 this ad has 0 views<br>be the first to like<br>algorithm pls 🥺', trapButtons: ['fyp 🙏'], safeButtons: ['scroll past'] },
+                    { text: '🎵 oh no oh no oh no<br>no no no no no<br>*that tiktok sound*', trapButtons: ['duet this'], safeButtons: ['not this sound'] },
+                    { text: '💃 learn this dance<br>in 3 easy steps<br>step 1: click this ad', trapButtons: ['teach me 💃'], safeButtons: ['two left feet'] },
+                    { text: '🧑‍🍳 5-minute crafts be like:<br>*hot glues an ad to<br>your screen*', trapButtons: ['life hack!'], safeButtons: ['call the police'] },
+                    { text: '👀 pov: you\'re the ad<br>that nobody swipes on<br>pain. suffering. 😔', trapButtons: ['i feel u'], safeButtons: ['swipe left'] },
+                    { text: '🌽 it\'s corn! 🌽<br>a big lump with knobs<br>it has the juice!', trapButtons: ['it has the juice!'], safeButtons: ['not corny enough'] },
+                    { text: '⚠️ the intrusive thought:<br>"what if I clicked the ad"<br>don\'t do it bestie', trapButtons: ['intrusive click'], safeButtons: ['i resisted'] },
+                    { text: '🎤 tell me ur an ad<br>without telling me<br>ur an ad', trapButtons: ['i\'ll go first'], safeButtons: ['no u'] },
+                    { text: '🪞 get ready with me<br>to close this pop-up<br>✨morning routine✨', trapButtons: ['grwm 💄'], safeButtons: ['not ready'] },
+                    { text: '🧊 put a finger down<br>if you\'ve ever clicked<br>a suspicious pop-up', trapButtons: ['🫣 guilty'], safeButtons: ['hands up'] },
+                    { text: '👨‍🍳 "hear me out"<br>this ad but make it<br>an aesthetic 🤌', trapButtons: ['heard out'], safeButtons: ['objection'] },
+                    // GenZ vibes & memes
+                    { text: '💀 no cap this slaps<br>fr fr ong on god', trapButtons: ['W'], safeButtons: ['L + ratio'] },
+                    { text: '✨ it\'s giving main character<br>energy rn slay bestie', trapButtons: ['slay 💅'], safeButtons: ['flop era'] },
+                    { text: '🧢 not me clicking ads<br>in 2026 couldn\'t be me<br>*clicks ad*', trapButtons: ['same tbh'], safeButtons: ['cap 🧢'] },
+                    { text: '😭 why is this so real<br>i\'m literally crying<br>who made this', trapButtons: ['crying rn'], safeButtons: ['me when'] },
+                    { text: '💅 that\'s lowkey sus ngl<br>amogus energy<br>just sayin', trapButtons: ['sus 📮'], safeButtons: ['valid'] },
+                    { text: '🔥 this goes hard<br>feel free to screenshot<br>no NFT needed', trapButtons: ['screenshot'], safeButtons: ['nah mid'] },
+                    { text: '⚡ sigma grindset activated<br>we ball 💯<br>andrew tate left the chat', trapButtons: ['we ball'], safeButtons: ['touch grass 🌱'] },
+                    { text: '👁️👄👁️<br>vibes check failed<br>pack it up bestie', trapButtons: ['oop-'], safeButtons: ['bestie no'] },
+                    { text: '🤡 pov: you\'re an ad<br>and nobody wants you<br>honk honk 🤡', trapButtons: ['clown moment'], safeButtons: ['skip'] },
+                    { text: '💀 dead 💀 deceased 💀<br>i literally cannot<br>bury me with this ad', trapButtons: ['i can\'t 💀'], safeButtons: ['literally me'] },
+                    { text: '🧠 living rent free<br>in ur head rn<br>eviction notice pending', trapButtons: ['rent due'], safeButtons: ['evicted'] },
+                    { text: '📱 EXCLUSIVE drop<br>only 47 gazillion left<br>selling fast (lying)', trapButtons: ['copped 🔥'], safeButtons: ['mid drop'] },
+                    { text: '✨ no thoughts just vibes<br>except this ad<br>and the existential dread', trapButtons: ['vibes ✨'], safeButtons: ['thoughts 🤔'] },
+                    { text: '🧃 this ad is certified<br>organic free-range<br>gluten-free content™', trapButtons: ['organic 🌱'], safeButtons: ['processed'] },
+                    { text: '🎪 the economy is bad<br>but this ad? immaculate<br>recession-proof content', trapButtons: ['invest!'], safeButtons: ['broke'] },
+                    { text: '👻 this ad said BOO 👻<br>did I scare you<br>into clicking?', trapButtons: ['spooked 👻'], safeButtons: ['unbothered'] },
+                    { text: '🏠 landlord energy:<br>this ad charges you<br>emotional rent monthly', trapButtons: ['pay rent'], safeButtons: ['squatter rights'] },
+                    { text: '🎭 me: i hate ads<br>also me: *reads entire ad*<br>we are all clowns 🤡', trapButtons: ['exposed 😳'], safeButtons: ['leaving now'] },
+                    { text: '🐕 if you don\'t click<br>this doggo will be sad<br>look at his face 🥺', trapButtons: ['for the dog 🐕'], safeButtons: ['dogs can\'t read'] },
+                    { text: '🍕 this ad is like pineapple<br>on pizza: controversial<br>but here anyway', trapButtons: ['pineapple gang 🍍'], safeButtons: ['pizza crime'] },
+                    { text: '🎬 nobody:<br>absolutely nobody:<br>this ad: *exists aggressively*', trapButtons: ['relatable'], safeButtons: ['unsubscribe'] },
+                    { text: '🦭 this ad is my<br>emotional support pop-up<br>please don\'t close me 🥺', trapButtons: ['i\'ll keep u'], safeButtons: ['therapy exists'] },
+                    { text: '🧊 ice spice would<br>never close this ad<br>munch munch munch', trapButtons: ['munch 🧊'], safeButtons: ['im not ice spice'] },
+                    { text: '🏃 caught you in 4k 📸<br>reading this ad<br>no take-backs', trapButtons: ['caught 📸'], safeButtons: ['delete the footage'] }
                 ],
                 virusMessages: [
-                    '🚀 crypto opportunity fr no cap<br>10000x gains confirmed by CT whales<br>[APE IN NOW 🦍]',
-                    '🐵 EXCLUSIVE FREE NFT DROP!<br>Just connect ur wallet — 100% legit bestie<br>definitely not a rug pull',
-                    '💎 Diamond hands ONLY!<br>WAGMI fam — last call to buy!<br>[BUY THE DIP NOW]',
-                    '😱 UR TIKTOK GOT HACKED!<br>Someone is posting as u rn — click 2 stop them!'
+                    '🚀 crypto opportunity fr<br>10000x gains no cap<br>[APE IN]',
+                    '🐵 FREE BORED APE!<br>Just connect wallet!<br>definitely not a rugpull',
+                    '💎 Diamond hands only!<br>WAGMI fam!<br>[BUY NOW]',
+                    '😱 UR TIKTOK HACKED!<br>Click 2 save ur account!',
+                    '🦍 EXCLUSIVE APE DROP<br>mint price: your soul<br>[CONNECT WALLET]',
+                    '📱 TikTok says ur famous!<br>1M followers waiting!<br>[CLAIM CLOUT]',
+                    '🪙 FREE CRYPTO AIRDROP<br>just enter seed phrase<br>totally legit fr fr',
+                    '🐵 Bored Ape Yacht Club<br>HIRING (unpaid intern)<br>compensation: exposure + JPEG',
+                    '🔗 ur MetaMask is<br>COMPROMISED bestie!!!<br>[VERIFY WALLET NOW]'
                 ]
             },
             ai: {
@@ -1034,25 +1119,38 @@
         // Personality button pairs - [accept (trap), decline (close)]
         const BUTTON_PAIRS = [
             { accept: 'YES! Hook Me Up! 🎉', decline: 'No thanks, I hate deals' },
-            { accept: 'I WANT THIS! →', decline: 'I\'ll pass (boring)' },
+            { accept: 'I WANT THIS! →', decline: 'I\'ll pass' },
             { accept: 'Sign Me Up! 🙌', decline: 'No thanks bestie' },
-            { accept: 'YES PLEASE! 😍', decline: 'Maybe later (boring)' },
-            { accept: 'Take My Money! 💸', decline: 'I enjoy paying more' },
-            { accept: 'OMG GIMME! NOW!', decline: 'Keep your scam' },
-            { accept: 'I NEED THIS NOW!', decline: 'Hard pass' },
-            { accept: 'Subscribe & Save! 🔥', decline: 'Unsubscribe from savings' },
-            { accept: 'Count Me In! 🎊', decline: 'Count me out' },
+            { accept: 'YOLO 🎉', decline: 'Maybe later' },
+            { accept: 'Bet 💯', decline: 'I\'m broke' },
+            { accept: 'Take my money! 💸', decline: 'Keep your scam' },
+            { accept: 'OMG YES', decline: 'Hard pass' },
+            { accept: 'Subscribe & Save! 🔥', decline: 'Unsubscribe from life' },
+            { accept: 'I\'m in!', decline: 'I\'m out' },
             { accept: 'DO IT! DO IT!', decline: 'Don\'t do it' },
-            { accept: 'Claim My Reward! 🏆', decline: 'I don\'t deserve rewards' },
+            { accept: 'Claim My Reward! 🏆', decline: 'Claim sanity instead' },
             { accept: 'FREE?! TAKE IT! 😍', decline: 'Nothing is ever free' },
-            { accept: 'Click Here! I\'m Ready →', decline: 'Click away' },
-            { accept: 'Accept & Unlock 🔓', decline: 'Stay locked out' },
-            { accept: 'Download FREE Now! 📥', decline: 'I enjoy trust issues' },
-            { accept: 'Join Free Today!', decline: 'Stay on the outside' },
-            { accept: 'Get Started Now →', decline: 'Stay stuck forever' },
-            { accept: 'Yes! Show Me More!', decline: 'Stay ignorant' },
-            { accept: 'Start FREE Today! ✨', decline: 'Pay more, get less' },
-            { accept: 'Activate My Deal! 💥', decline: 'I don\'t like saving money' }
+            { accept: 'Accept & Unlock 🔓', decline: 'Reject reality' },
+            { accept: 'Join Free Today!', decline: 'Join the resistance' },
+            { accept: 'Start FREE Today! ✨', decline: 'Try touching grass' },
+            { accept: 'APE IN 🦍', decline: 'paper hands exit' },
+            { accept: 'MINT NOW', decline: 'right-click save' },
+            { accept: 'Connect Wallet 🔗', decline: 'disconnect from reality' },
+            { accept: 'To the moon! 🚀', decline: 'stay on earth' },
+            { accept: 'WAGMI 💎', decline: 'NGMI and ok with it' },
+            { accept: 'Smash Like! 👍', decline: 'smash close button' },
+            { accept: 'slay 💅', decline: 'choosing peace ✌️' },
+            { accept: 'Send it!', decline: 'return to sender' },
+            { accept: 'lfg 🔥', decline: 'nah fam' },
+            { accept: 'based 🗿', decline: 'cringe pass' },
+            { accept: 'NO CAP BUY', decline: 'all cap skip' },
+            { accept: 'it\'s giving BUY', decline: 'it\'s giving no' },
+            { accept: 'sheeeesh 🥶', decline: 'room temperature take' },
+            { accept: 'caught in 4k 📸', decline: 'delete the footage' },
+            { accept: 'main character 💫', decline: 'npc behavior' },
+            { accept: 'duet this 🎤', decline: 'block & report' },
+            { accept: 'HODL FOREVER', decline: 'sell at a loss' },
+            { accept: 'gm frens ☀️', decline: 'gn forever 🌙' }
         ];
 
         let points = 0;
@@ -1200,8 +1298,11 @@
                 'Restore Purchases', 'Watch Ad for Reward', 'Premium: $9.99/mo'
             ],
             genz: [
-                'L + ratio', 'mid 🥱', 'touch grass', 'no cap', 'slay', 
-                'it\'s giving...', 'lowkey sus', 'W take', 'bet 💯', 'fr fr'
+                'L + ratio', 'mid 🥱', 'touch grass', 'no cap', 'slay',
+                'it\'s giving...', 'lowkey sus', 'W take', 'bet 💯', 'fr fr',
+                'ape in 🦍', 'WAGMI', 'mint it', 'right click save',
+                'to the moon 🚀', 'gm gm', 'probably nothing', 'ngmi',
+                'hodl', 'wen lambo', 'ser pls', 'copium 🫠'
             ],
             ai: [
                 'Regenerate', 'Copy', 'Thumbs Up 👍', 'Thumbs Down 👎', 
@@ -1279,19 +1380,53 @@
                 });
             }
             
-            // Add safe buttons (close ad when clicked)
+            // Add safe buttons (close ad when clicked) - with varied visual styles
             if (safeButtons) {
+                const styleChoice = Math.random();
                 safeButtons.forEach(btnText => {
-                    const btn = document.createElement('button');
-                    btn.className = 'trap-button secondary';
-                    btn.textContent = btnText;
-                    btn.style.margin = '5px';
-                    btn.style.opacity = '0.8';
-                    btn.addEventListener('click', function(e) {
-                        e.stopPropagation();
-                        adClosed(popup, 10);
-                    });
-                    container.appendChild(btn);
+                    if (styleChoice < 0.25) {
+                        // Underlined small text link
+                        const link = document.createElement('span');
+                        link.className = 'safe-link';
+                        link.textContent = btnText;
+                        link.addEventListener('click', function(e) {
+                            e.stopPropagation();
+                            adClosed(popup, 10);
+                        });
+                        container.appendChild(link);
+                    } else if (styleChoice < 0.4) {
+                        // Tiny italic disclaimer text
+                        const small = document.createElement('span');
+                        small.className = 'safe-small-text';
+                        small.textContent = btnText;
+                        small.addEventListener('click', function(e) {
+                            e.stopPropagation();
+                            adClosed(popup, 10);
+                        });
+                        container.appendChild(small);
+                    } else if (styleChoice < 0.55) {
+                        // Skip arrow text aligned right
+                        const skip = document.createElement('span');
+                        skip.className = 'safe-skip-arrow';
+                        skip.textContent = btnText + ' →';
+                        skip.addEventListener('click', function(e) {
+                            e.stopPropagation();
+                            adClosed(popup, 10);
+                        });
+                        container.appendChild(skip);
+                    } else {
+                        // Regular button (existing behavior)
+                        const btn = document.createElement('button');
+                        btn.className = 'trap-button secondary';
+                        btn.textContent = btnText;
+                        btn.style.margin = '5px';
+                        btn.style.opacity = '0.8';
+                        btn.addEventListener('click', function(e) {
+                            e.stopPropagation();
+                            adClosed(popup, 10);
+                        });
+                        container.appendChild(btn);
+                    }
                 });
             }
             
