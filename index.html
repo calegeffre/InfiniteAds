@@ -426,6 +426,55 @@
             margin: 10px 0;
         }
 
+        /* Windows XP (2001-2009) - Luna blue theme, rounded buttons, Bliss wallpaper vibes */
+        .era-popup.winxp {
+            border: none !important;
+            border-radius: 8px 8px 4px 4px !important;
+            padding-top: 30px !important;
+            box-shadow: 
+                0 4px 12px rgba(0, 0, 0, 0.3),
+                inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+            background: #ece9d8 !important;
+        }
+        .era-popup.winxp::before {
+            content: '🪟 Windows XP';
+            display: block;
+            background: linear-gradient(180deg, #0a246a 0%, #3a6ea5 40%, #0a246a 100%);
+            color: white;
+            font-weight: bold;
+            padding: 4px 8px;
+            margin: -30px -30px 12px -30px;
+            border-radius: 8px 8px 0 0;
+            font-family: Tahoma, "Segoe UI", sans-serif;
+            font-size: 12px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+        .era-popup.winxp .popup-ad-close-btn {
+            background: linear-gradient(180deg, #e08040 0%, #c85030 50%, #e08040 100%);
+            color: white;
+            border: 1px solid #3a3a3a;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: bold;
+            width: 20px;
+            height: 20px;
+            top: 5px !important;
+            right: 6px !important;
+            padding: 0;
+            line-height: 16px;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        }
+        .era-popup.winxp .popup-ad-close-btn:hover {
+            background: linear-gradient(180deg, #f09050 0%, #d86040 50%, #f09050 100%);
+        }
+        .era-popup.winxp .popup-ad-content {
+            background: #ffffff;
+            border: 1px solid #aca899;
+            padding: 18px;
+            margin: 8px 0;
+            font-family: Tahoma, sans-serif;
+        }
+
         /* Web 2.0 (2010-2020) - Clean, minimal, gradients, shadows */
         .era-popup.web20 {
             border: none !important;
@@ -859,6 +908,43 @@
                     '💀 HARD DRIVE CORRUPTED!<br>Recover your files — click to start FREE!'
                 ]
             },
+            windowsXP: {
+                name: 'Windows XP',
+                period: '2001-2009',
+                bgColor: '#ece9d8',
+                textColor: '#000000',
+                borderColor: '#0a246a',
+                fontFamily: 'Tahoma, "Segoe UI", sans-serif',
+                fontSize: '13px',
+                examples: [
+                    // Minesweeper
+                    { text: '💣 Minesweeper Pro Edition<br>Unlimited flags! Auto-reveal!<br>Never hit a mine again!', trapButtons: ['Install Pro 💣'], safeButtons: ['i like losing'] },
+                    { text: '🚩 Your Minesweeper stats:<br>47 wins, 2,891 losses<br>Improve with our AI helper!', trapButtons: ['Get Mine Helper'], safeButtons: ['those losses are valid'] },
+                    { text: '💥 BOOM! You hit a mine!<br>Just kidding. But buy our<br>Minesweeper skin pack ($2.99)', trapButtons: ['Buy Skins 🎨'], safeButtons: ['default is fine'] },
+                    // Space Cadet Pinball
+                    { text: '🪐 3D Pinball: Space Cadet<br>NEW: Ultra Table DLC!<br>12 new missions unlocked!', trapButtons: ['Download DLC 🚀'], safeButtons: ['one table is enough'] },
+                    { text: '🏆 PINBALL HIGH SCORE!<br>You scored: 14,750,650<br>Submit to global leaderboard?', trapButtons: ['Submit Score!'], safeButtons: ['nobody must know'] },
+                    { text: '🌌 Space Cadet says:<br>"TILT WARNING"<br>Your PC needs calibration!', trapButtons: ['Calibrate Now'], safeButtons: ['tilt this ad away'] },
+                    // Spider Solitaire
+                    { text: '🕷️ Spider Solitaire Tournament<br>$10,000 prize pool!<br>Entry: just 1 click away', trapButtons: ['Enter Tournament'], safeButtons: ['spider too scary'] },
+                    { text: '🃏 You\'ve played 847 hands<br>of Spider Solitaire today.<br>Touch grass? Or play more?', trapButtons: ['One More Hand 🃏'], safeButtons: ['grass sounds nice'] },
+                    { text: '🕸️ Spider Solitaire Premium<br>4-suit mode UNLOCKED!<br>Only grandmasters survive', trapButtons: ['I\'m a Grandmaster'], safeButtons: ['1-suit is hard enough'] },
+                    // Clippy
+                    { text: '📎 Hi! I\'m Clippy!<br>It looks like you\'re closing ads.<br>Would you like help with that?', trapButtons: ['Help me Clippy! 📎'], safeButtons: ['go away clippy'] },
+                    { text: '📎 Clippy says:<br>"It looks like you\'re trying<br>to be productive. Stop that."', trapButtons: ['OK Clippy...'], safeButtons: ['uninstall clippy'] },
+                    { text: '📎 Clippy is BACK and<br>he remembers EVERYTHING.<br>Even that essay you deleted.', trapButtons: ['What essay? 😰'], safeButtons: ['clippy pls no'] },
+                    // Windows XP general
+                    { text: '🪟 Windows XP Bliss<br>That wallpaper field?<br>It\'s a DLC now. $4.99/month', trapButtons: ['Subscribe to Bliss'], safeButtons: ['pirate the grass'] },
+                    { text: '🎵 Windows XP Startup Sound<br>Now available as ringtone!<br>ba da da DAAAA 🎶', trapButtons: ['Set Ringtone 🎵'], safeButtons: ['my ears are fine'] },
+                    { text: '⏳ Windows is checking<br>for a solution to the problem...<br>(it won\'t find one)', trapButtons: ['Keep Searching'], safeButtons: ['it never does'] }
+                ],
+                virusMessages: [
+                    '🛡️ Windows Security Center<br>Your firewall is OFF!<br>47 hackers detected! [FIX NOW]',
+                    '📎 Clippy: "It looks like your<br>PC has a virus! Click me<br>to download protection!"',
+                    '⚠️ WINDOWS ACTIVATION<br>This copy is NOT genuine!<br>Enter credit card to verify!',
+                    '💀 svchost.exe has stopped<br>Your system will shut down<br>in 60 seconds! [PREVENT]'
+                ]
+            },
             flash: {
                 name: 'Flash Era',
                 period: '2000-2017',
@@ -1284,6 +1370,11 @@
             win95: [
                 'OK', 'Cancel', 'Apply', 'Abort', 'Retry', 'Ignore', 
                 'Yes', 'No', 'Help', 'Details >>'
+            ],
+            winxp: [
+                'OK', 'Cancel', 'Send Report', 'Don\'t Send', 'Restart Now',
+                'Ask Clippy 📎', 'New Game', 'Undo', 'Deal Again', 'Hint',
+                'Flag Mine 🚩', 'Restart Level', 'View Scores'
             ],
             flash: [
                 'Skip Ad', 'Play Again', 'Mute 🔇', 'Fullscreen', 'Quality: LOW', 
@@ -2292,6 +2383,7 @@
             if (era.name === 'MySpace/AIM') return 'myspace';
             if (era.name === 'AOL/Dial-up') return 'aol';
             if (era.name === '90s Windows') return 'win95';
+            if (era.name === 'Windows XP') return 'winxp';
             if (era.name === 'Flash Era') return 'flash';
             if (era.name === 'Modern Web 2.0') return 'web20';
             if (era.name === 'Mobile Era') return 'mobile';
