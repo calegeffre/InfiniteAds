@@ -426,6 +426,55 @@
             margin: 10px 0;
         }
 
+        /* Windows XP (2001-2009) - Luna blue theme, rounded buttons, Bliss wallpaper vibes */
+        .era-popup.winxp {
+            border: none !important;
+            border-radius: 8px 8px 4px 4px !important;
+            padding-top: 30px !important;
+            box-shadow: 
+                0 4px 12px rgba(0, 0, 0, 0.3),
+                inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+            background: #ece9d8 !important;
+        }
+        .era-popup.winxp::before {
+            content: '🪟 Windows XP';
+            display: block;
+            background: linear-gradient(180deg, #0a246a 0%, #3a6ea5 40%, #0a246a 100%);
+            color: white;
+            font-weight: bold;
+            padding: 4px 8px;
+            margin: -30px -30px 12px -30px;
+            border-radius: 8px 8px 0 0;
+            font-family: Tahoma, "Segoe UI", sans-serif;
+            font-size: 12px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+        .era-popup.winxp .popup-ad-close-btn {
+            background: linear-gradient(180deg, #e08040 0%, #c85030 50%, #e08040 100%);
+            color: white;
+            border: 1px solid #3a3a3a;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: bold;
+            width: 20px;
+            height: 20px;
+            top: 5px !important;
+            right: 6px !important;
+            padding: 0;
+            line-height: 16px;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        }
+        .era-popup.winxp .popup-ad-close-btn:hover {
+            background: linear-gradient(180deg, #f09050 0%, #d86040 50%, #f09050 100%);
+        }
+        .era-popup.winxp .popup-ad-content {
+            background: #ffffff;
+            border: 1px solid #aca899;
+            padding: 18px;
+            margin: 8px 0;
+            font-family: Tahoma, sans-serif;
+        }
+
         /* Web 2.0 (2010-2020) - Clean, minimal, gradients, shadows */
         .era-popup.web20 {
             border: none !important;
@@ -471,6 +520,51 @@
             font-style: italic;
             color: #1a1a1a !important;
         }
+        /* GenZ ad content animations */
+        @keyframes genzPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        @keyframes genzShake {
+            0%, 100% { transform: translateX(0); }
+            20% { transform: translateX(-3px) rotate(-1deg); }
+            40% { transform: translateX(3px) rotate(1deg); }
+            60% { transform: translateX(-2px); }
+            80% { transform: translateX(2px); }
+        }
+        @keyframes genzRainbow {
+            0% { color: #a855f7; }
+            20% { color: #06b6d4; }
+            40% { color: #10b981; }
+            60% { color: #f59e0b; }
+            80% { color: #ef4444; }
+            100% { color: #a855f7; }
+        }
+        @keyframes genzFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-4px); }
+        }
+        @keyframes genzGlow {
+            0%, 100% { text-shadow: 0 0 4px rgba(168,85,247,0.3); }
+            50% { text-shadow: 0 0 12px rgba(168,85,247,0.8), 0 0 20px rgba(6,182,212,0.4); }
+        }
+        @keyframes genzSpin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        @keyframes genzBounce {
+            0%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-6px); }
+            50% { transform: translateY(0); }
+            70% { transform: translateY(-3px); }
+        }
+        .gz-pulse { display:inline-block; animation: genzPulse 1.5s infinite; }
+        .gz-shake { display:inline-block; animation: genzShake 0.6s infinite; }
+        .gz-rainbow { animation: genzRainbow 2s infinite; }
+        .gz-float { display:inline-block; animation: genzFloat 2s ease-in-out infinite; }
+        .gz-glow { animation: genzGlow 1.5s infinite; }
+        .gz-spin { display:inline-block; animation: genzSpin 3s linear infinite; }
+        .gz-bounce { display:inline-block; animation: genzBounce 1s infinite; }
 
         /* AI Era (2024+) - Terminal, dark, cyan glow, scanlines */
         @keyframes scanline {
@@ -859,6 +953,43 @@
                     '💀 HARD DRIVE CORRUPTED!<br>Recover your files — click to start FREE!'
                 ]
             },
+            windowsXP: {
+                name: 'Windows XP',
+                period: '2001-2009',
+                bgColor: '#ece9d8',
+                textColor: '#000000',
+                borderColor: '#0a246a',
+                fontFamily: 'Tahoma, "Segoe UI", sans-serif',
+                fontSize: '13px',
+                examples: [
+                    // Minesweeper
+                    { text: '💣 Minesweeper Pro Edition<br>Unlimited flags! Auto-reveal!<br>Never hit a mine again!', trapButtons: ['Install Pro 💣'], safeButtons: ['i like losing'] },
+                    { text: '🚩 Your Minesweeper stats:<br>47 wins, 2,891 losses<br>Improve with our AI helper!', trapButtons: ['Get Mine Helper'], safeButtons: ['those losses are valid'] },
+                    { text: '💥 BOOM! You hit a mine!<br>Just kidding. But buy our<br>Minesweeper skin pack ($2.99)', trapButtons: ['Buy Skins 🎨'], safeButtons: ['default is fine'] },
+                    // Space Cadet Pinball
+                    { text: '🪐 3D Pinball: Space Cadet<br>NEW: Ultra Table DLC!<br>12 new missions unlocked!', trapButtons: ['Download DLC 🚀'], safeButtons: ['one table is enough'] },
+                    { text: '🏆 PINBALL HIGH SCORE!<br>You scored: 14,750,650<br>Submit to global leaderboard?', trapButtons: ['Submit Score!'], safeButtons: ['nobody must know'] },
+                    { text: '🌌 Space Cadet says:<br>"TILT WARNING"<br>Your PC needs calibration!', trapButtons: ['Calibrate Now'], safeButtons: ['tilt this ad away'] },
+                    // Spider Solitaire
+                    { text: '🕷️ Spider Solitaire Tournament<br>$10,000 prize pool!<br>Entry: just 1 click away', trapButtons: ['Enter Tournament'], safeButtons: ['spider too scary'] },
+                    { text: '🃏 You\'ve played 847 hands<br>of Spider Solitaire today.<br>Touch grass? Or play more?', trapButtons: ['One More Hand 🃏'], safeButtons: ['grass sounds nice'] },
+                    { text: '🕸️ Spider Solitaire Premium<br>4-suit mode UNLOCKED!<br>Only grandmasters survive', trapButtons: ['I\'m a Grandmaster'], safeButtons: ['1-suit is hard enough'] },
+                    // Clippy
+                    { text: '📎 Hi! I\'m Clippy!<br>It looks like you\'re closing ads.<br>Would you like help with that?', trapButtons: ['Help me Clippy! 📎'], safeButtons: ['go away clippy'] },
+                    { text: '📎 Clippy says:<br>"It looks like you\'re trying<br>to be productive. Stop that."', trapButtons: ['OK Clippy...'], safeButtons: ['uninstall clippy'] },
+                    { text: '📎 Clippy is BACK and<br>he remembers EVERYTHING.<br>Even that essay you deleted.', trapButtons: ['What essay? 😰'], safeButtons: ['clippy pls no'] },
+                    // Windows XP general
+                    { text: '🪟 Windows XP Bliss<br>That wallpaper field?<br>It\'s a DLC now. $4.99/month', trapButtons: ['Subscribe to Bliss'], safeButtons: ['pirate the grass'] },
+                    { text: '🎵 Windows XP Startup Sound<br>Now available as ringtone!<br>ba da da DAAAA 🎶', trapButtons: ['Set Ringtone 🎵'], safeButtons: ['my ears are fine'] },
+                    { text: '⏳ Windows is checking<br>for a solution to the problem...<br>(it won\'t find one)', trapButtons: ['Keep Searching'], safeButtons: ['it never does'] }
+                ],
+                virusMessages: [
+                    '🛡️ Windows Security Center<br>Your firewall is OFF!<br>47 hackers detected! [FIX NOW]',
+                    '📎 Clippy: "It looks like your<br>PC has a virus! Click me<br>to download protection!"',
+                    '⚠️ WINDOWS ACTIVATION<br>This copy is NOT genuine!<br>Enter credit card to verify!',
+                    '💀 svchost.exe has stopped<br>Your system will shut down<br>in 60 seconds! [PREVENT]'
+                ]
+            },
             flash: {
                 name: 'Flash Era',
                 period: '2000-2017',
@@ -869,19 +1000,19 @@
                 fontSize: '14px',
                 examples: [
                     { text: '▶️ LOADING...<br>███░░░░░░░ 34% — Almost there!', trapButtons: ['Keep Waiting...'], safeButtons: ['Refresh'] },
-                    { text: '🎮 PLAY 47 FREE GAMES!<br>No download — starts instantly!', trapButtons: ['PLAY FREE NOW!'], safeButtons: ['Later'] },
+                    { text: '<pre style="font-size:10px;line-height:1;margin:4px 0">  ╔══════════╗\n  ║ ▶ PLAY ▶ ║\n  ╚══════════╝</pre>47 FREE GAMES — No download!', trapButtons: ['PLAY FREE NOW!'], safeButtons: ['Later'] },
                     { text: '🎬 Skip Ad in 5... 4... 3...<br>* Terms: 30 second minimum applies', trapButtons: ['Skip Ad →'], safeButtons: ['Watch Full Ad'] },
-                    { text: '🔊 TURN SOUND ON! 🔊<br>You\'re missing the best part!', trapButtons: ['🔊 ENABLE SOUND!'], safeButtons: ['Mute All'] },
-                    { text: '⚠️ Your Flash Player is OUT OF DATE!<br>Update now to continue playing!', trapButtons: ['Update Flash FREE!'], safeButtons: ['Not Today'] },
-                    { text: '🏆 YOU JUST BEAT THE HIGH SCORE!<br>Submit your name to the leaderboard?', trapButtons: ['Submit My Score! 🏆'], safeButtons: ['Stay Anonymous'] },
+                    { text: '<pre style="font-size:9px;line-height:1;margin:4px 0">♪♫•*¨*•.¸¸♪♫\n  TURN IT UP\n♪♫•*¨*•.¸¸♪♫</pre>You\'re missing the best part!', trapButtons: ['🔊 ENABLE SOUND!'], safeButtons: ['Mute All'] },
+                    { text: '<pre style="font-size:9px;line-height:1;margin:4px 0">  ⚠ FLASH ⚠\n ╔═══════════╗\n ║ OUTDATED! ║\n ╚═══════════╝</pre>Update now to continue!', trapButtons: ['Update Flash FREE!'], safeButtons: ['Not Today'] },
+                    { text: '<pre style="font-size:9px;line-height:1;margin:4px 0"> ___________\n|  #1 BEST  |\n| ★ ★ ★ ★ ★ |\n|___________|\n  HIGH SCORE!</pre>Submit your name?', trapButtons: ['Submit My Score! 🏆'], safeButtons: ['Stay Anonymous'] },
                     { text: '⭐ Rate this game & unlock BONUS LEVEL!<br>Just 5 stars to unlock hidden content!', trapButtons: ['5 Stars + Unlock! ⭐'], safeButtons: ['No Bonus Needed'] },
-                    { text: '📺 Buffering... 99%<br>Download the player for instant HD!', trapButtons: ['Get HD Player FREE!'], safeButtons: ['Wait Forever'] },
+                    { text: '<pre style="font-size:9px;line-height:1;margin:4px 0">BUFFERING...\n[████████░░] 99%\n ◄◄  ▐▐  ►►</pre>Download for instant HD!', trapButtons: ['Get HD Player FREE!'], safeButtons: ['Wait Forever'] },
                     { text: '🎪 EXCLUSIVE ANIMATION<br>Join the club to see the full version!', trapButtons: ['Join Club FREE!'], safeButtons: ['Miss the Ending'] },
                     { text: '💥 EPIC WIN! You got 3 stars!<br>Share your score + unlock bonus maps!', trapButtons: ['SHARE & UNLOCK! 🗺️'], safeButtons: ['Keep It Secret'] },
-                    { text: '🐱 Nyan Cat FULL EXTENDED VERSION 🌈<br>10 hours — Download for FREE!', trapButtons: ['DOWNLOAD 10 HRS! 🌈'], safeButtons: ['Stop Cat'] },
+                    { text: '<pre style="font-size:9px;line-height:1;margin:4px 0">~=[,,_,,]:3\n~=[,,_,,]:3\n~=[,,_,,]:3\n ═══════🌈</pre>NYAN CAT 10HR — FREE!', trapButtons: ['DOWNLOAD 10 HRS! 🌈'], safeButtons: ['Stop Cat'] },
                     { text: '🎵 TURN UP THE VOLUME 🎵<br>This song will change your life (for real)', trapButtons: ['MAX VOLUME NOW!'], safeButtons: ['Mute All'] },
-                    { text: '🎮 EXTREME FLASH GAMING PASS<br>Unlock ALL 500 games for FREE today!', trapButtons: ['UNLOCK 500 GAMES!'], safeButtons: ['Too Extreme'] },
-                    { text: '📦 FunnyVideo.exe is ready!<br>100% safe — scanned & verified ✅', trapButtons: ['Download Verified File!'], safeButtons: ['Seems Sus'] },
+                    { text: '<pre style="font-size:9px;line-height:1;margin:4px 0"> /══════════\\\n│ ✦EXTREME✦ │\n│  GAMING   │\n│   PASS    │\n \\══════════/</pre>Unlock ALL 500 games!', trapButtons: ['UNLOCK 500 GAMES!'], safeButtons: ['Too Extreme'] },
+                    { text: '<pre style="font-size:9px;line-height:1;margin:4px 0">╔══════════════╗\n║ FunnyVid.exe ║\n║  ✅ SAFE ✅   ║\n╚══════════════╝</pre>100% scanned & verified', trapButtons: ['Download Verified File!'], safeButtons: ['Seems Sus'] },
                     { text: '🔥 HOT SINGLES PLAYING<br>EXCITING games near you', trapButtons: ['I\'m Single'], safeButtons: ['Not Hot'] }
                 ],
                 virusMessages: [
@@ -969,54 +1100,54 @@
                 fontSize: '16px',
                 examples: [
                     // NFT / Crypto / BoredApe themed
-                    { text: '🐵 BORED APE #4269<br>Only 420.69 ETH<br>floor price is mooning', trapButtons: ['APE IN 🦍'], safeButtons: ['right click save'] },
-                    { text: '🖼️ This ad is an NFT<br>current bid: 0.001 ETH<br>minted on the blockchain fr', trapButtons: ['Place Bid'], safeButtons: ['screenshot this'] },
-                    { text: '💎🙌 DIAMOND HANDS ONLY<br>WAGMI if you click<br>paper hands keep scrolling', trapButtons: ['WAGMI 🚀'], safeButtons: ['paper hands 📄'] },
+                    { text: '<span class="gz-pulse">🐵 BORED APE #4269</span><br>Only 420.69 ETH<br><span class="gz-rainbow">floor price is mooning</span>', trapButtons: ['APE IN 🦍'], safeButtons: ['right click save'] },
+                    { text: '🖼️ This ad is an NFT<br><span class="gz-glow">current bid: 0.001 ETH</span><br>minted on the blockchain fr', trapButtons: ['Place Bid'], safeButtons: ['screenshot this'] },
+                    { text: '<span class="gz-shake">💎🙌 DIAMOND HANDS ONLY</span><br>WAGMI if you click<br>paper hands keep scrolling', trapButtons: ['WAGMI 🚀'], safeButtons: ['paper hands 📄'] },
                     { text: '🦧 ur not gonna make it<br>unless u mint this<br>definitely not a rugpull', trapButtons: ['MINT NOW'], safeButtons: ['ngmi anyway'] },
-                    { text: '🎨 AI-generated art NFT<br>drawn by a neural network<br>trained on vibes only', trapButtons: ['1 of 1 🎨'], safeButtons: ['ctrl+c ctrl+v'] },
-                    { text: '🐸 rare pepe NFT drop<br>only 10,000 left<br>(out of 10,000)', trapButtons: ['super rare!'], safeButtons: ['seen on google'] },
-                    { text: '🏴‍☠️ web3 is the future<br>trust me bro<br>*proceeds to rugpull*', trapButtons: ['trust bro'], safeButtons: ['web2 was fine'] },
-                    { text: '🪙 gm gm frens<br>new token just dropped<br>$SCAM up 9000% today', trapButtons: ['buy $SCAM'], safeButtons: ['gn gn'] },
-                    { text: '🐵 Mutant Ape says:<br>"join the yacht club"<br>minimum buy-in: ur savings', trapButtons: ['join yacht club'], safeButtons: ['i get seasick'] },
-                    { text: '🖼️ this pixel is worth<br>more than your car<br>blockchain verified ✅', trapButtons: ['outbid someone'], safeButtons: ['i like my car'] },
-                    { text: '💰 decentralized ad<br>no middleman, no refunds<br>gas fees: $847', trapButtons: ['pay gas ⛽'], safeButtons: ['centralize me'] },
+                    { text: '🎨 AI-generated art NFT<br>drawn by a neural network<br><span class="gz-float">trained on vibes only</span>', trapButtons: ['1 of 1 🎨'], safeButtons: ['ctrl+c ctrl+v'] },
+                    { text: '<span class="gz-bounce">🐸 rare pepe NFT drop</span><br>only 10,000 left<br>(out of 10,000)', trapButtons: ['super rare!'], safeButtons: ['seen on google'] },
+                    { text: '🏴‍☠️ web3 is the future<br><span class="gz-shake">trust me bro</span><br>*proceeds to rugpull*', trapButtons: ['trust bro'], safeButtons: ['web2 was fine'] },
+                    { text: '🪙 gm gm frens<br>new token just dropped<br><span class="gz-rainbow">$SCAM up 9000% today</span>', trapButtons: ['buy $SCAM'], safeButtons: ['gn gn'] },
+                    { text: '<span class="gz-float">🐵 Mutant Ape says:</span><br>"join the yacht club"<br>minimum buy-in: ur savings', trapButtons: ['join yacht club'], safeButtons: ['i get seasick'] },
+                    { text: '🖼️ this pixel is worth<br>more than your car<br><span class="gz-glow">blockchain verified ✅</span>', trapButtons: ['outbid someone'], safeButtons: ['i like my car'] },
+                    { text: '💰 decentralized ad<br>no middleman, no refunds<br><span class="gz-pulse">gas fees: $847</span>', trapButtons: ['pay gas ⛽'], safeButtons: ['centralize me'] },
                     // TikTok trends
-                    { text: '📱 this ad has 0 views<br>be the first to like<br>algorithm pls 🥺', trapButtons: ['fyp 🙏'], safeButtons: ['scroll past'] },
-                    { text: '🎵 oh no oh no oh no<br>no no no no no<br>*that tiktok sound*', trapButtons: ['duet this'], safeButtons: ['not this sound'] },
-                    { text: '💃 learn this dance<br>in 3 easy steps<br>step 1: click this ad', trapButtons: ['teach me 💃'], safeButtons: ['two left feet'] },
-                    { text: '🧑‍🍳 5-minute crafts be like:<br>*hot glues an ad to<br>your screen*', trapButtons: ['life hack!'], safeButtons: ['call the police'] },
+                    { text: '📱 this ad has 0 views<br>be the first to like<br><span class="gz-bounce">algorithm pls 🥺</span>', trapButtons: ['fyp 🙏'], safeButtons: ['scroll past'] },
+                    { text: '<span class="gz-shake">🎵 oh no oh no oh no</span><br>no no no no no<br>*that tiktok sound*', trapButtons: ['duet this'], safeButtons: ['not this sound'] },
+                    { text: '<span class="gz-float">💃 learn this dance</span><br>in 3 easy steps<br>step 1: click this ad', trapButtons: ['teach me 💃'], safeButtons: ['two left feet'] },
+                    { text: '🧑‍🍳 5-minute crafts be like:<br><span class="gz-shake">*hot glues an ad to<br>your screen*</span>', trapButtons: ['life hack!'], safeButtons: ['call the police'] },
                     { text: '👀 pov: you\'re the ad<br>that nobody swipes on<br>pain. suffering. 😔', trapButtons: ['i feel u'], safeButtons: ['swipe left'] },
-                    { text: '🌽 it\'s corn! 🌽<br>a big lump with knobs<br>it has the juice!', trapButtons: ['it has the juice!'], safeButtons: ['not corny enough'] },
-                    { text: '⚠️ the intrusive thought:<br>"what if I clicked the ad"<br>don\'t do it bestie', trapButtons: ['intrusive click'], safeButtons: ['i resisted'] },
+                    { text: '<span class="gz-bounce">🌽 it\'s corn! 🌽</span><br>a big lump with knobs<br><span class="gz-rainbow">it has the juice!</span>', trapButtons: ['it has the juice!'], safeButtons: ['not corny enough'] },
+                    { text: '⚠️ the intrusive thought:<br><span class="gz-glow">"what if I clicked the ad"</span><br>don\'t do it bestie', trapButtons: ['intrusive click'], safeButtons: ['i resisted'] },
                     { text: '🎤 tell me ur an ad<br>without telling me<br>ur an ad', trapButtons: ['i\'ll go first'], safeButtons: ['no u'] },
-                    { text: '🪞 get ready with me<br>to close this pop-up<br>✨morning routine✨', trapButtons: ['grwm 💄'], safeButtons: ['not ready'] },
-                    { text: '🧊 put a finger down<br>if you\'ve ever clicked<br>a suspicious pop-up', trapButtons: ['🫣 guilty'], safeButtons: ['hands up'] },
-                    { text: '👨‍🍳 "hear me out"<br>this ad but make it<br>an aesthetic 🤌', trapButtons: ['heard out'], safeButtons: ['objection'] },
+                    { text: '🪞 get ready with me<br>to close this pop-up<br><span class="gz-rainbow">✨morning routine✨</span>', trapButtons: ['grwm 💄'], safeButtons: ['not ready'] },
+                    { text: '🧊 put a finger down<br>if you\'ve ever clicked<br><span class="gz-pulse">a suspicious pop-up</span>', trapButtons: ['🫣 guilty'], safeButtons: ['hands up'] },
+                    { text: '👨‍🍳 "hear me out"<br>this ad but make it<br><span class="gz-float">an aesthetic 🤌</span>', trapButtons: ['heard out'], safeButtons: ['objection'] },
                     // GenZ vibes & memes
-                    { text: '💀 no cap this slaps<br>fr fr ong on god', trapButtons: ['W'], safeButtons: ['L + ratio'] },
-                    { text: '✨ it\'s giving main character<br>energy rn slay bestie', trapButtons: ['slay 💅'], safeButtons: ['flop era'] },
+                    { text: '<span class="gz-shake">💀 no cap this slaps</span><br><span class="gz-rainbow">fr fr ong on god</span>', trapButtons: ['W'], safeButtons: ['L + ratio'] },
+                    { text: '<span class="gz-glow">✨ it\'s giving main character</span><br>energy rn slay bestie', trapButtons: ['slay 💅'], safeButtons: ['flop era'] },
                     { text: '🧢 not me clicking ads<br>in 2026 couldn\'t be me<br>*clicks ad*', trapButtons: ['same tbh'], safeButtons: ['cap 🧢'] },
-                    { text: '😭 why is this so real<br>i\'m literally crying<br>who made this', trapButtons: ['crying rn'], safeButtons: ['me when'] },
-                    { text: '💅 that\'s lowkey sus ngl<br>amogus energy<br>just sayin', trapButtons: ['sus 📮'], safeButtons: ['valid'] },
-                    { text: '🔥 this goes hard<br>feel free to screenshot<br>no NFT needed', trapButtons: ['screenshot'], safeButtons: ['nah mid'] },
-                    { text: '⚡ sigma grindset activated<br>we ball 💯<br>andrew tate left the chat', trapButtons: ['we ball'], safeButtons: ['touch grass 🌱'] },
-                    { text: '👁️👄👁️<br>vibes check failed<br>pack it up bestie', trapButtons: ['oop-'], safeButtons: ['bestie no'] },
-                    { text: '🤡 pov: you\'re an ad<br>and nobody wants you<br>honk honk 🤡', trapButtons: ['clown moment'], safeButtons: ['skip'] },
-                    { text: '💀 dead 💀 deceased 💀<br>i literally cannot<br>bury me with this ad', trapButtons: ['i can\'t 💀'], safeButtons: ['literally me'] },
-                    { text: '🧠 living rent free<br>in ur head rn<br>eviction notice pending', trapButtons: ['rent due'], safeButtons: ['evicted'] },
+                    { text: '😭 why is this so real<br><span class="gz-shake">i\'m literally crying</span><br>who made this', trapButtons: ['crying rn'], safeButtons: ['me when'] },
+                    { text: '💅 that\'s lowkey sus ngl<br><span class="gz-pulse">amogus energy</span><br>just sayin', trapButtons: ['sus 📮'], safeButtons: ['valid'] },
+                    { text: '<span class="gz-rainbow">🔥 this goes hard</span><br>feel free to screenshot<br>no NFT needed', trapButtons: ['screenshot'], safeButtons: ['nah mid'] },
+                    { text: '<span class="gz-bounce">⚡ sigma grindset activated</span><br>we ball 💯<br>andrew tate left the chat', trapButtons: ['we ball'], safeButtons: ['touch grass 🌱'] },
+                    { text: '<span class="gz-float">👁️👄👁️</span><br>vibes check failed<br>pack it up bestie', trapButtons: ['oop-'], safeButtons: ['bestie no'] },
+                    { text: '🤡 pov: you\'re an ad<br>and nobody wants you<br><span class="gz-shake">honk honk 🤡</span>', trapButtons: ['clown moment'], safeButtons: ['skip'] },
+                    { text: '<span class="gz-glow">💀 dead 💀 deceased 💀</span><br>i literally cannot<br>bury me with this ad', trapButtons: ['i can\'t 💀'], safeButtons: ['literally me'] },
+                    { text: '🧠 living rent free<br><span class="gz-pulse">in ur head rn</span><br>eviction notice pending', trapButtons: ['rent due'], safeButtons: ['evicted'] },
                     { text: '📱 EXCLUSIVE drop<br>only 47 gazillion left<br>selling fast (lying)', trapButtons: ['copped 🔥'], safeButtons: ['mid drop'] },
-                    { text: '✨ no thoughts just vibes<br>except this ad<br>and the existential dread', trapButtons: ['vibes ✨'], safeButtons: ['thoughts 🤔'] },
-                    { text: '🧃 this ad is certified<br>organic free-range<br>gluten-free content™', trapButtons: ['organic 🌱'], safeButtons: ['processed'] },
-                    { text: '🎪 the economy is bad<br>but this ad? immaculate<br>recession-proof content', trapButtons: ['invest!'], safeButtons: ['broke'] },
-                    { text: '👻 this ad said BOO 👻<br>did I scare you<br>into clicking?', trapButtons: ['spooked 👻'], safeButtons: ['unbothered'] },
+                    { text: '<span class="gz-float">✨ no thoughts just vibes</span><br>except this ad<br>and the existential dread', trapButtons: ['vibes ✨'], safeButtons: ['thoughts 🤔'] },
+                    { text: '🧃 this ad is certified<br><span class="gz-rainbow">organic free-range</span><br>gluten-free content™', trapButtons: ['organic 🌱'], safeButtons: ['processed'] },
+                    { text: '🎪 the economy is bad<br>but this ad? <span class="gz-glow">immaculate</span><br>recession-proof content', trapButtons: ['invest!'], safeButtons: ['broke'] },
+                    { text: '<span class="gz-bounce">👻 this ad said BOO 👻</span><br>did I scare you<br>into clicking?', trapButtons: ['spooked 👻'], safeButtons: ['unbothered'] },
                     { text: '🏠 landlord energy:<br>this ad charges you<br>emotional rent monthly', trapButtons: ['pay rent'], safeButtons: ['squatter rights'] },
-                    { text: '🎭 me: i hate ads<br>also me: *reads entire ad*<br>we are all clowns 🤡', trapButtons: ['exposed 😳'], safeButtons: ['leaving now'] },
-                    { text: '🐕 if you don\'t click<br>this doggo will be sad<br>look at his face 🥺', trapButtons: ['for the dog 🐕'], safeButtons: ['dogs can\'t read'] },
+                    { text: '🎭 me: i hate ads<br>also me: *reads entire ad*<br><span class="gz-shake">we are all clowns 🤡</span>', trapButtons: ['exposed 😳'], safeButtons: ['leaving now'] },
+                    { text: '🐕 if you don\'t click<br>this doggo will be sad<br><span class="gz-float">look at his face 🥺</span>', trapButtons: ['for the dog 🐕'], safeButtons: ['dogs can\'t read'] },
                     { text: '🍕 this ad is like pineapple<br>on pizza: controversial<br>but here anyway', trapButtons: ['pineapple gang 🍍'], safeButtons: ['pizza crime'] },
-                    { text: '🎬 nobody:<br>absolutely nobody:<br>this ad: *exists aggressively*', trapButtons: ['relatable'], safeButtons: ['unsubscribe'] },
-                    { text: '🦭 this ad is my<br>emotional support pop-up<br>please don\'t close me 🥺', trapButtons: ['i\'ll keep u'], safeButtons: ['therapy exists'] },
-                    { text: '🧊 ice spice would<br>never close this ad<br>munch munch munch', trapButtons: ['munch 🧊'], safeButtons: ['im not ice spice'] },
-                    { text: '🏃 caught you in 4k 📸<br>reading this ad<br>no take-backs', trapButtons: ['caught 📸'], safeButtons: ['delete the footage'] }
+                    { text: '🎬 nobody:<br>absolutely nobody:<br><span class="gz-pulse">this ad: *exists aggressively*</span>', trapButtons: ['relatable'], safeButtons: ['unsubscribe'] },
+                    { text: '🦭 this ad is my<br><span class="gz-bounce">emotional support pop-up</span><br>please don\'t close me 🥺', trapButtons: ['i\'ll keep u'], safeButtons: ['therapy exists'] },
+                    { text: '🧊 ice spice would<br>never close this ad<br><span class="gz-rainbow">munch munch munch</span>', trapButtons: ['munch 🧊'], safeButtons: ['im not ice spice'] },
+                    { text: '<span class="gz-glow">🏃 caught you in 4k 📸</span><br>reading this ad<br>no take-backs', trapButtons: ['caught 📸'], safeButtons: ['delete the footage'] }
                 ],
                 virusMessages: [
                     '🚀 crypto opportunity fr<br>10000x gains no cap<br>[APE IN]',
@@ -1284,6 +1415,11 @@
             win95: [
                 'OK', 'Cancel', 'Apply', 'Abort', 'Retry', 'Ignore', 
                 'Yes', 'No', 'Help', 'Details >>'
+            ],
+            winxp: [
+                'OK', 'Cancel', 'Send Report', 'Don\'t Send', 'Restart Now',
+                'Ask Clippy 📎', 'New Game', 'Undo', 'Deal Again', 'Hint',
+                'Flag Mine 🚩', 'Restart Level', 'View Scores'
             ],
             flash: [
                 'Skip Ad', 'Play Again', 'Mute 🔇', 'Fullscreen', 'Quality: LOW', 
@@ -2292,6 +2428,7 @@
             if (era.name === 'MySpace/AIM') return 'myspace';
             if (era.name === 'AOL/Dial-up') return 'aol';
             if (era.name === '90s Windows') return 'win95';
+            if (era.name === 'Windows XP') return 'winxp';
             if (era.name === 'Flash Era') return 'flash';
             if (era.name === 'Modern Web 2.0') return 'web20';
             if (era.name === 'Mobile Era') return 'mobile';
