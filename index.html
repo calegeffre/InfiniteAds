@@ -257,20 +257,6 @@
             animation: popupSlideIn 0.3s ease-out;
         }
 
-        .popup-hint {
-            animation: hintFadeIn 0.5s ease-in 10s forwards;
-            opacity: 0;
-        }
-
-        @keyframes hintFadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
-
         /* Era-specific styling */
         
         /* Early Web (1990s) - Gray, basic HTML, under construction vibes */
@@ -1351,21 +1337,21 @@
             { text: 'Unlock Instantly!', style: 'danger' }
         ];
 
-        // HINT SYSTEM - subtle hints for each mechanism
+        // HINT SYSTEM - disabled (hints removed to increase difficulty)
         const MECHANISM_HINTS = {
-            simpleX: '*click the X*',
-            disabledX: '*the X is hidden in plain sight*',
-            movingX: '*catch that X!*',
-            fakeX: '*the real X hides*',
-            multipleX: '*close them all*',
-            keyboardTab: '*Tab to select, Enter to confirm*',
-            puzzle: '*click 1, 2, 3*',
-            holdX: '*hold it down*',
-            doubleClick: '*double tap*',
-            typeX: '*type the letter*',
-            declineBtn: '*just say no*',
-            endlessScroll: '*scroll to freedom*',
-            aiPicker: '*pick your favorite AI*'
+            simpleX: '',
+            disabledX: '',
+            movingX: '',
+            fakeX: '',
+            multipleX: '',
+            keyboardTab: '',
+            puzzle: '',
+            holdX: '',
+            doubleClick: '',
+            typeX: '',
+            declineBtn: '',
+            endlessScroll: '',
+            aiPicker: ''
         };
         const CLOSE_MECHANISMS = {
             simpleX: 'simpleX',           // Red X button
@@ -1950,16 +1936,16 @@
             } else {
                 // Messages with hidden X in the text
                 const fakeXMessages = [
-                    'E[X]CLUSIVE offer!<br>Click the X to close',
-                    'MA[X]IMUM savings!<br>Find the real X',
-                    'E[X]TRA special deal!<br>The X is hiding...',
-                    'BO[X] of surprises!<br>Where\'s the X?',
-                    'NE[X]T level content!<br>Hunt the X',
-                    'TE[X]T us for more!<br>X marks the spot',
-                    'RELA[X] and click<br>the hidden X',
-                    'MI[X]ED signals?<br>Find the X!',
-                    'FI[X] your life!<br>Click [X] to escape',
-                    'E[X]PERIENCE more!<br>X is in plain sight'
+                    'E[X]CLUSIVE offer!',
+                    'MA[X]IMUM savings!',
+                    'E[X]TRA special deal!',
+                    'BO[X] of surprises!',
+                    'NE[X]T level content!',
+                    'TE[X]T us for more!',
+                    'RELA[X] and enjoy!',
+                    'MI[X]ED signals?',
+                    'FI[X] your life!',
+                    'E[X]PERIENCE more!'
                 ];
                 const message = fakeXMessages[Math.floor(Math.random() * fakeXMessages.length)];
                 
