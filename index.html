@@ -2659,7 +2659,12 @@
                 scrollContainer.addEventListener('scroll', function() {
                     if (scrollTimeout) clearTimeout(scrollTimeout);
                     scrollTimeout = setTimeout(function() {
-                        const scrollPercent = scrollContainer.scrollTop / (scrollContainer.scrollHeight - scrollContainer.clientHeight);
+                        const scrollableHeight = scrollContainer.scrollHeight - scrollContainer.clientHeight;
+                        if (scrollableHeight <= 0) {
+                            victoryMsg.style.display = 'block';
+                            return;
+                        }
+                        const scrollPercent = scrollContainer.scrollTop / scrollableHeight;
                         if (scrollPercent > 0.5) {
                             victoryMsg.style.display = 'block';
                         }
