@@ -623,6 +623,125 @@
             animation: cursorBlink 1s infinite;
         }
 
+        /* Endless Scroll Mechanism */
+        .endless-scroll-container {
+            max-height: 300px;
+            overflow-y: scroll;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+            position: relative;
+        }
+        .endless-scroll-container::-webkit-scrollbar {
+            width: 6px;
+        }
+        .endless-scroll-container::-webkit-scrollbar-track {
+            background: #f0f0f0;
+        }
+        .endless-scroll-container::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border-radius: 3px;
+        }
+        .endless-scroll-item {
+            padding: 12px 10px;
+            border-bottom: 1px solid #e0e0e0;
+            font-size: 13px;
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+        }
+        .endless-scroll-item .scroll-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+        .endless-scroll-item .scroll-content {
+            flex: 1;
+        }
+        .endless-scroll-item .scroll-user {
+            font-weight: bold;
+            font-size: 12px;
+        }
+        .endless-scroll-item .scroll-text {
+            font-size: 12px;
+            margin-top: 2px;
+            color: #555;
+        }
+        .endless-scroll-item .scroll-meta {
+            font-size: 10px;
+            color: #999;
+            margin-top: 4px;
+        }
+        .endless-scroll-victory {
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-radius: 8px;
+            margin: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+            animation: genzPulse 1.5s infinite;
+            transition: transform 0.2s;
+        }
+        .endless-scroll-victory:hover {
+            transform: scale(1.05);
+        }
+
+        /* AI Picker Mechanism */
+        .ai-picker-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 12px;
+        }
+        .ai-picker-btn {
+            padding: 14px 10px;
+            border: 2px solid transparent;
+            border-radius: 10px;
+            cursor: pointer;
+            text-align: center;
+            font-size: 13px;
+            font-weight: bold;
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+        }
+        .ai-picker-btn:hover {
+            transform: scale(1.08);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+        .ai-picker-btn .ai-icon {
+            font-size: 28px;
+        }
+        .ai-picker-btn.copilot {
+            background: linear-gradient(135deg, #0078d4, #00bcf2);
+            color: white;
+            border-color: #0078d4;
+        }
+        .ai-picker-btn.gemini {
+            background: linear-gradient(135deg, #4285f4, #ea4335);
+            color: white;
+            border-color: #4285f4;
+        }
+        .ai-picker-btn.claude {
+            background: linear-gradient(135deg, #d97706, #f59e0b);
+            color: white;
+            border-color: #d97706;
+        }
+        .ai-picker-btn.chatgpt {
+            background: linear-gradient(135deg, #10a37f, #1a7f64);
+            color: white;
+            border-color: #10a37f;
+        }
+
         /* Flash Era (2000-2017) - Black with orange accents, loading bars */
         @keyframes flashPulse {
             0%, 100% { box-shadow: 0 0 10px #ff6600, inset 0 0 5px rgba(255, 102, 0, 0.2); }
@@ -1147,7 +1266,20 @@
                     { text: '🎬 nobody:<br>absolutely nobody:<br><span class="gz-pulse">this ad: *exists aggressively*</span>', trapButtons: ['relatable'], safeButtons: ['unsubscribe'] },
                     { text: '🦭 this ad is my<br><span class="gz-bounce">emotional support pop-up</span><br>please don\'t close me 🥺', trapButtons: ['i\'ll keep u'], safeButtons: ['therapy exists'] },
                     { text: '🧊 ice spice would<br>never close this ad<br><span class="gz-rainbow">munch munch munch</span>', trapButtons: ['munch 🧊'], safeButtons: ['im not ice spice'] },
-                    { text: '<span class="gz-glow">🏃 caught you in 4k 📸</span><br>reading this ad<br>no take-backs', trapButtons: ['caught 📸'], safeButtons: ['delete the footage'] }
+                    { text: '<span class="gz-glow">🏃 caught you in 4k 📸</span><br>reading this ad<br>no take-backs', trapButtons: ['caught 📸'], safeButtons: ['delete the footage'] },
+                    // Social media addiction / Strava / BeReal / anti-social-media
+                    { text: '🏃 Strava says you ran<br>0.0 miles this week<br><span class="gz-shake">ur followers noticed 👀</span>', trapButtons: ['Share My Shame 🏃'], safeButtons: ['running from this ad'] },
+                    { text: '<span class="gz-pulse">📸 BeReal ALERT!</span><br>⚠️ time to be real ⚠️<br>2 min left to post!', trapButtons: ['be real now!'], safeButtons: ['be fake instead'] },
+                    { text: '🚴 Strava segment alert:<br>you lost your KOM to<br><span class="gz-bounce">someone named xX_Chad_Xx</span>', trapButtons: ['reclaim my KOM!'], safeButtons: ['let chad have it'] },
+                    { text: '<span class="gz-rainbow">📵 I deleted social media</span><br>and now I just scroll Strava,<br>BeReal, and my notes app', trapButtons: ['same bestie'], safeButtons: ['that\'s still social media'] },
+                    { text: '🏃‍♀️ Strava: "You haven\'t<br>logged an activity in 3 days"<br><span class="gz-glow">your friends are worried</span>', trapButtons: ['log a walk 🚶'], safeButtons: ['let them worry'] },
+                    { text: '<span class="gz-shake">📸 BeReal recap:</span><br>364 days of your ceiling<br>1 day of actual content', trapButtons: ['view my ceilings'], safeButtons: ['sounds about right'] },
+                    { text: '📵 "i quit instagram"<br>*proceeds to post runs on<br>Strava with aesthetic captions*', trapButtons: ['post my splits'], safeButtons: ['called out'] },
+                    { text: '<span class="gz-float">🗺️ Strava heatmap shows</span><br>you only run to the fridge<br>and back. impressive route.', trapButtons: ['it\'s a PR!'], safeButtons: ['fridge is far ok'] },
+                    { text: '📱 "i\'m off social media"<br><span class="gz-pulse">*opens BeReal*</span><br>*opens Strava* *opens Letterboxd*', trapButtons: ['those don\'t count'], safeButtons: ['they absolutely count'] },
+                    { text: '<span class="gz-glow">🏅 Strava kudos alert!</span><br>your mom gave you kudos<br>on your 0.3mi walk', trapButtons: ['thanks mom 🥺'], safeButtons: ['cherish the kudos'] },
+                    { text: '📸 BeReal: you have<br><span class="gz-bounce">0 friends on here</span><br>just you and the void', trapButtons: ['befriend the void'], safeButtons: ['void is enough'] },
+                    { text: '📵 deleted twitter, insta,<br>and tiktok. now i just<br><span class="gz-rainbow">doomscroll linkedin instead</span>', trapButtons: ['open to work 💼'], safeButtons: ['same difference'] }
                 ],
                 virusMessages: [
                     '🚀 crypto opportunity fr<br>10000x gains no cap<br>[APE IN]',
@@ -1231,7 +1363,9 @@
             holdX: '*hold it down*',
             doubleClick: '*double tap*',
             typeX: '*type the letter*',
-            declineBtn: '*just say no*'
+            declineBtn: '*just say no*',
+            endlessScroll: '*scroll to freedom*',
+            aiPicker: '*pick your favorite AI*'
         };
         const CLOSE_MECHANISMS = {
             simpleX: 'simpleX',           // Red X button
@@ -1244,7 +1378,9 @@
             holdX: 'holdX',               // Hold X for 1 second
             doubleClick: 'doubleClick',   // Double-click X
             typeX: 'typeX',               // Type 'x' key to close
-            declineBtn: 'declineBtn'      // Click decline button (no X)
+            declineBtn: 'declineBtn',      // Click decline button (no X)
+            endlessScroll: 'endlessScroll',  // Endless scroll feed, scroll to escape
+            aiPicker: 'aiPicker'             // Pick favorite AI chatbot to close
         };
         
         // Personality button pairs - [accept (trap), decline (close)]
@@ -2423,6 +2559,185 @@
             return popup;
         }
 
+        function createEndlessScrollPopup(era, adData, isVirus = false) {
+            const adText = adData.text;
+            const popup = document.createElement('div');
+            const eraClass = getEraClass(era);
+            popup.className = 'popup-ad era-popup' + (eraClass ? ' ' + eraClass : '') + (isVirus ? ' virus-popup' : '');
+            const pos = getRandomPosition();
+            popup.style.left = pos.x + 'px';
+            popup.style.top = pos.y + 'px';
+            popup.style.width = '300px';
+            popup.style.backgroundColor = isVirus ? '#ff6b6b' : era.bgColor;
+            popup.style.borderColor = isVirus ? '#cc0000' : era.borderColor;
+            popup.style.color = isVirus ? 'white' : era.textColor;
+            popup.style.fontFamily = era.fontFamily;
+            popup.style.fontSize = era.fontSize;
+
+            if (isVirus) {
+                const content = document.createElement('div');
+                content.className = 'popup-ad-content';
+                content.innerHTML = `<p>${adText}</p>`;
+                content.appendChild(createTrapButtons(popup, Math.random() > 0.5 ? 2 : 1));
+                popup.appendChild(content);
+                return popup;
+            }
+
+            const content = document.createElement('div');
+            content.className = 'popup-ad-content';
+            const hintText = `<p class="popup-hint" style="margin-top: 15px; font-style: italic; font-size: 0.85em;">${MECHANISM_HINTS.endlessScroll}</p>`;
+            content.innerHTML = `<p>${adText}</p>${hintText}`;
+
+            const closeBtn = document.createElement('button');
+            closeBtn.className = 'popup-ad-close-btn';
+            closeBtn.innerHTML = '&times;';
+            closeBtn.addEventListener('click', function() {
+                content.innerHTML = '';
+                closeBtn.style.display = 'none';
+                popup.style.width = '320px';
+
+                const scrollHeader = document.createElement('div');
+                scrollHeader.style.padding = '8px 12px';
+                scrollHeader.style.fontWeight = 'bold';
+                scrollHeader.style.fontSize = '14px';
+                scrollHeader.style.borderBottom = '1px solid #e0e0e0';
+                scrollHeader.innerHTML = '📱 Your Feed';
+                content.appendChild(scrollHeader);
+
+                const scrollContainer = document.createElement('div');
+                scrollContainer.className = 'endless-scroll-container';
+
+                const feedItems = [
+                    { emoji: '🏃', user: 'RunnerGal42', text: 'Morning 5K! Feeling blessed 🙏', meta: '2 kudos · 3 min ago' },
+                    { emoji: '📸', user: 'authentic_jake', text: 'BeReal: me staring at my phone lol', meta: '📍 my couch · 5 min ago' },
+                    { emoji: '🚴', user: 'CycleKing', text: 'New Strava segment PR!! 🔥', meta: '47 kudos · 12 min ago' },
+                    { emoji: '📵', user: 'digital_detox_', text: 'Day 3 off social media (posted from Strava)', meta: '💬 12 comments · 20 min ago' },
+                    { emoji: '🏊', user: 'SwimFit_Emma', text: 'Pool day! 2000m 🏊‍♀️', meta: '8 kudos · 25 min ago' },
+                    { emoji: '📸', user: 'just_being_real', text: 'BeReal: eating cereal at 3pm no judgment', meta: '📍 kitchen · 30 min ago' },
+                    { emoji: '🥾', user: 'HikeBro', text: 'Summit selfie! (took 47 tries)', meta: '23 kudos · 1 hr ago' },
+                    { emoji: '📵', user: 'offline_era', text: 'I don\'t use social media anymore *posts on Letterboxd*', meta: '💬 8 comments · 1 hr ago' },
+                    { emoji: '🏃', user: 'slow_jogger_9', text: 'Walked to mailbox. Strava says 0.01mi PR 🏅', meta: '1 kudo (mom) · 2 hr ago' },
+                    { emoji: '📸', user: 'real_one_fr', text: 'BeReal: accidentally took a pic of my thumb', meta: '📍 bed · 2 hr ago' },
+                    { emoji: '🚴', user: 'velo_vibes', text: 'Is Strava down or is it just my fitness?', meta: '💬 34 comments · 3 hr ago' },
+                    { emoji: '📵', user: 'no_more_scrolling', text: 'Deleted IG. Now I rank movies on Letterboxd for 4 hrs', meta: '⭐ 2.5 avg rating · 3 hr ago' },
+                    { emoji: '🏃', user: 'MarathonMike', text: 'Easy 20 miler today 😤', meta: '156 kudos · 4 hr ago' },
+                    { emoji: '📸', user: 'bereal_queen', text: 'BeReal: screenshot of me scrolling Strava', meta: '📍 everywhere · 4 hr ago' },
+                    { emoji: '🧘', user: 'zen_but_online', text: 'Meditated for 10min (posted on 3 apps)', meta: '💬 5 comments · 5 hr ago' },
+                    { emoji: '📵', user: 'touch_grass_plz', text: 'Quit all apps. Miss nothing. (checks BeReal 47x/day)', meta: '🌱 · 5 hr ago' },
+                    { emoji: '🏃', user: 'couch_to_5k_to_couch', text: 'Ran 1 mile. Rewarded myself with 3 hrs of scrolling', meta: '3 kudos · 6 hr ago' },
+                    { emoji: '📸', user: 'not_staged', text: 'BeReal: totally candid pic (attempt #12)', meta: '📍 good lighting spot · 6 hr ago' },
+                    { emoji: '🚴', user: 'ebike_confession', text: 'My Strava KOM is on an e-bike. Nobody knows.', meta: '89 kudos · 7 hr ago' },
+                    { emoji: '📵', user: 'reformed_scroller', text: 'Replaced doomscrolling with Strava stalking 📊', meta: '💬 21 comments · 8 hr ago' }
+                ];
+
+                feedItems.forEach(function(item) {
+                    const feedEl = document.createElement('div');
+                    feedEl.className = 'endless-scroll-item';
+                    feedEl.innerHTML = `
+                        <div class="scroll-avatar">${item.emoji}</div>
+                        <div class="scroll-content">
+                            <div class="scroll-user">@${item.user}</div>
+                            <div class="scroll-text">${item.text}</div>
+                            <div class="scroll-meta">${item.meta}</div>
+                        </div>
+                    `;
+                    scrollContainer.appendChild(feedEl);
+                });
+
+                const victoryMsg = document.createElement('div');
+                victoryMsg.className = 'endless-scroll-victory';
+                victoryMsg.style.display = 'none';
+                victoryMsg.innerHTML = '🏆 Ok you defeated the endless scroll 🏆<br><span style="font-size: 12px;">click to escape</span>';
+                victoryMsg.addEventListener('click', function() {
+                    adClosed(popup, 15);
+                });
+                scrollContainer.appendChild(victoryMsg);
+
+                content.appendChild(scrollContainer);
+
+                let scrollTimeout;
+                scrollContainer.addEventListener('scroll', function() {
+                    if (scrollTimeout) clearTimeout(scrollTimeout);
+                    scrollTimeout = setTimeout(function() {
+                        const scrollableHeight = scrollContainer.scrollHeight - scrollContainer.clientHeight;
+                        if (scrollableHeight <= 0) {
+                            victoryMsg.style.display = 'block';
+                            return;
+                        }
+                        const scrollPercent = scrollContainer.scrollTop / scrollableHeight;
+                        if (scrollPercent > 0.5) {
+                            victoryMsg.style.display = 'block';
+                        }
+                    }, 200);
+                });
+            });
+
+            popup.appendChild(closeBtn);
+            popup.appendChild(content);
+            return popup;
+        }
+
+        function createAiPickerPopup(era, adData, isVirus = false) {
+            const adText = adData.text;
+            const popup = document.createElement('div');
+            const eraClass = getEraClass(era);
+            popup.className = 'popup-ad era-popup' + (eraClass ? ' ' + eraClass : '') + (isVirus ? ' virus-popup' : '');
+            const pos = getRandomPosition();
+            popup.style.left = pos.x + 'px';
+            popup.style.top = pos.y + 'px';
+            popup.style.width = '320px';
+            popup.style.backgroundColor = isVirus ? '#ff6b6b' : era.bgColor;
+            popup.style.borderColor = isVirus ? '#cc0000' : era.borderColor;
+            popup.style.color = isVirus ? 'white' : era.textColor;
+            popup.style.fontFamily = era.fontFamily;
+            popup.style.fontSize = era.fontSize;
+
+            const content = document.createElement('div');
+            content.className = 'popup-ad-content';
+
+            if (isVirus) {
+                content.innerHTML = `<p>${adText}</p>`;
+                content.appendChild(createTrapButtons(popup, Math.random() > 0.5 ? 2 : 1));
+                popup.appendChild(content);
+                return popup;
+            }
+
+            const hintText = `<p class="popup-hint" style="margin-top: 15px; font-style: italic; font-size: 0.85em;">${MECHANISM_HINTS.aiPicker}</p>`;
+            content.innerHTML = `<p>${adText}</p>${hintText}`;
+
+            const pickerLabel = document.createElement('p');
+            pickerLabel.style.textAlign = 'center';
+            pickerLabel.style.fontWeight = 'bold';
+            pickerLabel.style.margin = '10px 0 5px 0';
+            pickerLabel.style.fontSize = '14px';
+            pickerLabel.textContent = '🤖 Pick your favorite to close:';
+            content.appendChild(pickerLabel);
+
+            const grid = document.createElement('div');
+            grid.className = 'ai-picker-grid';
+
+            const aiOptions = [
+                { name: 'Copilot', cssClass: 'copilot', icon: '🧑‍✈️' },
+                { name: 'Gemini', cssClass: 'gemini', icon: '♊' },
+                { name: 'Claude', cssClass: 'claude', icon: '🟠' },
+                { name: 'ChatGPT', cssClass: 'chatgpt', icon: '💚' }
+            ];
+
+            aiOptions.forEach(function(ai) {
+                const btn = document.createElement('button');
+                btn.className = 'ai-picker-btn ' + ai.cssClass;
+                btn.innerHTML = `<span class="ai-icon">${ai.icon}</span>${ai.name}`;
+                btn.addEventListener('click', function() {
+                    adClosed(popup, 10);
+                });
+                grid.appendChild(btn);
+            });
+
+            content.appendChild(grid);
+            popup.appendChild(content);
+            return popup;
+        }
+
         function getEraClass(era) {
             if (era.name === 'Early Web') return 'earlyWeb';
             if (era.name === 'MySpace/AIM') return 'myspace';
@@ -2461,6 +2776,10 @@
                     return createTypeXPopup(era, adData, isVirus);
                 case CLOSE_MECHANISMS.declineBtn:
                     return createDeclineBtnPopup(era, adData, isVirus);
+                case CLOSE_MECHANISMS.endlessScroll:
+                    return createEndlessScrollPopup(era, adData, isVirus);
+                case CLOSE_MECHANISMS.aiPicker:
+                    return createAiPickerPopup(era, adData, isVirus);
                 default:
                     return createSimpleXPopup(era, adData, isVirus);
             }
