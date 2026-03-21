@@ -2852,6 +2852,71 @@
                 display.textContent = points;
             }
         }
+
+        // ── Preview mode ──────────────────────────────────────────────────────
+        // Open the page with ?preview=eraKey:mechanism:adIndex to bypass the
+        // start screen and immediately display a specific ad popup.
+        //
+        // Examples:
+        //   ?preview=earlyWeb                   → first earlyWeb ad, simpleX
+        //   ?preview=earlyWeb:simpleX:2         → earlyWeb ad[2], simpleX
+        //   ?preview=genZ:endlessScroll         → first genZ ad, endlessScroll
+        //   ?preview=earlyWeb:simpleX:credit    → earlyWeb ad whose text contains "credit", simpleX
+        //   ?preview=list                       → logs available era keys to the console
+        (function() {
+            const params = new URLSearchParams(window.location.search);
+            const preview = params.get('preview');
+            if (!preview) return;
+
+            if (preview === 'list') {
+                console.log('Available era keys:', Object.keys(ERAS).join(', '));
+                console.log('Available mechanisms:', Object.keys(CLOSE_MECHANISMS).join(', '));
+                return;
+            }
+
+            const parts = preview.split(':');
+            const eraKey = parts[0];
+            const mechanismKey = parts[1] || 'simpleX';
+            const adSelector = parts[2];
+
+            const era = ERAS[eraKey];
+            if (!era) {
+                console.error('Unknown era key:', eraKey, '| Available:', Object.keys(ERAS).join(', '));
+                return;
+            }
+
+            let adData;
+            if (adSelector !== undefined) {
+                const idx = parseInt(adSelector, 10);
+                if (!isNaN(idx)) {
+                    adData = era.examples[(idx % era.examples.length + era.examples.length) % era.examples.length];
+                } else {
+                    const needle = adSelector.toLowerCase();
+                    adData = era.examples.find(function(ex) {
+                        const txt = typeof ex === 'object' ? ex.text : ex;
+                        return txt.toLowerCase().indexOf(needle) !== -1;
+                    }) || era.examples[0];
+                }
+            } else {
+                adData = era.examples[0];
+            }
+            if (typeof adData === 'string') adData = { text: adData };
+
+            const closeMechanism = CLOSE_MECHANISMS[mechanismKey] || CLOSE_MECHANISMS.simpleX;
+
+            // Activate game mode and bypass start screen
+            gameActive = true;
+            document.getElementById('startScreen').classList.add('hidden');
+            document.getElementById('gameArea').classList.add('active');
+            updatePointsDisplay();
+
+            const ad = createAd(era, closeMechanism, adData, false);
+            // Center the ad for preview
+            ad.style.left = '50%';
+            ad.style.top = '50%';
+            ad.style.transform = 'translate(-50%, -50%)';
+            document.body.appendChild(ad);
+        }());
     </script>
 </body>
 </html>
