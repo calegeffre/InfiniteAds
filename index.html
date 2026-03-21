@@ -960,7 +960,11 @@
                     { text: '💾 Best viewed in Netscape Navigator 4.0<br>🎁 Download it FREE right now!', trapButtons: ['Get Netscape FREE'], safeButtons: ['I Use IE'] },
                     { text: '🎵 EPIC MIDI COLLECTION 🎵<br>500+ songs, all FREE to download!', trapButtons: ['GET ALL 500!'], safeButtons: ['My Ears Hurt'] },
                     { text: '👁️ This page has been viewed<br>by CELEBRITIES! Click to see who!', trapButtons: ['See The List!'], safeButtons: ['That\'s A Stretch'] },
-                    { text: '🖱️ CLICK HERE — You won\'t believe<br>what our webmaster discovered!', trapButtons: ['I MUST KNOW!!!'], safeButtons: ['I Believe Nothing'] }
+                    { text: '🖱️ CLICK HERE — You won\'t believe<br>what our webmaster discovered!', trapButtons: ['I MUST KNOW!!!'], safeButtons: ['I Believe Nothing'] },
+                    { text: '💳 Is your credit card number stolen?<br>Type it below to find out!<br>100% SAFE & SECURE ✅', trapButtons: ['Check My Card Number! 💳'], safeButtons: ['that\'s definitely a scam'] },
+                    { text: '🔒 SECURITY ALERT: Find out if your<br>Social Security Number is in our<br>database! Enter SSN below:', trapButtons: ['Check My SSN Now!'], safeButtons: ['absolutely not'] },
+                    { text: '🏦 BANK ACCOUNT BREACH CHECK!<br>Enter your account number to verify<br>it hasn\'t been compromised!', trapButtons: ['Verify My Account! 🏦'], safeButtons: ['no chance'] },
+                    { text: '🔑 PASSWORD SAFETY CHECKER!<br>Enter your password below to see<br>how many hackers have it!', trapButtons: ['Check My Password!'], safeButtons: ['this is a trap'] }
                 ],
                 virusMessages: [
                     '🎰 CONGRATULATIONS!!!<br>You are visitor #1,000,000!<br>CLAIM YOUR FREE LAPTOP NOW!',
@@ -2587,7 +2591,7 @@
                 scrollHeader.style.fontWeight = 'bold';
                 scrollHeader.style.fontSize = '14px';
                 scrollHeader.style.borderBottom = '1px solid #e0e0e0';
-                scrollHeader.innerHTML = '📱 Your Feed';
+                scrollHeader.innerHTML = '🏃 Strava Feed';
                 content.appendChild(scrollHeader);
 
                 const scrollContainer = document.createElement('div');
@@ -2595,25 +2599,45 @@
 
                 const feedItems = [
                     { emoji: '🏃', user: 'RunnerGal42', text: 'Morning 5K! Feeling blessed 🙏', meta: '2 kudos · 3 min ago' },
-                    { emoji: '📸', user: 'authentic_jake', text: 'BeReal: me staring at my phone lol', meta: '📍 my couch · 5 min ago' },
+                    { emoji: '🚶', user: 'mailbox_miles', text: 'Walk to mailbox. 0.1 mi. New PR. 🏅', meta: '1 kudo (mom) · 5 min ago' },
                     { emoji: '🚴', user: 'CycleKing', text: 'New Strava segment PR!! 🔥', meta: '47 kudos · 12 min ago' },
-                    { emoji: '📵', user: 'digital_detox_', text: 'Day 3 off social media (posted from Strava)', meta: '💬 12 comments · 20 min ago' },
+                    { emoji: '✈️', user: 'airport_athlete', text: 'Terminal B to Terminal C jog. 0.4 mi. Caught my flight tho 🏃', meta: '11 kudos · 18 min ago' },
                     { emoji: '🏊', user: 'SwimFit_Emma', text: 'Pool day! 2000m 🏊‍♀️', meta: '8 kudos · 25 min ago' },
-                    { emoji: '📸', user: 'just_being_real', text: 'BeReal: eating cereal at 3pm no judgment', meta: '📍 kitchen · 30 min ago' },
+                    { emoji: '🛒', user: 'grocery_gains', text: 'Ran to the grocery store. Strava says 0.2mi. Core workout: carrying bags.', meta: '4 kudos · 30 min ago' },
                     { emoji: '🥾', user: 'HikeBro', text: 'Summit selfie! (took 47 tries)', meta: '23 kudos · 1 hr ago' },
-                    { emoji: '📵', user: 'offline_era', text: 'I don\'t use social media anymore *posts on Letterboxd*', meta: '💬 8 comments · 1 hr ago' },
-                    { emoji: '🏃', user: 'slow_jogger_9', text: 'Walked to mailbox. Strava says 0.01mi PR 🏅', meta: '1 kudo (mom) · 2 hr ago' },
-                    { emoji: '📸', user: 'real_one_fr', text: 'BeReal: accidentally took a pic of my thumb', meta: '📍 bed · 2 hr ago' },
-                    { emoji: '🚴', user: 'velo_vibes', text: 'Is Strava down or is it just my fitness?', meta: '💬 34 comments · 3 hr ago' },
-                    { emoji: '📵', user: 'no_more_scrolling', text: 'Deleted IG. Now I rank movies on Letterboxd for 4 hrs', meta: '⭐ 2.5 avg rating · 3 hr ago' },
-                    { emoji: '🏃', user: 'MarathonMike', text: 'Easy 20 miler today 😤', meta: '156 kudos · 4 hr ago' },
-                    { emoji: '📸', user: 'bereal_queen', text: 'BeReal: screenshot of me scrolling Strava', meta: '📍 everywhere · 4 hr ago' },
-                    { emoji: '🧘', user: 'zen_but_online', text: 'Meditated for 10min (posted on 3 apps)', meta: '💬 5 comments · 5 hr ago' },
-                    { emoji: '📵', user: 'touch_grass_plz', text: 'Quit all apps. Miss nothing. (checks BeReal 47x/day)', meta: '🌱 · 5 hr ago' },
-                    { emoji: '🏃', user: 'couch_to_5k_to_couch', text: 'Ran 1 mile. Rewarded myself with 3 hrs of scrolling', meta: '3 kudos · 6 hr ago' },
-                    { emoji: '📸', user: 'not_staged', text: 'BeReal: totally candid pic (attempt #12)', meta: '📍 good lighting spot · 6 hr ago' },
-                    { emoji: '🚴', user: 'ebike_confession', text: 'My Strava KOM is on an e-bike. Nobody knows.', meta: '89 kudos · 7 hr ago' },
-                    { emoji: '📵', user: 'reformed_scroller', text: 'Replaced doomscrolling with Strava stalking 📊', meta: '💬 21 comments · 8 hr ago' }
+                    { emoji: '📵', user: 'digital_detox_', text: 'Day 3 off social media (posted from Strava)', meta: '💬 12 comments · 1 hr ago' },
+                    { emoji: '🏃', user: 'slow_jogger_9', text: 'Jogged to the end of the driveway and back. Strava says 0.02mi. New segment record.', meta: '1 kudo (mom) · 2 hr ago' },
+                    { emoji: '🚴', user: 'ebike_confession', text: 'My Strava KOM is on an e-bike. Nobody knows.', meta: '89 kudos · 2 hr ago' },
+                    { emoji: '🚶', user: 'fridge_runner', text: 'Strava heatmap is just my kitchen floor. 0.05mi. Every. Day.', meta: '💬 6 comments · 3 hr ago' },
+                    { emoji: '🏃', user: 'MarathonMike', text: 'Easy 20 miler today 😤', meta: '156 kudos · 3 hr ago' },
+                    { emoji: '✈️', user: 'layover_laps', text: 'Did 3 laps of the departure lounge while waiting. Strava: 0.8mi. Security: confused.', meta: '17 kudos · 4 hr ago' },
+                    { emoji: '🧘', user: 'zen_but_online', text: 'Meditated for 10min (posted on 3 apps)', meta: '💬 5 comments · 4 hr ago' },
+                    { emoji: '🏃', user: 'couch_to_5k_to_couch', text: 'Ran 1 mile. Rewarded myself with 3 hrs of scrolling', meta: '3 kudos · 5 hr ago' },
+                    { emoji: '🚴', user: 'velo_vibes', text: 'Is Strava down or is it just my fitness?', meta: '💬 34 comments · 5 hr ago' },
+                    { emoji: '📵', user: 'reformed_scroller', text: 'Replaced doomscrolling with Strava stalking 📊', meta: '💬 21 comments · 6 hr ago' },
+                    { emoji: '🏃', user: 'parking_lot_pr', text: 'Jogged to the far end of the parking lot. 0.07mi. New segment KOM.', meta: '2 kudos · 6 hr ago' },
+                    { emoji: '🚶', user: 'step_counter_chad', text: 'Forgot to start Strava. Ran 10 miles. It didn\'t count. I\'m nothing.', meta: '💬 44 comments · 7 hr ago' },
+                    { emoji: '✈️', user: 'gate_change_grind', text: 'Gate changed from A12 to C47. Strava auto-logged: 0.6mi run, 1 stress response.', meta: '28 kudos · 7 hr ago' },
+                    { emoji: '🏃', user: 'segment_hunter', text: 'Woke up at 4am to steal a KOM nobody else has attempted. #Dedication', meta: '72 kudos · 8 hr ago' },
+                    { emoji: '🚴', user: 'cadence_queen', text: 'Accidentally rode a Strava segment backwards. New QOM. Worth it.', meta: '33 kudos · 8 hr ago' },
+                    { emoji: '🛒', user: 'supermarket_sprints', text: 'Sprinted for the last parking spot. 0.03mi. My fastest pace ever. Strava verified.', meta: '5 kudos · 9 hr ago' },
+                    { emoji: '🏃', user: 'accountability_arc', text: 'Posted a 0.3mi walk with the caption "never stop grinding" 💪', meta: '19 kudos · 9 hr ago' },
+                    { emoji: '📵', user: 'offline_era', text: '"I quit social media." *checks Strava 47 times today*', meta: '💬 8 comments · 10 hr ago' },
+                    { emoji: '✈️', user: 'tsa_tempo', text: 'Ran through TSA pre-check because the line was short. Strava logged it as a PR. No regrets.', meta: '41 kudos · 10 hr ago' },
+                    { emoji: '🏃', user: 'kudos_economy', text: 'Gave 200 kudos today hoping for reciprocation. Received: 2.', meta: '💬 13 comments · 11 hr ago' },
+                    { emoji: '🚶', user: 'casual_stroller', text: 'Walked to the bathroom and back at work. Strava: 0.02mi, Active Minutes: 1. Progress.', meta: '1 kudo · 11 hr ago' },
+                    { emoji: '🚴', user: 'wind_excuses', text: 'Segment time was slow because of a headwind in both directions somehow.', meta: '💬 29 comments · 12 hr ago' },
+                    { emoji: '✈️', user: 'concourse_crusher', text: 'Entire concourse jog before boarding. 1.1mi in flip flops. Strava 5 stars.', meta: '63 kudos · 13 hr ago' },
+                    { emoji: '🏃', user: 'pace_anxiety', text: 'Ran slow on purpose so my average pace wouldn\'t drop. Core memory.', meta: '7 kudos · 14 hr ago' },
+                    { emoji: '🛒', user: 'cart_intervals', text: 'Interval training: sprint with full cart, rest at register, repeat. 0.15mi. Elite.', meta: '9 kudos · 15 hr ago' },
+                    { emoji: '🏃', user: 'strava_tourist', text: 'Mapped out a route that spells "HELP" from the satellite view.', meta: '204 kudos · 16 hr ago' },
+                    { emoji: '🚶', user: 'commute_logger', text: 'Logged my walk from bed to desk. Segment name: "The Grind." 0.008mi. PR.', meta: '3 kudos · 17 hr ago' },
+                    { emoji: '✈️', user: 'delayed_miles', text: 'Flight delayed 3 hours. Ran the entire terminal. Strava: 4.2mi. Airline: unapologetic.', meta: '88 kudos · 18 hr ago' },
+                    { emoji: '🚴', user: 'trophy_hunter', text: 'There are 847 trophies in my Strava. My wife has seen me twice this month.', meta: '💬 52 comments · 19 hr ago' },
+                    { emoji: '🏃', user: 'midnight_miles', text: 'Went for a midnight run just so today\'s distance would beat yesterday\'s.', meta: '14 kudos · 20 hr ago' },
+                    { emoji: '🚶', user: 'elevator_rebel', text: 'Took the stairs instead of elevator. Strava: 0.04mi. LinkedIn post: incoming.', meta: '6 kudos · 22 hr ago' },
+                    { emoji: '✈️', user: 'boarding_bolt', text: 'They called my boarding group. I was at the other gate. Strava: fastest 400m of my life.', meta: '117 kudos · 23 hr ago' },
+                    { emoji: '🏃', user: 'trophy_case_full', text: 'Out of storage for Strava trophies. Deleted my childhood photos to make room.', meta: '💬 71 comments · 1 day ago' }
                 ];
 
                 feedItems.forEach(function(item) {
@@ -2828,6 +2852,71 @@
                 display.textContent = points;
             }
         }
+
+        // ── Preview mode ──────────────────────────────────────────────────────
+        // Open the page with ?preview=eraKey:mechanism:adIndex to bypass the
+        // start screen and immediately display a specific ad popup.
+        //
+        // Examples:
+        //   ?preview=earlyWeb                   → first earlyWeb ad, simpleX
+        //   ?preview=earlyWeb:simpleX:2         → earlyWeb ad[2], simpleX
+        //   ?preview=genZ:endlessScroll         → first genZ ad, endlessScroll
+        //   ?preview=earlyWeb:simpleX:credit    → earlyWeb ad whose text contains "credit", simpleX
+        //   ?preview=list                       → logs available era keys to the console
+        (function() {
+            const params = new URLSearchParams(window.location.search);
+            const preview = params.get('preview');
+            if (!preview) return;
+
+            if (preview === 'list') {
+                console.log('Available era keys:', Object.keys(ERAS).join(', '));
+                console.log('Available mechanisms:', Object.keys(CLOSE_MECHANISMS).join(', '));
+                return;
+            }
+
+            const parts = preview.split(':');
+            const eraKey = parts[0];
+            const mechanismKey = parts[1] || 'simpleX';
+            const adSelector = parts[2];
+
+            const era = ERAS[eraKey];
+            if (!era) {
+                console.error('Unknown era key:', eraKey, '| Available:', Object.keys(ERAS).join(', '));
+                return;
+            }
+
+            let adData;
+            if (adSelector !== undefined) {
+                const idx = parseInt(adSelector, 10);
+                if (!isNaN(idx)) {
+                    adData = era.examples[(idx % era.examples.length + era.examples.length) % era.examples.length];
+                } else {
+                    const needle = adSelector.toLowerCase();
+                    adData = era.examples.find(function(ex) {
+                        const txt = typeof ex === 'object' ? ex.text : ex;
+                        return txt.toLowerCase().indexOf(needle) !== -1;
+                    }) || era.examples[0];
+                }
+            } else {
+                adData = era.examples[0];
+            }
+            if (typeof adData === 'string') adData = { text: adData };
+
+            const closeMechanism = CLOSE_MECHANISMS[mechanismKey] || CLOSE_MECHANISMS.simpleX;
+
+            // Activate game mode and bypass start screen
+            gameActive = true;
+            document.getElementById('startScreen').classList.add('hidden');
+            document.getElementById('gameArea').classList.add('active');
+            updatePointsDisplay();
+
+            const ad = createAd(era, closeMechanism, adData, false);
+            // Center the ad for preview
+            ad.style.left = '50%';
+            ad.style.top = '50%';
+            ad.style.transform = 'translate(-50%, -50%)';
+            document.body.appendChild(ad);
+        }());
     </script>
 </body>
 </html>
