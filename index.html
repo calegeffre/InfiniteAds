@@ -780,6 +780,135 @@
             font-family: -apple-system, BlinkMacSystemFont, "SF Pro", sans-serif;
         }
 
+        /* ── Angry Birds Ad ──────────────────────────────────────────────── */
+        .angry-bird-popup {
+            padding: 15px !important;
+        }
+        .ab-game-area {
+            position: relative;
+            width: 100%;
+            height: 140px;
+            background: linear-gradient(to bottom, #87CEEB 0%, #87CEEB 62%, #8BC34A 62%, #4CAF50 100%);
+            border-radius: 6px;
+            overflow: hidden;
+            margin-top: 8px;
+            cursor: crosshair;
+            border: 2px solid #5d9a3b;
+            user-select: none;
+        }
+        .ab-title-bar {
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            background: rgba(0,0,0,0.55);
+            color: #fff;
+            font-size: 11px;
+            font-weight: bold;
+            padding: 3px 8px;
+            text-align: center;
+            z-index: 20;
+        }
+        .ab-miss-counter {
+            position: absolute;
+            top: 22px; right: 6px;
+            font-size: 11px;
+            font-weight: bold;
+            color: #cc0000;
+            background: rgba(255,255,255,0.75);
+            padding: 1px 5px;
+            border-radius: 4px;
+            z-index: 15;
+        }
+        /* Slingshot fork */
+        .ab-slingshot {
+            position: absolute;
+            bottom: 20px;
+            left: 18px;
+            width: 30px;
+            height: 46px;
+            z-index: 6;
+        }
+        .ab-slingshot-trunk {
+            position: absolute;
+            bottom: 0; left: 13px;
+            width: 5px; height: 32px;
+            background: #6B3410;
+            border-radius: 2px;
+        }
+        .ab-slingshot-left {
+            position: absolute;
+            top: 0; left: 0;
+            width: 5px; height: 24px;
+            background: #8B4513;
+            border-radius: 2px;
+            transform: rotate(-18deg);
+            transform-origin: bottom center;
+        }
+        .ab-slingshot-right {
+            position: absolute;
+            top: 0; right: 0;
+            width: 5px; height: 24px;
+            background: #8B4513;
+            border-radius: 2px;
+            transform: rotate(18deg);
+            transform-origin: bottom center;
+        }
+        /* Rubber band */
+        .ab-band {
+            position: absolute;
+            top: 8px; left: 3px; right: 3px;
+            height: 2px;
+            background: #c97c00;
+            border-radius: 1px;
+            z-index: 7;
+        }
+        /* Bird */
+        .ab-bird {
+            position: absolute;
+            bottom: 58px;
+            left: 14px;
+            font-size: 24px;
+            z-index: 10;
+            line-height: 1;
+            pointer-events: none;
+        }
+        /* Pig target */
+        .ab-pig {
+            position: absolute;
+            bottom: 26px;
+            right: 22px;
+            font-size: 30px;
+            z-index: 10;
+            line-height: 1;
+            pointer-events: none;
+        }
+        /* Clouds */
+        .ab-cloud {
+            position: absolute;
+            font-size: 20px;
+            opacity: 0.85;
+            pointer-events: none;
+        }
+        /* Flying bird animation layer */
+        .ab-flying-bird {
+            position: absolute;
+            font-size: 24px;
+            z-index: 25;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            line-height: 1;
+        }
+        @keyframes ab-pig-wobble {
+            0%,100% { transform: rotate(-4deg); }
+            50%      { transform: rotate(4deg); }
+        }
+        .ab-pig-wobble {
+            animation: ab-pig-wobble 0.9s ease-in-out infinite;
+        }
+        @keyframes ab-pig-panic {
+            0%,100% { transform: scale(1); }
+            50%      { transform: scale(1.15); }
+        }
+
         /* Trap button styles */
         .trap-button {
             display: inline-block;
@@ -1355,7 +1484,8 @@
             typeX: '',
             declineBtn: '',
             endlessScroll: '',
-            aiPicker: ''
+            aiPicker: '',
+            angryBird: ''
         };
         const CLOSE_MECHANISMS = {
             simpleX: 'simpleX',           // Red X button
@@ -1370,7 +1500,8 @@
             typeX: 'typeX',               // Type 'x' key to close
             declineBtn: 'declineBtn',      // Click decline button (no X)
             endlessScroll: 'endlessScroll',  // Endless scroll feed, scroll to escape
-            aiPicker: 'aiPicker'             // Pick favorite AI chatbot to close
+            aiPicker: 'aiPicker',            // Pick favorite AI chatbot to close
+            angryBird: 'angryBird'           // Shoot the pig with a bird to close
         };
         
         // Personality button pairs - [accept (trap), decline (close)]
@@ -2762,6 +2893,210 @@
             return '';
         }
 
+        function createAngryBirdPopup(era, adData, isVirus = false) {
+            const adText = adData.text;
+            const popup = document.createElement('div');
+            const eraClass = getEraClass(era);
+            popup.className = 'popup-ad era-popup angry-bird-popup' + (eraClass ? ' ' + eraClass : '') + (isVirus ? ' virus-popup' : '');
+            const pos = getRandomPosition();
+            popup.style.left = pos.x + 'px';
+            popup.style.top = pos.y + 'px';
+            popup.style.width = '310px';
+
+            if (isVirus) {
+                popup.style.backgroundColor = '#ff6b6b';
+                popup.style.borderColor = '#cc0000';
+                popup.style.color = 'white';
+                popup.style.fontFamily = era.fontFamily;
+                popup.style.fontSize = era.fontSize;
+                const content = document.createElement('div');
+                content.className = 'popup-ad-content';
+                content.innerHTML = `<p>${adText}</p>`;
+                content.appendChild(createTrapButtons(popup, Math.random() > 0.5 ? 2 : 1));
+                popup.appendChild(content);
+                return popup;
+            }
+
+            popup.style.backgroundColor = era.bgColor;
+            popup.style.borderColor = era.borderColor;
+            popup.style.color = era.textColor;
+            popup.style.fontFamily = era.fontFamily;
+            popup.style.fontSize = era.fontSize;
+
+            let misses = 0;
+            const maxMisses = 3;
+            const HIT_RADIUS = 38;
+            const ARC_HEIGHT = 55;
+            const FLIGHT_DURATION = 480;
+            const HIT_SCORE = 20;
+            const HIT_CLOSE_DELAY = 500;
+            let birdInFlight = false;
+
+            const content = document.createElement('div');
+            content.className = 'popup-ad-content';
+            content.innerHTML = `<p style="margin-bottom:6px;font-size:0.88em;">${adText}</p>`;
+
+            // ── Game area ──────────────────────────────────────────────────────
+            const gameArea = document.createElement('div');
+            gameArea.className = 'ab-game-area';
+
+            // Title bar
+            const titleBar = document.createElement('div');
+            titleBar.className = 'ab-title-bar';
+            titleBar.textContent = '🎯 Shoot the pig to close this ad!';
+
+            // Miss counter
+            const missCounter = document.createElement('div');
+            missCounter.className = 'ab-miss-counter';
+            missCounter.textContent = '❌ 0 / 3';
+
+            // Decorative clouds
+            const cloud1 = document.createElement('div');
+            cloud1.className = 'ab-cloud';
+            cloud1.style.cssText = 'top:18px;left:70px;';
+            cloud1.textContent = '☁️';
+            const cloud2 = document.createElement('div');
+            cloud2.className = 'ab-cloud';
+            cloud2.style.cssText = 'top:14px;left:140px;font-size:16px;';
+            cloud2.textContent = '☁️';
+
+            // Slingshot
+            const sling = document.createElement('div');
+            sling.className = 'ab-slingshot';
+            const trunk = document.createElement('div');
+            trunk.className = 'ab-slingshot-trunk';
+            const leftArm = document.createElement('div');
+            leftArm.className = 'ab-slingshot-left';
+            const rightArm = document.createElement('div');
+            rightArm.className = 'ab-slingshot-right';
+            const band = document.createElement('div');
+            band.className = 'ab-band';
+            sling.appendChild(leftArm);
+            sling.appendChild(rightArm);
+            sling.appendChild(trunk);
+            sling.appendChild(band);
+
+            // Bird sitting in slingshot
+            const birdEl = document.createElement('div');
+            birdEl.className = 'ab-bird';
+            birdEl.textContent = '🐦';
+
+            // Pig target
+            const pigEl = document.createElement('div');
+            pigEl.className = 'ab-pig ab-pig-wobble';
+            pigEl.textContent = '🐷';
+
+            gameArea.appendChild(titleBar);
+            gameArea.appendChild(missCounter);
+            gameArea.appendChild(cloud1);
+            gameArea.appendChild(cloud2);
+            gameArea.appendChild(sling);
+            gameArea.appendChild(birdEl);
+            gameArea.appendChild(pigEl);
+
+            content.appendChild(gameArea);
+            popup.appendChild(content);
+
+            // ── Bezier arc animation ───────────────────────────────────────────
+            function launchBird(clickX, clickY) {
+                if (birdInFlight) return;
+                birdInFlight = true;
+
+                // Slingshot cup position (game-area-relative)
+                const birdRect = birdEl.getBoundingClientRect();
+                const areaRect = gameArea.getBoundingClientRect();
+                const startX = birdRect.left - areaRect.left + birdRect.width / 2;
+                const startY = birdRect.top  - areaRect.top  + birdRect.height / 2;
+
+                // Pig centre
+                const pigRect  = pigEl.getBoundingClientRect();
+                const pigCX    = pigRect.left - areaRect.left + pigRect.width  / 2;
+                const pigCY    = pigRect.top  - areaRect.top  + pigRect.height / 2;
+
+                const isHit = Math.hypot(clickX - pigCX, clickY - pigCY) < HIT_RADIUS;
+
+                // Bezier control point arcs upward
+                const cpX = (startX + clickX) / 2;
+                const cpY = Math.min(startY, clickY) - ARC_HEIGHT;
+
+                const flyBird = document.createElement('div');
+                flyBird.className = 'ab-flying-bird';
+                flyBird.textContent = '🐦';
+                flyBird.style.left = startX + 'px';
+                flyBird.style.top  = startY + 'px';
+                gameArea.appendChild(flyBird);
+                birdEl.style.opacity = '0';
+
+                const startTime = performance.now();
+
+                function step(now) {
+                    const t = Math.min((now - startTime) / FLIGHT_DURATION, 1);
+                    const inv = 1 - t;
+                    const x = inv * inv * startX + 2 * inv * t * cpX + t * t * clickX;
+                    const y = inv * inv * startY + 2 * inv * t * cpY + t * t * clickY;
+                    // Rotate to follow trajectory tangent
+                    const dx = 2 * inv * (cpX - startX) + 2 * t * (clickX - cpX);
+                    const dy = 2 * inv * (cpY - startY) + 2 * t * (clickY - cpY);
+                    const angle = Math.atan2(dy, dx) * 180 / Math.PI;
+                    flyBird.style.left      = x + 'px';
+                    flyBird.style.top       = y + 'px';
+                    flyBird.style.transform = `translate(-50%,-50%) rotate(${angle}deg)`;
+
+                    if (t < 1) {
+                        requestAnimationFrame(step);
+                    } else {
+                        onLanded(isHit, flyBird);
+                    }
+                }
+                requestAnimationFrame(step);
+            }
+
+            function onLanded(isHit, flyBird) {
+                if (isHit) {
+                    flyBird.textContent = '💥';
+                    flyBird.style.transform = 'translate(-50%,-50%) scale(1.4)';
+                    pigEl.className = 'ab-pig';
+                    pigEl.textContent = '💀';
+                    titleBar.textContent = '🎉 Direct hit! Ad destroyed!';
+                    titleBar.style.background = 'rgba(0,140,0,0.75)';
+                    setTimeout(() => adClosed(popup, HIT_SCORE), HIT_CLOSE_DELAY);
+                } else {
+                    misses++;
+                    flyBird.textContent = '💨';
+                    missCounter.textContent = `❌ ${misses} / ${maxMisses}`;
+                    // Turn counter red on the last miss warning
+                    if (misses === maxMisses - 1) missCounter.style.color = '#ff0000';
+
+                    // Pig celebrates the miss
+                    pigEl.className = 'ab-pig';
+                    pigEl.style.animation = 'ab-pig-panic 0.3s ease-in-out 3';
+                    setTimeout(() => { pigEl.className = 'ab-pig ab-pig-wobble'; }, 1000);
+
+                    setTimeout(() => {
+                        flyBird.remove();
+                        birdEl.style.opacity = '1';
+                        birdInFlight = false;
+
+                        if (misses >= maxMisses) {
+                            titleBar.textContent = '🐷 The pig wins! Game over!';
+                            titleBar.style.background = 'rgba(180,0,0,0.75)';
+                            setTimeout(() => endGame(), 700);
+                        }
+                    }, 550);
+                }
+            }
+
+            // Click to aim & shoot
+            gameArea.addEventListener('click', function(e) {
+                if (birdInFlight) return;
+                e.stopPropagation();
+                const rect = gameArea.getBoundingClientRect();
+                launchBird(e.clientX - rect.left, e.clientY - rect.top);
+            });
+
+            return popup;
+        }
+
         function createAd(era, mechanism, adData, isVirus = false) {
             switch(mechanism) {
                 case CLOSE_MECHANISMS.simpleX:
@@ -2790,6 +3125,8 @@
                     return createEndlessScrollPopup(era, adData, isVirus);
                 case CLOSE_MECHANISMS.aiPicker:
                     return createAiPickerPopup(era, adData, isVirus);
+                case CLOSE_MECHANISMS.angryBird:
+                    return createAngryBirdPopup(era, adData, isVirus);
                 default:
                     return createSimpleXPopup(era, adData, isVirus);
             }
