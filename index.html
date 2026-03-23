@@ -897,6 +897,9 @@
             transform: translate(-50%, -50%);
             line-height: 1;
         }
+        .ab-miss-counter.ab-miss-warning {
+            color: #ff0000;
+        }
         @keyframes ab-pig-wobble {
             0%,100% { transform: rotate(-4deg); }
             50%      { transform: rotate(4deg); }
@@ -2893,10 +2896,126 @@
             return '';
         }
 
+        // ── Per-era flavor config for the Angry Bird mechanic ─────────────
+        const AB_ERA_THEMES = {
+            // ── Millennial / classic (default bird & pig) ──────────────────
+            flash: {
+                projectile: '🐦', projectileStyle: null,
+                target: '🐷',
+                instruction: '🎯 Shoot the pig to close this ad!',
+                hitMsg:  '🎉 Direct hit! Ad destroyed!',
+                winMsg:  '🐷 The pig wins! Game over!',
+                bg: 'linear-gradient(to bottom,#87CEEB 0%,#87CEEB 62%,#8BC34A 62%,#4CAF50 100%)',
+                borderColor: '#5d9a3b',
+                decor: ['☁️', '☁️']
+            },
+            web20: {
+                projectile: '🐦', projectileStyle: null,
+                target: '🐷',
+                instruction: '🎯 Shoot the pig to close this ad!',
+                hitMsg:  '🎉 Direct hit! Ad destroyed!',
+                winMsg:  '🐷 The pig wins! Game over!',
+                bg: 'linear-gradient(to bottom,#87CEEB 0%,#87CEEB 62%,#8BC34A 62%,#4CAF50 100%)',
+                borderColor: '#5d9a3b',
+                decor: ['☁️', '☁️']
+            },
+            mobile: {
+                projectile: '🐦', projectileStyle: null,
+                target: '🐷',
+                instruction: '🎯 Shoot the pig to close this ad!',
+                hitMsg:  '🎉 Direct hit! Ad destroyed!',
+                winMsg:  '🐷 The pig wins! Game over!',
+                bg: 'linear-gradient(to bottom,#87CEEB 0%,#87CEEB 62%,#8BC34A 62%,#4CAF50 100%)',
+                borderColor: '#5d9a3b',
+                decor: ['☁️', '☁️']
+            },
+            // ── Early Web (90s) ───────────────────────────────────────────
+            earlyWeb: {
+                projectile: '🖱️', projectileStyle: null,
+                target: '👾',
+                instruction: '💾 Click to hurl the cursor at the alien!',
+                hitMsg:  '💾 Webmaster wins! Alien defeated!',
+                winMsg:  '👾 The alien escapes! Game over!',
+                bg: 'linear-gradient(to bottom,#c0c0c0 0%,#c0c0c0 60%,#008080 60%,#006060 100%)',
+                borderColor: '#000080',
+                decor: ['⭐', '🌐']
+            },
+            // ── MySpace / AIM ─────────────────────────────────────────────
+            myspace: {
+                projectile: '💜', projectileStyle: null,
+                target: '🧑',
+                instruction: '~*~ Click 2 poke Tom with a comment! ~*~',
+                hitMsg:  '~*~ Tom has been POKED!! ur a 10/10 ~*~',
+                winMsg:  '😤 Tom blocked u! Game over!',
+                bg: 'linear-gradient(to bottom,#1a0a2e 0%,#1a0a2e 60%,#4a0080 60%,#2d006b 100%)',
+                borderColor: '#ff00ff',
+                decor: ['✨', '🖤']
+            },
+            // ── AOL / Dial-up ─────────────────────────────────────────────
+            aol: {
+                projectile: '💿', projectileStyle: null,
+                target: '☎️',
+                instruction: '📞 Hurl the AOL CD at the phone!',
+                hitMsg:  '🔌 Line disconnected! Ad closed!',
+                winMsg:  '☎️ Mom picked up the phone! Game over!',
+                bg: 'linear-gradient(to bottom,#a8a8a8 0%,#a8a8a8 60%,#606060 60%,#404040 100%)',
+                borderColor: '#808080',
+                decor: ['📬', '💿']
+            },
+            // ── 90s Windows (BSOD) ───────────────────────────────────────
+            win95: {
+                projectile: '📎', projectileStyle: null,
+                target: '💻',
+                instruction: '📎 Launch Clippy at the Blue Screen!',
+                hitMsg:  '📎 Clippy fixed it! (for once)',
+                winMsg:  '☠️ Fatal exception 0E! Game over!',
+                bg: 'linear-gradient(to bottom,#0000aa 0%,#0000aa 100%)',
+                borderColor: '#ffffff',
+                decor: ['⚠️', '💾']
+            },
+            // ── Windows XP ────────────────────────────────────────────────
+            winxp: {
+                projectile: '📎', projectileStyle: null,
+                target: '💻',
+                instruction: '📎 Send Clippy at the Blue Screen!',
+                hitMsg:  '🪟 Clippy to the rescue!',
+                winMsg:  '💥 svchost.exe has stopped! Game over!',
+                bg: 'linear-gradient(to bottom,#3a7ec8 0%,#3a7ec8 60%,#1b7a1f 60%,#2e9932 100%)',
+                borderColor: '#0a246a',
+                decor: ['🌅', '☁️']
+            },
+            // ── Gen-Z ─────────────────────────────────────────────────────
+            genz: {
+                projectile: 'BRUH',
+                projectileStyle: 'font-weight:900;font-size:13px;color:#ff2d7e;letter-spacing:-1px;',
+                target: '🧑',
+                instruction: '💀 Click to yeet BRUH at that person!',
+                hitMsg:  '💀 Direct ratio! No cap fr fr!',
+                winMsg:  '🤡 Clown behavior detected! Game over!',
+                bg: 'linear-gradient(to bottom,#ff6ab0 0%,#ff6ab0 55%,#a855f7 55%,#7c3aed 100%)',
+                borderColor: '#333333',
+                decor: ['✨', '💅']
+            },
+            // ── AI Era ────────────────────────────────────────────────────
+            ai: {
+                projectile: '💬', projectileStyle: null,
+                target: '🤖',
+                instruction: '🤖 Click to prompt the AI into closing!',
+                hitMsg:  '✅ Prompt accepted! Ad context cleared!',
+                winMsg:  '🤖 AI refuses to comply! Game over!',
+                bg: 'linear-gradient(to bottom,#0a0e27 0%,#0a0e27 65%,#001428 65%,#000a14 100%)',
+                borderColor: '#00d9ff',
+                decor: ['...', '>>>']
+            }
+        };
+        // Default theme (classic bird & pig) used when era has no specific theme
+        const AB_DEFAULT_THEME = AB_ERA_THEMES.flash;
+
         function createAngryBirdPopup(era, adData, isVirus = false) {
             const adText = adData.text;
             const popup = document.createElement('div');
             const eraClass = getEraClass(era);
+            const theme = AB_ERA_THEMES[eraClass] || AB_DEFAULT_THEME;
             popup.className = 'popup-ad era-popup angry-bird-popup' + (eraClass ? ' ' + eraClass : '') + (isVirus ? ' virus-popup' : '');
             const pos = getRandomPosition();
             popup.style.left = pos.x + 'px';
@@ -2939,26 +3058,28 @@
             // ── Game area ──────────────────────────────────────────────────────
             const gameArea = document.createElement('div');
             gameArea.className = 'ab-game-area';
+            gameArea.style.background = theme.bg;
+            gameArea.style.borderColor = theme.borderColor;
 
             // Title bar
             const titleBar = document.createElement('div');
             titleBar.className = 'ab-title-bar';
-            titleBar.textContent = '🎯 Shoot the pig to close this ad!';
+            titleBar.textContent = theme.instruction;
 
             // Miss counter
             const missCounter = document.createElement('div');
             missCounter.className = 'ab-miss-counter';
             missCounter.textContent = '❌ 0 / 3';
 
-            // Decorative clouds
+            // Decorative elements (era-specific)
             const cloud1 = document.createElement('div');
             cloud1.className = 'ab-cloud';
             cloud1.style.cssText = 'top:18px;left:70px;';
-            cloud1.textContent = '☁️';
+            cloud1.textContent = theme.decor[0];
             const cloud2 = document.createElement('div');
             cloud2.className = 'ab-cloud';
             cloud2.style.cssText = 'top:14px;left:140px;font-size:16px;';
-            cloud2.textContent = '☁️';
+            cloud2.textContent = theme.decor[1];
 
             // Slingshot
             const sling = document.createElement('div');
@@ -2976,15 +3097,16 @@
             sling.appendChild(trunk);
             sling.appendChild(band);
 
-            // Bird sitting in slingshot
+            // Projectile sitting in slingshot
             const birdEl = document.createElement('div');
             birdEl.className = 'ab-bird';
-            birdEl.textContent = '🐦';
+            birdEl.textContent = theme.projectile;
+            if (theme.projectileStyle) birdEl.style.cssText += theme.projectileStyle;
 
-            // Pig target
+            // Target
             const pigEl = document.createElement('div');
             pigEl.className = 'ab-pig ab-pig-wobble';
-            pigEl.textContent = '🐷';
+            pigEl.textContent = theme.target;
 
             gameArea.appendChild(titleBar);
             gameArea.appendChild(missCounter);
@@ -3021,7 +3143,8 @@
 
                 const flyBird = document.createElement('div');
                 flyBird.className = 'ab-flying-bird';
-                flyBird.textContent = '🐦';
+                flyBird.textContent = theme.projectile;
+                if (theme.projectileStyle) flyBird.style.cssText += theme.projectileStyle;
                 flyBird.style.left = startX + 'px';
                 flyBird.style.top  = startY + 'px';
                 gameArea.appendChild(flyBird);
@@ -3057,7 +3180,7 @@
                     flyBird.style.transform = 'translate(-50%,-50%) scale(1.4)';
                     pigEl.className = 'ab-pig';
                     pigEl.textContent = '💀';
-                    titleBar.textContent = '🎉 Direct hit! Ad destroyed!';
+                    titleBar.textContent = theme.hitMsg;
                     titleBar.style.background = 'rgba(0,140,0,0.75)';
                     setTimeout(() => adClosed(popup, HIT_SCORE), HIT_CLOSE_DELAY);
                 } else {
@@ -3065,7 +3188,7 @@
                     flyBird.textContent = '💨';
                     missCounter.textContent = `❌ ${misses} / ${maxMisses}`;
                     // Turn counter red on the last miss warning
-                    if (misses === maxMisses - 1) missCounter.style.color = '#ff0000';
+                    if (misses === maxMisses - 1) missCounter.classList.add('ab-miss-warning');
 
                     // Pig celebrates the miss
                     pigEl.className = 'ab-pig';
@@ -3078,7 +3201,7 @@
                         birdInFlight = false;
 
                         if (misses >= maxMisses) {
-                            titleBar.textContent = '🐷 The pig wins! Game over!';
+                            titleBar.textContent = theme.winMsg;
                             titleBar.style.background = 'rgba(180,0,0,0.75)';
                             setTimeout(() => endGame(), 700);
                         }
