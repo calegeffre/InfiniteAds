@@ -912,6 +912,68 @@
             50%      { transform: scale(1.15); }
         }
 
+        /* ── Minesweeper Ad ──────────────────────────────────────────────── */
+        .ms-popup {
+            padding: 10px !important;
+        }
+        .ms-game-area {
+            padding: 8px;
+            border-radius: 4px;
+            margin-top: 6px;
+            user-select: none;
+            text-align: center;
+        }
+        .ms-title-bar {
+            font-size: 11px;
+            font-weight: bold;
+            text-align: center;
+            padding: 3px 8px;
+            margin-bottom: 5px;
+            border-radius: 3px;
+        }
+        .ms-info-bar {
+            font-size: 10px;
+            text-align: center;
+            margin-bottom: 6px;
+            opacity: 0.85;
+        }
+        .ms-grid {
+            display: inline-grid;
+            grid-template-columns: repeat(3, 50px);
+            grid-template-rows: repeat(3, 50px);
+            gap: 3px;
+        }
+        .ms-cell {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            font-weight: bold;
+            cursor: pointer;
+            box-sizing: border-box;
+            border-radius: 3px;
+            transition: transform 0.08s;
+        }
+        .ms-cell.ms-unrevealed:hover {
+            transform: scale(0.94);
+        }
+        .ms-cell.ms-revealed {
+            cursor: default;
+        }
+        .ms-cell.ms-exploded {
+            background: #ff3333 !important;
+        }
+        @keyframes ms-flag-pop {
+            0%   { transform: scale(1); }
+            40%  { transform: scale(1.35); }
+            100% { transform: scale(1); }
+        }
+        .ms-cell.ms-flag-anim {
+            animation: ms-flag-pop 0.25s ease-out;
+        }
+
         /* Trap button styles */
         .trap-button {
             display: inline-block;
@@ -1488,7 +1550,8 @@
             declineBtn: '',
             endlessScroll: '',
             aiPicker: '',
-            angryBird: ''
+            angryBird: '',
+            minesweeper: ''
         };
         const CLOSE_MECHANISMS = {
             simpleX: 'simpleX',           // Red X button
@@ -1504,7 +1567,8 @@
             declineBtn: 'declineBtn',      // Click decline button (no X)
             endlessScroll: 'endlessScroll',  // Endless scroll feed, scroll to escape
             aiPicker: 'aiPicker',            // Pick favorite AI chatbot to close
-            angryBird: 'angryBird'           // Shoot the pig with a bird to close
+            angryBird: 'angryBird',          // Shoot the pig with a bird to close
+            minesweeper: 'minesweeper'        // Reveal all safe cells to close
         };
         
         // Personality button pairs - [accept (trap), decline (close)]
@@ -3220,6 +3284,375 @@
             return popup;
         }
 
+        // ── Per-era flavor config for the Minesweeper mechanic ────────────
+        const MS_ERA_THEMES = {
+            // ── 90s Windows & Windows XP – classic Minesweeper ────────────
+            win95: {
+                mine: '💣', flag: '🚩',
+                instruction: '🚩 Flag the mine to close this ad!',
+                winMsg:  '✅ Mine flagged! Board cleared!',
+                loseMsg: '💣 BOOM! You hit the mine!',
+                bg: '#c0c0c0',
+                cellBg: '#c0c0c0', cellRevBg: '#b4b4b4',
+                borderHigh: '#ffffff', borderLow: '#808080',
+                numColor: '#0000cc',
+                titleBg: '#000080', titleColor: '#ffffff',
+                infoColor: '#000000'
+            },
+            winxp: {
+                mine: '💣', flag: '🚩',
+                instruction: '🚩 Flag the mine to clear the board!',
+                winMsg:  '🪟 Board cleared! Mine defused!',
+                loseMsg: '💣 KA-BOOM! 💀 Fatal mine!',
+                bg: '#ece9d8',
+                cellBg: '#d4d0c8', cellRevBg: '#b8b4ac',
+                borderHigh: '#ffffff', borderLow: '#a0a0a0',
+                numColor: '#0000cc',
+                titleBg: '#0a246a', titleColor: '#ffffff',
+                infoColor: '#000000'
+            },
+            // ── AI Era – tokens as flags, hallucination as bomb ────────────
+            ai: {
+                mine: '🤯', flag: '🪙',
+                instruction: '🪙 Token the hallucination to close!',
+                winMsg:  '✅ Hallucination contained! 0 tokens wasted!',
+                loseMsg: '🤯 Hallucination cascade! Context lost!',
+                bg: '#0a0e27',
+                cellBg: '#1a1f3c', cellRevBg: '#0d1020',
+                borderHigh: '#00d9ff', borderLow: '#003d55',
+                numColor: '#00ffaa',
+                titleBg: 'rgba(0,217,255,0.12)', titleColor: '#00d9ff',
+                infoColor: '#00d9ff'
+            },
+            // ── Early Web (90s Internet) ───────────────────────────────────
+            earlyWeb: {
+                mine: '👾', flag: '⭐',
+                instruction: '⭐ Mark the alien to close!',
+                winMsg:  '💾 Alien marked! Webmaster wins!',
+                loseMsg: '👾 The alien got you! Game over!',
+                bg: '#008080',
+                cellBg: '#c0c0c0', cellRevBg: '#a0a0a0',
+                borderHigh: '#ffffff', borderLow: '#808080',
+                numColor: '#000080',
+                titleBg: '#000080', titleColor: '#ffffff',
+                infoColor: '#ffffff'
+            },
+            // ── MySpace / AIM ─────────────────────────────────────────────
+            myspace: {
+                mine: '💔', flag: '💜',
+                instruction: '~*~ Mark the broken heart to close ~*~',
+                winMsg:  '~*~ Tom has been saved!! ur amazing ~*~',
+                loseMsg: '😤 Your profile got hacked! Game over!',
+                bg: '#1a0a2e',
+                cellBg: '#2d0060', cellRevBg: '#1a003a',
+                borderHigh: '#ff00ff', borderLow: '#4a0080',
+                numColor: '#ff88ff',
+                titleBg: 'rgba(255,0,255,0.18)', titleColor: '#ff00ff',
+                infoColor: '#ff00ff'
+            },
+            // ── AOL / Dial-up ─────────────────────────────────────────────
+            aol: {
+                mine: '📧', flag: '📬',
+                instruction: '📬 Flag the spam email to close!',
+                winMsg:  '🔌 Spam blocked! You\'ve got mail!',
+                loseMsg: '📧 SPAM OVERFLOW! Game over!',
+                bg: '#404040',
+                cellBg: '#c0c0c0', cellRevBg: '#a0a0a0',
+                borderHigh: '#ffffff', borderLow: '#808080',
+                numColor: '#000080',
+                titleBg: '#003366', titleColor: '#ffffff',
+                infoColor: '#ffffff'
+            },
+            // ── Flash / Web 2.0 / Mobile ──────────────────────────────────
+            flash: {
+                mine: '💥', flag: '🚩',
+                instruction: '🚩 Flag the bomb to close!',
+                winMsg:  '🎉 Bomb found! Ad destroyed!',
+                loseMsg: '💥 KABOOM! Game over!',
+                bg: '#1a6fa8',
+                cellBg: '#2980b9', cellRevBg: '#1e6090',
+                borderHigh: '#5dade2', borderLow: '#1a5276',
+                numColor: '#ffff00',
+                titleBg: 'rgba(0,0,0,0.45)', titleColor: '#ffffff',
+                infoColor: '#ffffff'
+            },
+            web20: {
+                mine: '💥', flag: '🔖',
+                instruction: '🔖 Bookmark the bomb cell to close!',
+                winMsg:  '🎉 Bookmarked! Ad closed!',
+                loseMsg: '💥 KABOOM! Game over!',
+                bg: '#1a6fa8',
+                cellBg: '#2980b9', cellRevBg: '#1e6090',
+                borderHigh: '#5dade2', borderLow: '#1a5276',
+                numColor: '#ffff00',
+                titleBg: 'rgba(0,0,0,0.45)', titleColor: '#ffffff',
+                infoColor: '#ffffff'
+            },
+            mobile: {
+                mine: '💣', flag: '📌',
+                instruction: '📌 Pin the bomb cell to close!',
+                winMsg:  '🎉 Mine pinned! Ad gone!',
+                loseMsg: '💥 Oops! Mine detonated! Game over!',
+                bg: '#27ae60',
+                cellBg: '#2ecc71', cellRevBg: '#1e8449',
+                borderHigh: '#82e0aa', borderLow: '#145a32',
+                numColor: '#fff176',
+                titleBg: 'rgba(0,0,0,0.3)', titleColor: '#ffffff',
+                infoColor: '#ffffff'
+            },
+            // ── Gen-Z ─────────────────────────────────────────────────────
+            genz: {
+                mine: '💀', flag: '✨',
+                instruction: '✨ Slay the sus cell fr fr!',
+                winMsg:  '💅 No cap! Sus cell found! Periodt!',
+                loseMsg: '💀 It was giving 💀 vibes. Game over!',
+                bg: '#ff6ab0',
+                cellBg: '#ff2d7e', cellRevBg: '#cc0060',
+                borderHigh: '#ffaacc', borderLow: '#880040',
+                numColor: '#ffffff',
+                titleBg: 'rgba(0,0,0,0.3)', titleColor: '#ffffff',
+                infoColor: '#ffffff'
+            }
+        };
+        const MS_DEFAULT_THEME = MS_ERA_THEMES.flash;
+
+        function createMinesweeperPopup(era, adData, isVirus = false) {
+            const adText = adData.text;
+            const popup = document.createElement('div');
+            const eraClass = getEraClass(era);
+            const theme = MS_ERA_THEMES[eraClass] || MS_DEFAULT_THEME;
+            popup.className = 'popup-ad era-popup ms-popup' + (eraClass ? ' ' + eraClass : '') + (isVirus ? ' virus-popup' : '');
+            const pos = getRandomPosition();
+            popup.style.left = pos.x + 'px';
+            popup.style.top = pos.y + 'px';
+            popup.style.width = '270px';
+
+            if (isVirus) {
+                popup.style.backgroundColor = '#ff6b6b';
+                popup.style.borderColor = '#cc0000';
+                popup.style.color = 'white';
+                popup.style.fontFamily = era.fontFamily;
+                popup.style.fontSize = era.fontSize;
+                const content = document.createElement('div');
+                content.className = 'popup-ad-content';
+                content.innerHTML = `<p>${adText}</p>`;
+                content.appendChild(createTrapButtons(popup, Math.random() > 0.5 ? 2 : 1));
+                popup.appendChild(content);
+                return popup;
+            }
+
+            popup.style.backgroundColor = era.bgColor;
+            popup.style.borderColor = era.borderColor;
+            popup.style.color = era.textColor;
+            popup.style.fontFamily = era.fontFamily;
+            popup.style.fontSize = era.fontSize;
+
+            // ── Game state ─────────────────────────────────────────────────
+            const GRID_SIZE = 3;
+            const TOTAL_CELLS = GRID_SIZE * GRID_SIZE;
+            const MINE_COUNT = 1;
+            const WIN_SCORE = 25;
+            const mineIndex = Math.floor(Math.random() * TOTAL_CELLS);
+
+            const cells = Array.from({ length: TOTAL_CELLS }, (_, i) => ({
+                index: i,
+                row: Math.floor(i / GRID_SIZE),
+                col: i % GRID_SIZE,
+                isMine: i === mineIndex,
+                revealed: false,
+                flagged: false,
+                number: 0
+            }));
+
+            // Calculate adjacent mine counts
+            cells.forEach(cell => {
+                if (cell.isMine) return;
+                let count = 0;
+                for (let dr = -1; dr <= 1; dr++) {
+                    for (let dc = -1; dc <= 1; dc++) {
+                        if (dr === 0 && dc === 0) continue;
+                        const r = cell.row + dr;
+                        const c = cell.col + dc;
+                        if (r >= 0 && r < GRID_SIZE && c >= 0 && c < GRID_SIZE) {
+                            if (cells[r * GRID_SIZE + c].isMine) count++;
+                        }
+                    }
+                }
+                cell.number = count;
+            });
+
+            let gameOver = false;
+
+            const content = document.createElement('div');
+            content.className = 'popup-ad-content';
+            content.innerHTML = `<p style="margin-bottom:4px;font-size:0.88em;">${adText}</p>`;
+
+            // ── DOM structure ──────────────────────────────────────────────
+            const gameArea = document.createElement('div');
+            gameArea.className = 'ms-game-area';
+            gameArea.style.background = theme.bg;
+
+            const titleBar = document.createElement('div');
+            titleBar.className = 'ms-title-bar';
+            titleBar.textContent = theme.instruction;
+            titleBar.style.background = theme.titleBg;
+            titleBar.style.color = theme.titleColor;
+
+            const infoBar = document.createElement('div');
+            infoBar.className = 'ms-info-bar';
+            infoBar.style.color = theme.infoColor;
+
+            const grid = document.createElement('div');
+            grid.className = 'ms-grid';
+
+            const cellEls = [];
+
+            // ── Helpers ────────────────────────────────────────────────────
+            function safeCellsRevealed() {
+                return cells.filter(c => !c.isMine && c.revealed).length;
+            }
+
+            function updateInfoBar() {
+                const flagged = cells.filter(c => c.flagged).length;
+                infoBar.textContent = `${theme.flag} ${flagged} / ${MINE_COUNT}  ·  ${theme.mine} ${MINE_COUNT}`;
+            }
+
+            function applyUnrevealedStyle(el) {
+                el.style.background = theme.cellBg;
+                el.style.boxShadow = `inset -2px -2px 0 ${theme.borderLow}, inset 2px 2px 0 ${theme.borderHigh}`;
+            }
+
+            function applyRevealedStyle(el) {
+                el.style.background = theme.cellRevBg;
+                el.style.boxShadow = `inset 1px 1px 0 ${theme.borderLow}`;
+                el.style.cursor = 'default';
+            }
+
+            function renderCell(i) {
+                const cell = cells[i];
+                const el = cellEls[i];
+                el.className = 'ms-cell';
+
+                if (cell.revealed) {
+                    el.classList.add('ms-revealed');
+                    applyRevealedStyle(el);
+                    if (cell.isMine) {
+                        el.classList.add('ms-exploded');
+                        el.textContent = theme.mine;
+                        el.style.fontSize = '22px';
+                    } else if (cell.number > 0) {
+                        el.textContent = String(cell.number);
+                        el.style.color = theme.numColor;
+                        el.style.fontSize = '20px';
+                    } else {
+                        el.textContent = '';
+                    }
+                } else if (cell.flagged) {
+                    el.classList.add('ms-unrevealed');
+                    applyUnrevealedStyle(el);
+                    el.textContent = theme.flag;
+                } else {
+                    el.classList.add('ms-unrevealed');
+                    applyUnrevealedStyle(el);
+                    el.textContent = '';
+                }
+            }
+
+            function floodReveal(i) {
+                const cell = cells[i];
+                if (cell.revealed || cell.flagged || cell.isMine) return;
+                cell.revealed = true;
+                renderCell(i);
+                if (cell.number === 0) {
+                    for (let dr = -1; dr <= 1; dr++) {
+                        for (let dc = -1; dc <= 1; dc++) {
+                            if (dr === 0 && dc === 0) continue;
+                            const r = cell.row + dr;
+                            const c = cell.col + dc;
+                            if (r >= 0 && r < GRID_SIZE && c >= 0 && c < GRID_SIZE) {
+                                floodReveal(r * GRID_SIZE + c);
+                            }
+                        }
+                    }
+                }
+            }
+
+            function revealAll() {
+                cells.forEach((cell, i) => {
+                    cell.flagged = false;
+                    cell.revealed = true;
+                    renderCell(i);
+                });
+            }
+
+            // ── Build grid ─────────────────────────────────────────────────
+            cells.forEach((cell, i) => {
+                const el = document.createElement('div');
+                cellEls.push(el);
+
+                // Left click – reveal
+                el.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    if (gameOver || cell.revealed || cell.flagged) return;
+
+                    if (cell.isMine) {
+                        gameOver = true;
+                        cell.revealed = true;
+                        renderCell(i);
+                        titleBar.textContent = theme.loseMsg;
+                        titleBar.style.background = 'rgba(180,0,0,0.75)';
+                        titleBar.style.color = '#ffffff';
+                        setTimeout(() => {
+                            revealAll();
+                            setTimeout(() => endGame(), 900);
+                        }, 300);
+                    } else {
+                        floodReveal(i);
+                        updateInfoBar();
+                        if (safeCellsRevealed() === TOTAL_CELLS - MINE_COUNT) {
+                            gameOver = true;
+                            titleBar.textContent = theme.winMsg;
+                            titleBar.style.background = 'rgba(0,140,0,0.75)';
+                            titleBar.style.color = '#ffffff';
+                            setTimeout(() => adClosed(popup, WIN_SCORE), 650);
+                        }
+                    }
+                });
+
+                // Right click – toggle flag
+                el.addEventListener('contextmenu', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    if (gameOver || cell.revealed) return;
+                    cell.flagged = !cell.flagged;
+                    renderCell(i);
+                    // Play a little pop animation
+                    if (cell.flagged) {
+                        el.classList.add('ms-flag-anim');
+                        el.addEventListener('animationend', () => el.classList.remove('ms-flag-anim'), { once: true });
+                    }
+                    updateInfoBar();
+                });
+
+                renderCell(i);
+                grid.appendChild(el);
+            });
+
+            updateInfoBar();
+
+            gameArea.appendChild(titleBar);
+            gameArea.appendChild(infoBar);
+            gameArea.appendChild(grid);
+
+            content.appendChild(gameArea);
+            popup.appendChild(content);
+
+            // Block browser context menu on the whole popup
+            popup.addEventListener('contextmenu', e => e.preventDefault());
+
+            return popup;
+        }
+
         function createAd(era, mechanism, adData, isVirus = false) {
             switch(mechanism) {
                 case CLOSE_MECHANISMS.simpleX:
@@ -3250,6 +3683,8 @@
                     return createAiPickerPopup(era, adData, isVirus);
                 case CLOSE_MECHANISMS.angryBird:
                     return createAngryBirdPopup(era, adData, isVirus);
+                case CLOSE_MECHANISMS.minesweeper:
+                    return createMinesweeperPopup(era, adData, isVirus);
                 default:
                     return createSimpleXPopup(era, adData, isVirus);
             }
