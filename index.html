@@ -974,6 +974,161 @@
             animation: ms-flag-pop 0.25s ease-out;
         }
 
+        /* ── Luigi's Mansion mechanism ───────────────────── */
+        .lm-game-area {
+            position: relative;
+            width: 100%;
+            height: 160px;
+            background: #0a0a1a;
+            border-radius: 6px;
+            overflow: hidden;
+            margin-top: 8px;
+            cursor: none;
+            border: 2px solid #2a1a4a;
+            user-select: none;
+        }
+        .lm-title-bar {
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            background: rgba(0,0,0,0.7);
+            color: #7fff7f;
+            font-size: 11px;
+            font-weight: bold;
+            padding: 3px 8px;
+            text-align: center;
+            z-index: 20;
+        }
+        .lm-darkness {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.95);
+            z-index: 15;
+            pointer-events: none;
+        }
+        .lm-luigi {
+            position: absolute;
+            font-size: 22px;
+            z-index: 18;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            line-height: 1;
+            filter: drop-shadow(0 0 8px rgba(255,255,100,0.8));
+        }
+        .lm-object {
+            position: absolute;
+            font-size: 24px;
+            z-index: 10;
+            line-height: 1;
+            cursor: pointer;
+            pointer-events: auto;
+        }
+        .lm-ghost {
+            position: absolute;
+            font-size: 22px;
+            z-index: 10;
+            line-height: 1;
+            cursor: pointer;
+            pointer-events: auto;
+        }
+        @keyframes lm-ghost-float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+        .lm-ghost-float {
+            animation: lm-ghost-float 2s ease-in-out infinite;
+        }
+        .lm-lives {
+            position: absolute;
+            bottom: 4px; left: 8px;
+            font-size: 12px;
+            color: #ff4444;
+            z-index: 20;
+            text-shadow: 0 0 4px #ff0000;
+        }
+
+        /* ── Mario Kart mechanism ────────────────────────── */
+        .mk-game-area {
+            position: relative;
+            width: 100%;
+            border-radius: 6px;
+            overflow: hidden;
+            margin-top: 8px;
+            user-select: none;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+        .mk-title-bar {
+            font-size: 11px;
+            font-weight: bold;
+            text-align: center;
+            padding: 3px 8px;
+            margin-bottom: 6px;
+            border-radius: 3px;
+            background: rgba(0,0,0,0.5);
+            color: #fff;
+        }
+        .mk-lane {
+            display: flex;
+            align-items: center;
+            margin-bottom: 6px;
+            gap: 6px;
+        }
+        .mk-racer {
+            font-size: 20px;
+            flex-shrink: 0;
+            width: 30px;
+            text-align: center;
+            line-height: 1;
+        }
+        .mk-track {
+            flex: 1;
+            height: 22px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 11px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .mk-progress {
+            height: 100%;
+            border-radius: 11px;
+            transition: width 0.15s ease-out;
+            position: relative;
+        }
+        .mk-progress-mario {
+            background: linear-gradient(90deg, #e52521, #ff6b6b);
+        }
+        .mk-progress-opponent {
+            background: linear-gradient(90deg, #4a90d9, #6bb5ff);
+        }
+        .mk-finish {
+            position: absolute;
+            right: 2px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 12px;
+            z-index: 2;
+        }
+        .mk-boost-btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-top: 4px;
+            border: 2px solid rgba(255,255,255,0.4);
+            border-radius: 8px;
+            background: linear-gradient(180deg, #e52521, #b71c1c);
+            color: #fff;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            text-align: center;
+            transition: transform 0.06s;
+        }
+        .mk-boost-btn:active {
+            transform: scale(0.95);
+            background: linear-gradient(180deg, #ff6b6b, #e52521);
+        }
+
         /* Trap button styles */
         .trap-button {
             display: inline-block;
@@ -1568,7 +1723,9 @@
             endlessScroll: 'endlessScroll',  // Endless scroll feed, scroll to escape
             aiPicker: 'aiPicker',            // Pick favorite AI chatbot to close
             angryBird: 'angryBird',          // Shoot the pig with a bird to close
-            minesweeper: 'minesweeper'        // Reveal all safe cells to close
+            minesweeper: 'minesweeper',        // Reveal all safe cells to close
+            luigisMansion: 'luigisMansion',    // Flashlight find-the-object game
+            marioKart: 'marioKart'             // Click-to-race game
         };
         
         // Personality button pairs - [accept (trap), decline (close)]
@@ -3653,6 +3810,507 @@
             return popup;
         }
 
+        // ── Per-era flavor config for the Luigi's Mansion mechanic ────────
+        const LM_ERA_THEMES = {
+            earlyWeb: {
+                object: '🖥️', objectName: 'the old computer',
+                ghost: '👾',
+                instruction: '🔦 Find the old computer to escape!',
+                winMsg: '💾 Computer found! You escaped!',
+                loseMsg: '👾 The aliens got you! Game over!',
+                roomBg: '#0a0a1a',
+                borderColor: '#008080'
+            },
+            myspace: {
+                object: '💜', objectName: "Tom's heart",
+                ghost: '🧑',
+                instruction: '🔦 Find Tom\'s heart to escape!',
+                winMsg: '~*~ Heart found! ur free!! ~*~',
+                loseMsg: '😤 Tom\'s ghost blocked you! Game over!',
+                roomBg: '#0a0015',
+                borderColor: '#ff00ff'
+            },
+            aol: {
+                object: '💿', objectName: 'the AOL CD',
+                ghost: '☎️',
+                instruction: '🔦 Find the AOL CD to escape!',
+                winMsg: '📬 AOL CD found! You\'ve got mail!',
+                loseMsg: '☎️ Mom picked up! Game over!',
+                roomBg: '#0a0a10',
+                borderColor: '#808080'
+            },
+            win95: {
+                object: '📎', objectName: 'Clippy',
+                ghost: '💻',
+                instruction: '🔦 Find Clippy to escape!',
+                winMsg: '📎 Clippy found! He\'ll help you escape!',
+                loseMsg: '💻 BSOD! Fatal exception! Game over!',
+                roomBg: '#00001a',
+                borderColor: '#000080'
+            },
+            winxp: {
+                object: '🪟', objectName: 'the XP window',
+                ghost: '💻',
+                instruction: '🔦 Find the XP window to escape!',
+                winMsg: '🪟 Window found! Escape through it!',
+                loseMsg: '💻 svchost.exe crashed! Game over!',
+                roomBg: '#00001a',
+                borderColor: '#0a246a'
+            },
+            flash: {
+                object: '⚡', objectName: 'the Flash bolt',
+                ghost: '🐷',
+                instruction: '🔦 Find the Flash bolt to escape!',
+                winMsg: '⚡ Flash bolt found! Ad destroyed!',
+                loseMsg: '🐷 The Flash pigs got you! Game over!',
+                roomBg: '#0a1a0a',
+                borderColor: '#5d9a3b'
+            },
+            web20: {
+                object: '📱', objectName: 'the smartphone',
+                ghost: '💻',
+                instruction: '🔦 Find the smartphone to escape!',
+                winMsg: '📱 Phone found! Swiping to freedom!',
+                loseMsg: '💻 Old tech got you! Game over!',
+                roomBg: '#0a0a1a',
+                borderColor: '#1a6fa8'
+            },
+            mobile: {
+                object: '📱', objectName: 'the phone',
+                ghost: '📲',
+                instruction: '🔦 Find the phone to escape!',
+                winMsg: '📱 Phone found! Notification cleared!',
+                loseMsg: '📲 Notifications overwhelmed you!',
+                roomBg: '#0a1a0a',
+                borderColor: '#27ae60'
+            },
+            genz: {
+                object: '✨', objectName: 'the sparkle',
+                ghost: '🤡',
+                instruction: '🔦 Find the sparkle fr fr!',
+                winMsg: '✨ Slay! Sparkle found! Periodt!',
+                loseMsg: '🤡 Clown behavior detected! Game over!',
+                roomBg: '#1a0020',
+                borderColor: '#ff2d7e'
+            },
+            ai: {
+                object: '🤖', objectName: 'the AI bot',
+                ghost: '💬',
+                instruction: '🔦 Find the AI bot to escape!',
+                winMsg: '🤖 AI found! Prompt accepted!',
+                loseMsg: '💬 Hallucination cascade! Game over!',
+                roomBg: '#050a1a',
+                borderColor: '#00d9ff'
+            }
+        };
+        const LM_DEFAULT_THEME = LM_ERA_THEMES.flash;
+
+        function createLuigisMansionPopup(era, adData, isVirus = false) {
+            const adText = adData.text;
+            const popup = document.createElement('div');
+            const eraClass = getEraClass(era);
+            const theme = LM_ERA_THEMES[eraClass] || LM_DEFAULT_THEME;
+            popup.className = 'popup-ad era-popup lm-popup' + (eraClass ? ' ' + eraClass : '') + (isVirus ? ' virus-popup' : '');
+            const pos = getRandomPosition();
+            popup.style.left = pos.x + 'px';
+            popup.style.top = pos.y + 'px';
+            popup.style.width = '320px';
+
+            if (isVirus) {
+                popup.style.backgroundColor = '#ff6b6b';
+                popup.style.borderColor = '#cc0000';
+                popup.style.color = 'white';
+                popup.style.fontFamily = era.fontFamily;
+                popup.style.fontSize = era.fontSize;
+                const content = document.createElement('div');
+                content.className = 'popup-ad-content';
+                content.innerHTML = `<p>${adText}</p>`;
+                content.appendChild(createTrapButtons(popup, Math.random() > 0.5 ? 2 : 1));
+                popup.appendChild(content);
+                return popup;
+            }
+
+            popup.style.backgroundColor = era.bgColor;
+            popup.style.borderColor = era.borderColor;
+            popup.style.color = era.textColor;
+            popup.style.fontFamily = era.fontFamily;
+            popup.style.fontSize = era.fontSize;
+
+            const WIN_SCORE = 25;
+            let lives = 3;
+            let found = false;
+
+            const content = document.createElement('div');
+            content.className = 'popup-ad-content';
+            content.innerHTML = `<p style="margin-bottom:6px;font-size:0.88em;">${adText}</p>`;
+
+            // ── Game area ──────────────────────────────────────────────────────
+            const gameArea = document.createElement('div');
+            gameArea.className = 'lm-game-area';
+            gameArea.style.background = theme.roomBg;
+            gameArea.style.borderColor = theme.borderColor;
+
+            const titleBar = document.createElement('div');
+            titleBar.className = 'lm-title-bar';
+            titleBar.textContent = theme.instruction;
+
+            // Darkness overlay (flashlight punches a hole through it)
+            const darkness = document.createElement('div');
+            darkness.className = 'lm-darkness';
+
+            // Luigi (follows cursor)
+            const luigi = document.createElement('div');
+            luigi.className = 'lm-luigi';
+            luigi.textContent = '🔦';
+            luigi.style.display = 'none';
+
+            // Lives display
+            const livesDisplay = document.createElement('div');
+            livesDisplay.className = 'lm-lives';
+            livesDisplay.textContent = '❤️❤️❤️';
+
+            // Random position helper (inside game area)
+            const MARGIN = 35;
+            const AREA_W = 320 - MARGIN * 2;
+            const AREA_H = 160 - MARGIN * 2 - 20;
+            function rndPos() {
+                return {
+                    x: MARGIN + Math.random() * AREA_W,
+                    y: MARGIN + 20 + Math.random() * AREA_H
+                };
+            }
+
+            // Place the hidden target object
+            const tPos = rndPos();
+            const targetEl = document.createElement('div');
+            targetEl.className = 'lm-object';
+            targetEl.textContent = theme.object;
+            targetEl.style.left = tPos.x + 'px';
+            targetEl.style.top = tPos.y + 'px';
+
+            // Place ghost decoys
+            const ghostCount = 3 + Math.floor(Math.random() * 2);
+            const ghosts = [];
+            for (let i = 0; i < ghostCount; i++) {
+                const gPos = rndPos();
+                const ghostEl = document.createElement('div');
+                ghostEl.className = 'lm-ghost lm-ghost-float';
+                ghostEl.textContent = theme.ghost;
+                ghostEl.style.left = gPos.x + 'px';
+                ghostEl.style.top = gPos.y + 'px';
+                ghostEl.style.animationDelay = (i * 0.4) + 's';
+                ghosts.push(ghostEl);
+            }
+
+            // Assemble
+            gameArea.appendChild(titleBar);
+            ghosts.forEach(function(g) { gameArea.appendChild(g); });
+            gameArea.appendChild(targetEl);
+            gameArea.appendChild(darkness);
+            gameArea.appendChild(luigi);
+            gameArea.appendChild(livesDisplay);
+
+            // ── Flashlight effect (radial hole in the darkness) ────────────────
+            gameArea.addEventListener('mousemove', function(e) {
+                const rect = gameArea.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                darkness.style.background =
+                    'radial-gradient(circle 55px at ' + x + 'px ' + y + 'px, ' +
+                    'transparent 0%, transparent 35px, rgba(0,0,0,0.92) 55px)';
+                luigi.style.display = 'block';
+                luigi.style.left = x + 'px';
+                luigi.style.top = y + 'px';
+            });
+
+            gameArea.addEventListener('mouseleave', function() {
+                darkness.style.background = 'rgba(0,0,0,0.95)';
+                luigi.style.display = 'none';
+            });
+
+            // ── Click target → win ─────────────────────────────────────────────
+            targetEl.addEventListener('click', function(e) {
+                if (found) return;
+                e.stopPropagation();
+                found = true;
+                targetEl.style.fontSize = '30px';
+                titleBar.textContent = theme.winMsg;
+                titleBar.style.background = 'rgba(0,140,0,0.75)';
+                darkness.style.background = 'transparent';
+                setTimeout(function() { adClosed(popup, WIN_SCORE); }, 600);
+            });
+
+            // ── Click ghost → lose a life ──────────────────────────────────────
+            ghosts.forEach(function(ghostEl) {
+                ghostEl.addEventListener('click', function(e) {
+                    if (found) return;
+                    e.stopPropagation();
+                    lives--;
+                    ghostEl.textContent = '💀';
+                    ghostEl.style.pointerEvents = 'none';
+                    var hearts = '';
+                    for (var h = 0; h < lives; h++) hearts += '❤️';
+                    for (var h2 = 0; h2 < 3 - lives; h2++) hearts += '🖤';
+                    livesDisplay.textContent = hearts;
+                    if (lives <= 0) {
+                        found = true;
+                        titleBar.textContent = theme.loseMsg;
+                        titleBar.style.background = 'rgba(180,0,0,0.75)';
+                        setTimeout(function() { endGame(); }, 700);
+                    }
+                });
+            });
+
+            content.appendChild(gameArea);
+            popup.appendChild(content);
+            return popup;
+        }
+
+        // ── Per-era flavor config for the Mario Kart mechanic ─────────────
+        const MK_ERA_THEMES = {
+            earlyWeb: {
+                opponent: '👾', opponentName: 'Alien',
+                opponentStyle: null,
+                instruction: '🏁 Beat the Alien in a race!',
+                winMsg: '🏆 You beat the Alien!',
+                loseMsg: '👾 The Alien wins! Game over!',
+                trackBg: '#008080',
+                opponentColor: '#6bb5ff'
+            },
+            myspace: {
+                opponent: '🧑', opponentName: 'Tom',
+                opponentStyle: null,
+                instruction: '~*~ Beat Tom in a race! ~*~',
+                winMsg: '~*~ You beat Tom!! ur #1!! ~*~',
+                loseMsg: '😤 Tom wins! He\'s #1 in ur Top 8!',
+                trackBg: '#1a0a2e',
+                opponentColor: '#ff00ff'
+            },
+            aol: {
+                opponent: '💿', opponentName: 'AOL CD',
+                opponentStyle: null,
+                instruction: '📞 Outrun the AOL CD!',
+                winMsg: '🔌 You\'re faster than dial-up!',
+                loseMsg: '💿 AOL CD wins! You\'ve got fail!',
+                trackBg: '#404040',
+                opponentColor: '#6b9fff'
+            },
+            win95: {
+                opponent: '📎', opponentName: 'Clippy',
+                opponentStyle: null,
+                instruction: '📎 Race against Clippy!',
+                winMsg: '📎 You beat Clippy! (he\'ll be back)',
+                loseMsg: '📎 Clippy wins! "Need help losing?"',
+                trackBg: '#0000aa',
+                opponentColor: '#ffffff'
+            },
+            winxp: {
+                opponent: '📎', opponentName: 'Clippy',
+                opponentStyle: null,
+                instruction: '📎 Outrun Clippy on the XP hills!',
+                winMsg: '🪟 Clippy left in the dust!',
+                loseMsg: '📎 Clippy wins! "I see you\'re losing!"',
+                trackBg: '#3a7ec8',
+                opponentColor: '#0a246a'
+            },
+            flash: {
+                opponent: '🐷', opponentName: 'Flash Pig',
+                opponentStyle: null,
+                instruction: '🏁 Beat the Flash Pig!',
+                winMsg: '🎉 Flash Pig defeated!',
+                loseMsg: '🐷 Flash Pig wins! Game over!',
+                trackBg: '#2e7d32',
+                opponentColor: '#81c784'
+            },
+            web20: {
+                opponent: '🏃', opponentName: 'Strava Runner',
+                opponentStyle: null,
+                instruction: '🏃 Beat the Strava Runner!',
+                winMsg: '🏆 New PR! Strava Runner beaten!',
+                loseMsg: '🏃 Strava Runner wins! Check your pace!',
+                trackBg: '#1a6fa8',
+                opponentColor: '#ff6600'
+            },
+            mobile: {
+                opponent: '🏃', opponentName: 'Strava Runner',
+                opponentStyle: null,
+                instruction: '🏃 Outrun the Strava Runner!',
+                winMsg: '📱 Fastest lap! Runner beaten!',
+                loseMsg: '🏃 Strava Runner wins! Kudos denied!',
+                trackBg: '#27ae60',
+                opponentColor: '#ff6600'
+            },
+            genz: {
+                opponent: 'BRUH',
+                opponentName: 'Bruh',
+                opponentStyle: 'font-weight:900;font-size:13px;color:#ff2d7e;letter-spacing:-1px;',
+                instruction: '💀 Beat BRUH in a race, no cap!',
+                winMsg: '💅 BRUH got ratioed! Slay!',
+                loseMsg: '💀 BRUH wins! It\'s giving L vibes!',
+                trackBg: '#ff6ab0',
+                opponentColor: '#a855f7'
+            },
+            ai: {
+                opponent: '🤖', opponentName: 'AI Bot',
+                opponentStyle: null,
+                instruction: '🤖 Race the AI Bot!',
+                winMsg: '✅ Human > Machine! You win!',
+                loseMsg: '🤖 AI wins! Singularity achieved!',
+                trackBg: '#0a0e27',
+                opponentColor: '#00d9ff'
+            }
+        };
+        const MK_DEFAULT_THEME = MK_ERA_THEMES.flash;
+
+        function createMarioKartPopup(era, adData, isVirus = false) {
+            const adText = adData.text;
+            const popup = document.createElement('div');
+            const eraClass = getEraClass(era);
+            const theme = MK_ERA_THEMES[eraClass] || MK_DEFAULT_THEME;
+            popup.className = 'popup-ad era-popup mk-popup' + (eraClass ? ' ' + eraClass : '') + (isVirus ? ' virus-popup' : '');
+            const pos = getRandomPosition();
+            popup.style.left = pos.x + 'px';
+            popup.style.top = pos.y + 'px';
+            popup.style.width = '310px';
+
+            if (isVirus) {
+                popup.style.backgroundColor = '#ff6b6b';
+                popup.style.borderColor = '#cc0000';
+                popup.style.color = 'white';
+                popup.style.fontFamily = era.fontFamily;
+                popup.style.fontSize = era.fontSize;
+                const content = document.createElement('div');
+                content.className = 'popup-ad-content';
+                content.innerHTML = `<p>${adText}</p>`;
+                content.appendChild(createTrapButtons(popup, Math.random() > 0.5 ? 2 : 1));
+                popup.appendChild(content);
+                return popup;
+            }
+
+            popup.style.backgroundColor = era.bgColor;
+            popup.style.borderColor = era.borderColor;
+            popup.style.color = era.textColor;
+            popup.style.fontFamily = era.fontFamily;
+            popup.style.fontSize = era.fontSize;
+
+            const WIN_SCORE = 20;
+            const FINISH = 100;
+            let marioProgress = 0;
+            let opponentProgress = 0;
+            let raceOver = false;
+            let raceStarted = false;
+
+            const content = document.createElement('div');
+            content.className = 'popup-ad-content';
+            content.innerHTML = `<p style="margin-bottom:6px;font-size:0.88em;">${adText}</p>`;
+
+            // ── Game area ──────────────────────────────────────────────────────
+            const gameArea = document.createElement('div');
+            gameArea.className = 'mk-game-area';
+            gameArea.style.background = theme.trackBg;
+
+            const titleBar = document.createElement('div');
+            titleBar.className = 'mk-title-bar';
+            titleBar.textContent = theme.instruction;
+
+            // Mario lane
+            const marioLane = document.createElement('div');
+            marioLane.className = 'mk-lane';
+            const marioRacer = document.createElement('div');
+            marioRacer.className = 'mk-racer';
+            marioRacer.textContent = '🏎️';
+            const marioTrack = document.createElement('div');
+            marioTrack.className = 'mk-track';
+            const marioBar = document.createElement('div');
+            marioBar.className = 'mk-progress mk-progress-mario';
+            marioBar.style.width = '0%';
+            const marioFinish = document.createElement('div');
+            marioFinish.className = 'mk-finish';
+            marioFinish.textContent = '🏁';
+            marioTrack.appendChild(marioBar);
+            marioTrack.appendChild(marioFinish);
+            marioLane.appendChild(marioRacer);
+            marioLane.appendChild(marioTrack);
+
+            // Opponent lane
+            const oppLane = document.createElement('div');
+            oppLane.className = 'mk-lane';
+            const oppRacer = document.createElement('div');
+            oppRacer.className = 'mk-racer';
+            oppRacer.textContent = theme.opponent;
+            if (theme.opponentStyle) oppRacer.style.cssText += theme.opponentStyle;
+            const oppTrack = document.createElement('div');
+            oppTrack.className = 'mk-track';
+            const oppBar = document.createElement('div');
+            oppBar.className = 'mk-progress mk-progress-opponent';
+            oppBar.style.width = '0%';
+            oppBar.style.background = 'linear-gradient(90deg, ' + theme.opponentColor + ', ' + theme.opponentColor + 'aa)';
+            const oppFinish = document.createElement('div');
+            oppFinish.className = 'mk-finish';
+            oppFinish.textContent = '🏁';
+            oppTrack.appendChild(oppBar);
+            oppTrack.appendChild(oppFinish);
+            oppLane.appendChild(oppRacer);
+            oppLane.appendChild(oppTrack);
+
+            // Boost button
+            const boostBtn = document.createElement('button');
+            boostBtn.className = 'mk-boost-btn';
+            boostBtn.textContent = '🏁 TAP TO BOOST! 🏁';
+
+            gameArea.appendChild(titleBar);
+            gameArea.appendChild(marioLane);
+            gameArea.appendChild(oppLane);
+            gameArea.appendChild(boostBtn);
+
+            // ── Race logic ─────────────────────────────────────────────────────
+            const MARIO_BOOST = 4 + Math.random() * 3;
+            const OPP_SPEED = 0.8 + Math.random() * 0.4;
+            const TICK_MS = 100;
+
+            var oppInterval;
+            function startRace() {
+                if (raceStarted) return;
+                raceStarted = true;
+                boostBtn.textContent = '🏁 TAP FASTER! 🏁';
+                oppInterval = setInterval(function() {
+                    if (raceOver) { clearInterval(oppInterval); return; }
+                    opponentProgress += OPP_SPEED;
+                    oppBar.style.width = Math.min(opponentProgress, FINISH) + '%';
+                    if (opponentProgress >= FINISH) {
+                        raceOver = true;
+                        clearInterval(oppInterval);
+                        titleBar.textContent = theme.loseMsg;
+                        titleBar.style.background = 'rgba(180,0,0,0.75)';
+                        boostBtn.disabled = true;
+                        boostBtn.textContent = '💀 Too slow!';
+                        setTimeout(function() { endGame(); }, 700);
+                    }
+                }, TICK_MS);
+            }
+
+            boostBtn.addEventListener('click', function(e) {
+                if (raceOver) return;
+                e.stopPropagation();
+                if (!raceStarted) startRace();
+                marioProgress += MARIO_BOOST;
+                marioBar.style.width = Math.min(marioProgress, FINISH) + '%';
+                if (marioProgress >= FINISH) {
+                    raceOver = true;
+                    if (oppInterval) clearInterval(oppInterval);
+                    titleBar.textContent = theme.winMsg;
+                    titleBar.style.background = 'rgba(0,140,0,0.75)';
+                    boostBtn.disabled = true;
+                    boostBtn.textContent = '🏆 Winner!';
+                    setTimeout(function() { adClosed(popup, WIN_SCORE); }, 600);
+                }
+            });
+
+            content.appendChild(gameArea);
+            popup.appendChild(content);
+            return popup;
+        }
+
         function createAd(era, mechanism, adData, isVirus = false) {
             switch(mechanism) {
                 case CLOSE_MECHANISMS.simpleX:
@@ -3685,6 +4343,10 @@
                     return createAngryBirdPopup(era, adData, isVirus);
                 case CLOSE_MECHANISMS.minesweeper:
                     return createMinesweeperPopup(era, adData, isVirus);
+                case CLOSE_MECHANISMS.luigisMansion:
+                    return createLuigisMansionPopup(era, adData, isVirus);
+                case CLOSE_MECHANISMS.marioKart:
+                    return createMarioKartPopup(era, adData, isVirus);
                 default:
                     return createSimpleXPopup(era, adData, isVirus);
             }
