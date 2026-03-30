@@ -1251,6 +1251,51 @@
         .game-over-screen {
             animation: gameOverSlideIn 0.5s ease-out;
         }
+
+        /* ── YouTube Ad mechanism ─────────────────────────────────────── */
+        .yt-popup { width: 340px; padding: 0; overflow: hidden; }
+        .yt-header { background: #212121; color: #fff; padding: 6px 10px; display: flex; align-items: center; gap: 8px; font-family: 'Arial', sans-serif; font-size: 12px; }
+        .yt-logo { color: #f00; font-size: 16px; font-weight: bold; letter-spacing: -1px; }
+        .yt-channel { color: #aaa; font-size: 11px; flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .yt-screen { width: 100%; height: 145px; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+        .yt-ad-label { position: absolute; top: 6px; left: 6px; background: rgba(0,0,0,0.75); color: #ffd700; font-size: 9px; font-family: Arial, sans-serif; padding: 2px 5px; border-radius: 2px; z-index: 2; font-weight: bold; letter-spacing: 0.5px; }
+        .yt-progress-wrap { background: #333; height: 4px; position: relative; }
+        .yt-progress-fill { height: 100%; background: #f00; width: 0%; }
+        .yt-controls { background: #181818; padding: 5px 8px; display: flex; align-items: center; gap: 8px; font-family: Arial, sans-serif; }
+        .yt-play-icon { color: #fff; font-size: 14px; }
+        .yt-time { color: #aaa; font-size: 11px; flex: 1; }
+        .yt-action-bar { background: #fff; padding: 8px 10px; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; font-family: Arial, sans-serif; }
+        .yt-video-title { font-size: 11px; color: #333; flex: 1; font-weight: bold; line-height: 1.3; }
+        .yt-trap-subscribe { background: #f00; color: #fff; border: none; padding: 5px 10px; font-size: 11px; font-weight: bold; border-radius: 2px; cursor: pointer; white-space: nowrap; }
+        .yt-trap-like { background: #f0f0f0; border: 1px solid #ccc; padding: 5px 8px; font-size: 11px; border-radius: 2px; cursor: pointer; }
+        .yt-skip-row { background: #181818; padding: 6px 8px; display: flex; justify-content: flex-end; }
+        .yt-skip-btn { background: rgba(30,30,30,0.95); color: #ccc; border: 1px solid #666; padding: 6px 14px; font-size: 11px; font-family: Arial, sans-serif; cursor: not-allowed; opacity: 0.65; white-space: nowrap; }
+        .yt-skip-btn.yt-skip-ready { cursor: pointer; color: #fff; opacity: 1; border-color: #aaa; background: rgba(50,50,50,0.95); }
+        .yt-skip-btn.yt-skip-ready:hover { background: #444; }
+
+        @keyframes ytBlink    { 0%,100%{opacity:1} 50%{opacity:0} }
+        @keyframes ytGlitter  { 0%,100%{text-shadow:0 0 4px #f0f,0 0 8px #0ff} 50%{text-shadow:0 0 8px #ff0,0 0 16px #f0f} }
+        @keyframes ytSpin     { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+        @keyframes ytLoadBar  { 0%{width:0%} 100%{width:100%} }
+        @keyframes ytBounce   { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+        @keyframes ytStream   { from{clip-path:inset(0 100% 0 0)} to{clip-path:inset(0 0% 0 0)} }
+        @keyframes ytScrollUp { from{transform:translateY(0)} to{transform:translateY(-50%)} }
+        @keyframes ytPulse    { 0%,100%{opacity:0.85;transform:scale(1)} 50%{opacity:1;transform:scale(1.04)} }
+
+        /* ── AdBlocker mechanism ──────────────────────────────────────── */
+        .adblocker-popup { border: 2px solid #1a73e8 !important; }
+        .adblocker-header { background: linear-gradient(135deg, #1a73e8, #0d47a1); color: #fff; padding: 10px 14px; display: flex; align-items: center; gap: 10px; font-family: Arial, sans-serif; }
+        .adblocker-shield-icon { font-size: 28px; animation: shieldPulse 1.5s ease-in-out infinite; }
+        .adblocker-header-text { flex: 1; }
+        .adblocker-header-title { font-size: 14px; font-weight: bold; }
+        .adblocker-header-sub { font-size: 10px; opacity: 0.85; margin-top: 2px; }
+        .adblocker-body { padding: 12px 14px; font-family: Arial, sans-serif; }
+        .adblocker-riddle-text { font-size: 12px; color: #333; line-height: 1.5; background: #f0f4ff; border-radius: 6px; padding: 10px; border-left: 3px solid #1a73e8; }
+        .adblocker-choice-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; }
+        .adblocker-choice-btn { font-size: 2em; padding: 10px; border: 2px solid #ddd; border-radius: 8px; background: #fff; cursor: pointer; transition: transform 0.1s, border-color 0.1s; }
+        .adblocker-choice-btn:hover { transform: scale(1.1); border-color: #1a73e8; }
+        .adblocker-wipe-flash { background: #22c55e; color: #fff; text-align: center; font-weight: bold; font-size: 13px; padding: 10px; border-radius: 6px; margin-top: 10px; font-family: Arial, sans-serif; }
+        @keyframes shieldPulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.18)} }
     </style>
 </head>
 <body>
@@ -1777,7 +1822,9 @@
             aiPicker: '',
             angryBird: '',
             minesweeper: '',
-            riddleChoice: ''
+            riddleChoice: '',
+            youtubeAd: '',
+            adBlocker: ''
         };
         const CLOSE_MECHANISMS = {
             simpleX: 'simpleX',           // Red X button
@@ -1797,7 +1844,9 @@
             minesweeper: 'minesweeper',        // Reveal all safe cells to close
             luigisMansion: 'luigisMansion',    // Flashlight find-the-object game
             marioKart: 'marioKart',            // Click-to-race game
-            riddleChoice: 'riddleChoice'       // Answer the riddle: pick the correct emoji
+            riddleChoice: 'riddleChoice',      // Answer the riddle: pick the correct emoji
+            youtubeAd: 'youtubeAd',            // YouTube-style video ad with skip countdown
+            adBlocker: 'adBlocker'             // AdBlocker installs and wipes all current ads
         };
         
         // Personality button pairs - [accept (trap), decline (close)]
@@ -4475,6 +4524,365 @@
             return popup;
         }
 
+        // ── Era-specific YouTube "video" screen renderers ──────────────────
+        const YT_ERA_SCREENS = {
+            'Early Web': {
+                channelName: 'GeoCities TV 🌐',
+                videoTitle: 'TOP 10 BEST WEBSITES 1997!! (MUST SEE)',
+                render: function(screen) {
+                    screen.style.background = '#000080';
+                    screen.innerHTML = '<div style="text-align:center;font-family:monospace;font-size:11px;padding:10px;">' +
+                        '<div style="color:#ffff00;animation:ytBlink 0.8s infinite">🔨 UNDER CONSTRUCTION 🔨</div>' +
+                        '<div style="color:#00ff00;margin-top:8px;animation:ytBlink 1.2s infinite">⭐ VISITOR #000847 ⭐</div>' +
+                        '<div style="color:#ff00ff;margin-top:6px">🌐 Best viewed in 800×600</div>' +
+                        '<div style="color:#ffff00;margin-top:6px;animation:ytBlink 1.5s infinite">[ NETSCAPE 4.0 REQUIRED ]</div>' +
+                        '</div>';
+                }
+            },
+            'MySpace/AIM': {
+                channelName: 'xXx_DaRkAnGeL_xXx 🎸',
+                videoTitle: '~*~MY TOP 8 EMO PLAYLIST~*~ (plz rate!!!)',
+                render: function(screen) {
+                    screen.style.background = '#1a0a2e';
+                    screen.innerHTML = '<div style="text-align:center;font-family:\'Comic Sans MS\',cursive;font-size:12px;padding:10px;">' +
+                        '<div style="color:#ff00ff;animation:ytGlitter 1s infinite">✨ gLiTtEr TeXt GeNeRaToR ✨</div>' +
+                        '<div style="color:#00ff00;margin-top:8px">~*~BFF 4 EVER~*~</div>' +
+                        '<div style="color:#ff69b4;margin-top:6px;animation:ytBlink 1s infinite">♪ Helena - MCR ♪</div>' +
+                        '<div style="color:#9370db;margin-top:6px">ur profile is SO kawaii!! ♥</div>' +
+                        '</div>';
+                }
+            },
+            'AOL/Dial-up': {
+                channelName: 'AOL Keywords TV 📬',
+                videoTitle: 'YOU\'VE GOT CONTENT! (1000 hrs FREE inside)',
+                render: function(screen) {
+                    screen.style.background = '#c0c0c0';
+                    screen.innerHTML = '<div style="text-align:center;font-family:Arial,sans-serif;font-size:11px;color:#000;padding:10px;">' +
+                        '<div style="animation:ytBlink 0.6s infinite">📡 Connecting... 28.8kbps</div>' +
+                        '<div style="background:#000080;margin-top:8px;height:10px;border-radius:2px;overflow:hidden;">' +
+                        '<div style="height:100%;background:#00ff00;animation:ytLoadBar 2.5s linear infinite;"></div></div>' +
+                        '<div style="margin-top:6px">📬 You\'ve Got Mail! (3 unread)</div>' +
+                        '<div style="color:#000080;margin-top:4px;font-size:10px">Keyword: FREESTUFF</div>' +
+                        '</div>';
+                }
+            },
+            '90s Windows': {
+                channelName: 'Microsoft® Windows™ TV',
+                videoTitle: 'CRITICAL SYSTEM ERROR – Please watch this',
+                render: function(screen) {
+                    screen.style.background = '#000080';
+                    screen.innerHTML = '<div style="text-align:center;font-family:\'Courier New\',monospace;font-size:10px;color:#fff;padding:10px;">' +
+                        '<div>A fatal exception 0E has occurred</div>' +
+                        '<div style="margin-top:4px">at 0028:C0034B53</div>' +
+                        '<div style="margin-top:6px;animation:ytBlink 1s infinite">* Press any key to continue _</div>' +
+                        '<div style="margin-top:6px;font-size:9px">Windows 95 restarting in 3... 2... 1...</div>' +
+                        '</div>';
+                }
+            },
+            'Windows XP': {
+                channelName: 'Microsoft® Windows™ XP',
+                videoTitle: 'Windows is loading your experience...',
+                render: function(screen) {
+                    screen.style.background = '#000';
+                    screen.innerHTML = '<div style="text-align:center;font-family:Tahoma,sans-serif;font-size:11px;color:#fff;padding:10px;">' +
+                        '<div style="color:#1b7fe3;font-size:22px">⊞</div>' +
+                        '<div style="margin-top:4px">Windows XP</div>' +
+                        '<div style="background:#333;margin:8px auto 0;border-radius:10px;overflow:hidden;width:120px;height:10px;">' +
+                        '<div style="height:100%;background:#1b7fe3;animation:ytLoadBar 2s linear infinite;border-radius:10px;"></div></div>' +
+                        '<div style="font-size:9px;color:#aaa;margin-top:6px">Starting Windows...</div>' +
+                        '</div>';
+                }
+            },
+            'Flash Era': {
+                channelName: 'Newgrounds Official 🎮',
+                videoTitle: 'EPIC FLASH GAME – Play now in your browser!',
+                render: function(screen) {
+                    screen.style.background = '#000';
+                    screen.innerHTML = '<div style="text-align:center;font-family:Arial,sans-serif;font-size:11px;color:#ff6600;padding:10px;">' +
+                        '<div style="font-size:22px;animation:ytSpin 2s linear infinite">⚡</div>' +
+                        '<div style="margin-top:6px">Adobe Flash Player</div>' +
+                        '<div style="background:#333;margin:8px auto 0;border-radius:2px;overflow:hidden;width:140px;height:12px;">' +
+                        '<div style="height:100%;background:#ff6600;animation:ytLoadBar 2s linear infinite;"></div></div>' +
+                        '<div style="font-size:10px;margin-top:4px;animation:ytBlink 1s infinite">Loading... 47%</div>' +
+                        '</div>';
+                }
+            },
+            'Modern Web 2.0': {
+                channelName: 'SocialMediaHub ▶️',
+                videoTitle: '10 LIFE HACKS that will BLOW YOUR MIND! 🤯',
+                render: function(screen) {
+                    screen.style.background = '#f9f9f9';
+                    screen.innerHTML = '<div style="text-align:center;font-family:Arial,sans-serif;font-size:12px;color:#333;padding:10px;">' +
+                        '<div style="font-size:20px">👍 📤 ⭐ 💬</div>' +
+                        '<div style="margin-top:8px;font-weight:bold">LIKE & SHARE!</div>' +
+                        '<div style="color:#666;margin-top:6px;font-size:10px">▶ 1.2M views • 47K likes</div>' +
+                        '<div style="color:#1da1f2;margin-top:4px;font-size:11px">📤 Retweet • +1 • Pin It</div>' +
+                        '</div>';
+                }
+            },
+            'Mobile Era': {
+                channelName: 'AppStore Promos 📱',
+                videoTitle: '5 apps you NEED on your phone RIGHT NOW',
+                render: function(screen) {
+                    screen.style.background = '#fff';
+                    screen.innerHTML = '<div style="text-align:center;font-family:-apple-system,Helvetica,sans-serif;font-size:12px;color:#333;padding:10px;">' +
+                        '<div style="font-size:26px;animation:ytBounce 1s ease-in-out infinite">📱</div>' +
+                        '<div style="margin-top:6px;font-weight:bold">Rate this app!</div>' +
+                        '<div style="color:#ff9500;font-size:18px;margin-top:4px">⭐⭐⭐⭐⭐</div>' +
+                        '<div style="color:#1c7ed6;margin-top:6px;font-size:11px">Enable Notifications</div>' +
+                        '</div>';
+                }
+            },
+            'Gen-Z': {
+                channelName: '@thirstytok 💅',
+                videoTitle: 'POV: you clicked on an ad (not clickbait fr fr)',
+                render: function(screen) {
+                    screen.style.background = '#000';
+                    screen.innerHTML = '<div style="text-align:center;font-family:Arial,sans-serif;font-size:12px;color:#fff;padding:10px;">' +
+                        '<div style="font-size:18px;animation:ytBounce 0.8s ease-in-out infinite">💅 slay era 💅</div>' +
+                        '<div style="margin-top:6px;color:#a855f7">it\'s giving... ad revenue</div>' +
+                        '<div style="margin-top:4px;color:#ec4899">main character energy 💫</div>' +
+                        '<div style="color:#06b6d4;margin-top:4px;font-size:10px">❤️ 847K  💬 12K  ↗️ Share</div>' +
+                        '</div>';
+                }
+            },
+            'AI Era': {
+                channelName: 'AI Content Creator 🤖',
+                videoTitle: 'I asked AI to make me rich — the response shocked me',
+                render: function(screen) {
+                    screen.style.background = '#0a0e27';
+                    screen.innerHTML = '<div style="text-align:center;font-family:\'Courier New\',monospace;font-size:10px;color:#00d9ff;padding:10px;">' +
+                        '<div style="animation:ytBlink 0.4s infinite;font-size:16px">█</div>' +
+                        '<div style="margin-top:6px;color:#7fff00">✓ AI-optimized for engagement</div>' +
+                        '<div style="margin-top:4px;animation:ytBlink 0.8s infinite">&gt; Generating wealth plan...</div>' +
+                        '<div style="margin-top:4px;font-size:9px;color:#888">Trained on 47TB of your data</div>' +
+                        '</div>';
+                }
+            }
+        };
+
+        function createYoutubeAdPopup(era, adData, isVirus = false) {
+            const popup = document.createElement('div');
+            const eraClass = getEraClass(era);
+            popup.className = 'popup-ad era-popup yt-popup' + (eraClass ? ' ' + eraClass : '') + (isVirus ? ' virus-popup' : '');
+            const pos = getRandomPosition();
+            popup.style.left = pos.x + 'px';
+            popup.style.top = pos.y + 'px';
+
+            if (isVirus) {
+                popup.style.backgroundColor = '#ff6b6b';
+                popup.style.borderColor = '#cc0000';
+                popup.style.color = 'white';
+                popup.style.fontFamily = era.fontFamily;
+                popup.style.fontSize = era.fontSize;
+                popup.style.padding = '30px';
+                const content = document.createElement('div');
+                content.className = 'popup-ad-content';
+                content.innerHTML = '<p>' + adData.text + '</p>';
+                content.appendChild(createTrapButtons(popup, Math.random() > 0.5 ? 2 : 1));
+                popup.appendChild(content);
+                return popup;
+            }
+
+            // Pick era screen definition (fall back to AI Era as the most generic "modern" default)
+            const ytScreen = YT_ERA_SCREENS[era.name] || YT_ERA_SCREENS['AI Era'];
+            const SKIP_DELAY = 5; // seconds
+
+            // ── Header bar ─────────────────────────────────────────────────
+            const header = document.createElement('div');
+            header.className = 'yt-header';
+            header.innerHTML = '<span class="yt-logo">▶ YouTube</span><span class="yt-channel">' + ytScreen.channelName + '</span>';
+
+            // ── Video screen ────────────────────────────────────────────────
+            const screen = document.createElement('div');
+            screen.className = 'yt-screen';
+            ytScreen.render(screen);
+            const adLabel = document.createElement('div');
+            adLabel.className = 'yt-ad-label';
+            adLabel.textContent = 'AD';
+            screen.appendChild(adLabel);
+
+            // ── Progress bar ────────────────────────────────────────────────
+            const progressWrap = document.createElement('div');
+            progressWrap.className = 'yt-progress-wrap';
+            const progressFill = document.createElement('div');
+            progressFill.className = 'yt-progress-fill';
+            progressWrap.appendChild(progressFill);
+
+            // ── Playback controls row ────────────────────────────────────────
+            const controls = document.createElement('div');
+            controls.className = 'yt-controls';
+            controls.innerHTML = '<span class="yt-play-icon">▶</span><span class="yt-time">0:00 / 0:' + (SKIP_DELAY + 10) + '</span>';
+
+            // ── Video title / action bar (trap buttons) ─────────────────────
+            const actionBar = document.createElement('div');
+            actionBar.className = 'yt-action-bar';
+
+            const videoTitleEl = document.createElement('div');
+            videoTitleEl.className = 'yt-video-title';
+            videoTitleEl.textContent = adData.text ? adData.text.replace(/<[^>]*>/g, '') : ytScreen.videoTitle;
+
+            const subscribeBtn = document.createElement('button');
+            subscribeBtn.className = 'yt-trap-subscribe';
+            subscribeBtn.textContent = '🔔 Subscribe';
+            subscribeBtn.addEventListener('click', function(e) { e.stopPropagation(); virusClicked(popup); });
+
+            const likeBtn = document.createElement('button');
+            likeBtn.className = 'yt-trap-like';
+            likeBtn.textContent = '👍 Like';
+            likeBtn.addEventListener('click', function(e) { e.stopPropagation(); virusClicked(popup); });
+
+            actionBar.appendChild(videoTitleEl);
+            actionBar.appendChild(subscribeBtn);
+            actionBar.appendChild(likeBtn);
+
+            // ── Skip row ────────────────────────────────────────────────────
+            const skipRow = document.createElement('div');
+            skipRow.className = 'yt-skip-row';
+
+            const skipBtn = document.createElement('button');
+            skipBtn.className = 'yt-skip-btn';
+            skipBtn.textContent = 'Skip Ad in ' + SKIP_DELAY + '  ▶▶';
+            skipRow.appendChild(skipBtn);
+
+            // ── Assemble popup ──────────────────────────────────────────────
+            popup.appendChild(header);
+            popup.appendChild(screen);
+            popup.appendChild(progressWrap);
+            popup.appendChild(controls);
+            popup.appendChild(actionBar);
+            popup.appendChild(skipRow);
+
+            // ── Countdown + progress animation ──────────────────────────────
+            const totalDuration = SKIP_DELAY * 1000;
+            const startTime = performance.now();
+            let skipEnabled = false;
+
+            function tick(now) {
+                if (!document.body.contains(popup)) return;
+                const elapsed = now - startTime;
+                const fraction = Math.min(elapsed / totalDuration, 1);
+                progressFill.style.width = (fraction * 100) + '%';
+                const secsLeft = Math.ceil((totalDuration - elapsed) / 1000);
+                if (secsLeft > 0) {
+                    skipBtn.textContent = 'Skip Ad in ' + secsLeft + '  ▶▶';
+                } else if (!skipEnabled) {
+                    skipEnabled = true;
+                    skipBtn.textContent = 'Skip Ad  ▶▶';
+                    skipBtn.classList.add('yt-skip-ready');
+                    skipBtn.style.cursor = 'pointer';
+                    skipBtn.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        adClosed(popup, 15);
+                    });
+                }
+                if (fraction < 1) requestAnimationFrame(tick);
+            }
+            requestAnimationFrame(tick);
+
+            return popup;
+        }
+
+        function createAdBlockerPopup(era, adData, isVirus = false) {
+            const popup = document.createElement('div');
+            const eraClass = getEraClass(era);
+            popup.className = 'popup-ad era-popup adblocker-popup' + (eraClass ? ' ' + eraClass : '') + (isVirus ? ' virus-popup' : '');
+            const pos = getRandomPosition();
+            popup.style.left = pos.x + 'px';
+            popup.style.top = pos.y + 'px';
+            popup.style.width = '300px';
+            popup.style.padding = '0';
+            popup.style.overflow = 'hidden';
+
+            if (isVirus) {
+                popup.style.backgroundColor = '#ff6b6b';
+                popup.style.borderColor = '#cc0000';
+                popup.style.color = 'white';
+                popup.style.fontFamily = era.fontFamily;
+                popup.style.fontSize = era.fontSize;
+                popup.style.padding = '30px';
+                const content = document.createElement('div');
+                content.className = 'popup-ad-content';
+                content.innerHTML = '<p>' + adData.text + '</p>';
+                content.appendChild(createTrapButtons(popup, Math.random() > 0.5 ? 2 : 1));
+                popup.appendChild(content);
+                return popup;
+            }
+
+            // ── Header ──────────────────────────────────────────────────────
+            const header = document.createElement('div');
+            header.className = 'adblocker-header';
+            header.innerHTML =
+                '<div class="adblocker-shield-icon">🛡️</div>' +
+                '<div class="adblocker-header-text">' +
+                    '<div class="adblocker-header-title">AdBlocker Pro</div>' +
+                    '<div class="adblocker-header-sub">Block ALL ads — 100% Free · 10M+ installs</div>' +
+                '</div>';
+
+            // ── Body ────────────────────────────────────────────────────────
+            const body = document.createElement('div');
+            body.className = 'adblocker-body';
+
+            const riddleText = document.createElement('div');
+            riddleText.className = 'adblocker-riddle-text';
+            riddleText.innerHTML =
+                '<strong>🧩 Prove you\'re human to install:</strong><br><br>' +
+                'I guard your browser.<br>' +
+                'Ads are my sworn enemy.<br>' +
+                'Websites beg you not to use me.<br><br>' +
+                '<em>What am I?</em>';
+
+            // ── Emoji choices ────────────────────────────────────────────────
+            const choices = [
+                { emoji: '🛡️', isCorrect: true },
+                { emoji: '💰', isCorrect: false },
+                { emoji: '🦠', isCorrect: false },
+                { emoji: '📺', isCorrect: false }
+            ];
+            // Fisher-Yates shuffle
+            for (let i = choices.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                const tmp = choices[i]; choices[i] = choices[j]; choices[j] = tmp;
+            }
+
+            const grid = document.createElement('div');
+            grid.className = 'adblocker-choice-grid';
+
+            choices.forEach(function(choice) {
+                const btn = document.createElement('button');
+                btn.className = 'adblocker-choice-btn';
+                btn.textContent = choice.emoji;
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    if (choice.isCorrect) {
+                        // Show confirmation flash
+                        const flash = document.createElement('div');
+                        flash.className = 'adblocker-wipe-flash';
+                        flash.textContent = '✅ AdBlocker installed! Wiping all ads…';
+                        body.appendChild(flash);
+                        grid.style.pointerEvents = 'none';
+                        setTimeout(function() {
+                            // Remove every visible ad popup except this one
+                            document.querySelectorAll('.era-popup').forEach(function(el) {
+                                if (el !== popup) el.remove();
+                            });
+                            adClosed(popup, 25);
+                        }, 700);
+                    } else {
+                        virusClicked(popup);
+                    }
+                });
+                grid.appendChild(btn);
+            });
+
+            body.appendChild(riddleText);
+            body.appendChild(grid);
+
+            popup.appendChild(header);
+            popup.appendChild(body);
+            return popup;
+        }
+
         function createAd(era, mechanism, adData, isVirus = false) {
             switch(mechanism) {
                 case CLOSE_MECHANISMS.simpleX:
@@ -4513,6 +4921,10 @@
                     return createMarioKartPopup(era, adData, isVirus);
                 case CLOSE_MECHANISMS.riddleChoice:
                     return createRiddleChoicePopup(era, adData, isVirus);
+                case CLOSE_MECHANISMS.youtubeAd:
+                    return createYoutubeAdPopup(era, adData, isVirus);
+                case CLOSE_MECHANISMS.adBlocker:
+                    return createAdBlockerPopup(era, adData, isVirus);
                 default:
                     return createSimpleXPopup(era, adData, isVirus);
             }
