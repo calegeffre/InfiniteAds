@@ -1824,7 +1824,10 @@
             minesweeper: '',
             riddleChoice: '',
             youtubeAd: '',
-            adBlocker: ''
+            adBlocker: '',
+            bouncingX: '',
+            spinX: '',
+            rightClickX: ''
         };
         const CLOSE_MECHANISMS = {
             simpleX: 'simpleX',           // Red X button
@@ -1835,6 +1838,7 @@
             keyboardTab: 'keyboardTab',   // Tab+Enter to close
             puzzle: 'puzzle',             // Click sequence puzzle
             holdX: 'holdX',               // Hold X for 1 second
+            holdXAlt: 'holdX',            // Hold X for 1 second (intentional duplicate – doubles spawn probability)
             doubleClick: 'doubleClick',   // Double-click X
             typeX: 'typeX',               // Type 'x' key to close
             declineBtn: 'declineBtn',      // Click decline button (no X)
@@ -1846,7 +1850,10 @@
             marioKart: 'marioKart',            // Click-to-race game
             riddleChoice: 'riddleChoice',      // Answer the riddle: pick the correct emoji
             youtubeAd: 'youtubeAd',            // YouTube-style video ad with skip countdown
-            adBlocker: 'adBlocker'             // AdBlocker installs and wipes all current ads
+            adBlocker: 'adBlocker',            // AdBlocker installs and wipes all current ads
+            bouncingX: 'bouncingX',            // X bounces around the popup, must click it
+            spinX: 'spinX',                    // X spins; click during the green stop-window
+            rightClickX: 'rightClickX'         // Must right-click the X to close
         };
         
         // Personality button pairs - [accept (trap), decline (close)]
@@ -4883,6 +4890,258 @@
             return popup;
         }
 
+        // BOUNCING X - X button bounces around the popup, must click it to close
+        function createBouncingXPopup(era, adData, isVirus = false) {
+            const adText = adData.text;
+            const adTrapButtons = adData.trapButtons;
+            const adSafeButtons = adData.safeButtons;
+            const adButtons = adData.buttons;
+            const popup = document.createElement('div');
+            const eraClass = getEraClass(era);
+            popup.className = 'popup-ad era-popup' + (eraClass ? ' ' + eraClass : '') + (isVirus ? ' virus-popup' : '');
+            const pos = getRandomPosition();
+            popup.style.left = pos.x + 'px';
+            popup.style.top = pos.y + 'px';
+            popup.style.width = '280px';
+            popup.style.backgroundColor = isVirus ? '#ff6b6b' : era.bgColor;
+            popup.style.borderColor = isVirus ? '#cc0000' : era.borderColor;
+            popup.style.color = isVirus ? 'white' : era.textColor;
+            popup.style.fontFamily = era.fontFamily;
+            popup.style.fontSize = era.fontSize;
+
+            const closeBtn = document.createElement('button');
+            closeBtn.className = 'popup-ad-close-btn';
+            closeBtn.innerHTML = '&times;';
+
+            if (isVirus) {
+                closeBtn.style.cursor = 'not-allowed';
+                closeBtn.style.opacity = '0.5';
+            } else {
+                // Override static position so we can animate it freely inside the popup
+                closeBtn.style.position = 'absolute';
+                closeBtn.style.top = '10px';
+                closeBtn.style.right = 'auto';
+                closeBtn.style.left = '10px';
+
+                const btnSize = 30;
+                let bx = 10, by = 10;
+                let vx = 2, vy = 1.5;
+                let animFrame;
+                let alive = true;
+
+                function bounce() {
+                    if (!alive || !document.body.contains(popup)) {
+                        alive = false;
+                        return;
+                    }
+                    const pw = popup.offsetWidth;
+                    const ph = popup.offsetHeight;
+                    bx += vx;
+                    by += vy;
+                    if (bx <= 0) { bx = 0; vx = Math.abs(vx); }
+                    if (bx + btnSize >= pw) { bx = pw - btnSize; vx = -Math.abs(vx); }
+                    if (by <= 0) { by = 0; vy = Math.abs(vy); }
+                    if (by + btnSize >= ph) { by = ph - btnSize; vy = -Math.abs(vy); }
+                    closeBtn.style.left = bx + 'px';
+                    closeBtn.style.top = by + 'px';
+                    animFrame = requestAnimationFrame(bounce);
+                }
+
+                animFrame = requestAnimationFrame(bounce);
+
+                closeBtn.addEventListener('click', function() {
+                    alive = false;
+                    cancelAnimationFrame(animFrame);
+                    adClosed(popup, 12);
+                });
+            }
+
+            const content = document.createElement('div');
+            content.className = 'popup-ad-content';
+            const hintText = isVirus ? '' : `<p class="popup-hint" style="margin-top: 15px; font-style: italic; font-size: 0.85em;">${MECHANISM_HINTS.bouncingX}</p>`;
+            content.innerHTML = isVirus ? `<p>${adText}</p>` : `<p>${adText}</p>${hintText}`;
+
+            if (isVirus) {
+                content.appendChild(createTrapButtons(popup, Math.random() > 0.5 ? 2 : 1));
+            } else if (adTrapButtons || adSafeButtons) {
+                content.appendChild(createAdButtonSet(popup, adTrapButtons, adSafeButtons, null));
+            } else if (adButtons) {
+                content.appendChild(createAdButtonSet(popup, null, null, adButtons));
+            } else if (Math.random() > 0.5) {
+                content.appendChild(createFakeButtons(Math.random() > 0.5 ? 2 : 1, eraClass));
+            }
+
+            popup.appendChild(closeBtn);
+            popup.appendChild(content);
+            return popup;
+        }
+
+        // SPIN X - X button spins; briefly turns green/stops every few seconds – click during the green window
+        function createSpinXPopup(era, adData, isVirus = false) {
+            const adText = adData.text;
+            const adTrapButtons = adData.trapButtons;
+            const adSafeButtons = adData.safeButtons;
+            const adButtons = adData.buttons;
+            const popup = document.createElement('div');
+            const eraClass = getEraClass(era);
+            popup.className = 'popup-ad era-popup' + (eraClass ? ' ' + eraClass : '') + (isVirus ? ' virus-popup' : '');
+            const pos = getRandomPosition();
+            popup.style.left = pos.x + 'px';
+            popup.style.top = pos.y + 'px';
+            popup.style.width = '280px';
+            popup.style.backgroundColor = isVirus ? '#ff6b6b' : era.bgColor;
+            popup.style.borderColor = isVirus ? '#cc0000' : era.borderColor;
+            popup.style.color = isVirus ? 'white' : era.textColor;
+            popup.style.fontFamily = era.fontFamily;
+            popup.style.fontSize = era.fontSize;
+
+            const closeBtn = document.createElement('button');
+            closeBtn.className = 'popup-ad-close-btn';
+            closeBtn.innerHTML = '&times;';
+            closeBtn.style.transition = 'none';
+
+            if (isVirus) {
+                closeBtn.style.cursor = 'not-allowed';
+                closeBtn.style.opacity = '0.5';
+            } else {
+                let angle = 0;
+                let speed = 6; // degrees per frame
+                let canClick = false;
+                let animFrame;
+                let alive = true;
+                let windowTimer = null;
+                let spinTimeout = null;
+
+                function spin() {
+                    if (!alive || !document.body.contains(popup)) {
+                        alive = false;
+                        return;
+                    }
+                    angle = (angle + speed) % 360;
+                    closeBtn.style.transform = `rotate(${angle}deg)`;
+                    animFrame = requestAnimationFrame(spin);
+                }
+
+                function openClickWindow() {
+                    if (!alive) return;
+                    canClick = true;
+                    cancelAnimationFrame(animFrame);
+                    closeBtn.style.transform = 'rotate(0deg)';
+                    closeBtn.style.backgroundColor = '#22c55e';
+                    windowTimer = setTimeout(function() {
+                        if (!alive) return;
+                        canClick = false;
+                        closeBtn.style.backgroundColor = '';
+                        speed = Math.min(speed + 1, 14); // spin faster each cycle
+                        animFrame = requestAnimationFrame(spin);
+                        spinTimeout = setTimeout(openClickWindow, 1800 + Math.random() * 800);
+                    }, 600);
+                }
+
+                animFrame = requestAnimationFrame(spin);
+                spinTimeout = setTimeout(openClickWindow, 1800 + Math.random() * 500);
+
+                closeBtn.addEventListener('click', function() {
+                    if (canClick) {
+                        alive = false;
+                        cancelAnimationFrame(animFrame);
+                        clearTimeout(windowTimer);
+                        clearTimeout(spinTimeout);
+                        adClosed(popup, 12);
+                    } else {
+                        // Wrong time – pause spin, shake as feedback, then resume
+                        cancelAnimationFrame(animFrame);
+                        closeBtn.style.transform = 'translateX(-6px)';
+                        setTimeout(function() { closeBtn.style.transform = 'translateX(6px)'; }, 80);
+                        setTimeout(function() {
+                            closeBtn.style.transform = `rotate(${angle}deg)`;
+                            animFrame = requestAnimationFrame(spin);
+                        }, 160);
+                    }
+                });
+            }
+
+            const content = document.createElement('div');
+            content.className = 'popup-ad-content';
+            const hintText = isVirus ? '' : `<p class="popup-hint" style="margin-top: 15px; font-style: italic; font-size: 0.85em;">${MECHANISM_HINTS.spinX}</p>`;
+            content.innerHTML = isVirus ? `<p>${adText}</p>` : `<p>${adText}</p>${hintText}`;
+
+            if (isVirus) {
+                content.appendChild(createTrapButtons(popup, Math.random() > 0.5 ? 2 : 1));
+            } else if (adTrapButtons || adSafeButtons) {
+                content.appendChild(createAdButtonSet(popup, adTrapButtons, adSafeButtons, null));
+            } else if (adButtons) {
+                content.appendChild(createAdButtonSet(popup, null, null, adButtons));
+            } else if (Math.random() > 0.5) {
+                content.appendChild(createFakeButtons(Math.random() > 0.5 ? 2 : 1, eraClass));
+            }
+
+            popup.appendChild(closeBtn);
+            popup.appendChild(content);
+            return popup;
+        }
+
+        // RIGHT-CLICK X - Must right-click the X to close (left-click is rejected)
+        function createRightClickXPopup(era, adData, isVirus = false) {
+            const adText = adData.text;
+            const adTrapButtons = adData.trapButtons;
+            const adSafeButtons = adData.safeButtons;
+            const adButtons = adData.buttons;
+            const popup = document.createElement('div');
+            const eraClass = getEraClass(era);
+            popup.className = 'popup-ad era-popup' + (eraClass ? ' ' + eraClass : '') + (isVirus ? ' virus-popup' : '');
+            const pos = getRandomPosition();
+            popup.style.left = pos.x + 'px';
+            popup.style.top = pos.y + 'px';
+            popup.style.width = '280px';
+            popup.style.backgroundColor = isVirus ? '#ff6b6b' : era.bgColor;
+            popup.style.borderColor = isVirus ? '#cc0000' : era.borderColor;
+            popup.style.color = isVirus ? 'white' : era.textColor;
+            popup.style.fontFamily = era.fontFamily;
+            popup.style.fontSize = era.fontSize;
+
+            const closeBtn = document.createElement('button');
+            closeBtn.className = 'popup-ad-close-btn';
+            closeBtn.innerHTML = '&times;';
+
+            if (isVirus) {
+                closeBtn.style.cursor = 'not-allowed';
+                closeBtn.style.opacity = '0.5';
+            } else {
+                closeBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    // Reject left-click with a brief shake
+                    closeBtn.style.transform = 'translateX(-5px)';
+                    setTimeout(function() { closeBtn.style.transform = 'translateX(5px)'; }, 80);
+                    setTimeout(function() { closeBtn.style.transform = ''; }, 160);
+                });
+
+                closeBtn.addEventListener('contextmenu', function(e) {
+                    e.preventDefault();
+                    adClosed(popup, 12);
+                });
+            }
+
+            const content = document.createElement('div');
+            content.className = 'popup-ad-content';
+            const hintText = isVirus ? '' : `<p class="popup-hint" style="margin-top: 15px; font-style: italic; font-size: 0.85em;">${MECHANISM_HINTS.rightClickX}</p>`;
+            content.innerHTML = isVirus ? `<p>${adText}</p>` : `<p>${adText}</p>${hintText}`;
+
+            if (isVirus) {
+                content.appendChild(createTrapButtons(popup, Math.random() > 0.5 ? 2 : 1));
+            } else if (adTrapButtons || adSafeButtons) {
+                content.appendChild(createAdButtonSet(popup, adTrapButtons, adSafeButtons, null));
+            } else if (adButtons) {
+                content.appendChild(createAdButtonSet(popup, null, null, adButtons));
+            } else if (Math.random() > 0.5) {
+                content.appendChild(createFakeButtons(Math.random() > 0.5 ? 2 : 1, eraClass));
+            }
+
+            popup.appendChild(closeBtn);
+            popup.appendChild(content);
+            return popup;
+        }
+
         function createAd(era, mechanism, adData, isVirus = false) {
             switch(mechanism) {
                 case CLOSE_MECHANISMS.simpleX:
@@ -4925,6 +5184,12 @@
                     return createYoutubeAdPopup(era, adData, isVirus);
                 case CLOSE_MECHANISMS.adBlocker:
                     return createAdBlockerPopup(era, adData, isVirus);
+                case CLOSE_MECHANISMS.bouncingX:
+                    return createBouncingXPopup(era, adData, isVirus);
+                case CLOSE_MECHANISMS.spinX:
+                    return createSpinXPopup(era, adData, isVirus);
+                case CLOSE_MECHANISMS.rightClickX:
+                    return createRightClickXPopup(era, adData, isVirus);
                 default:
                     return createSimpleXPopup(era, adData, isVirus);
             }
