@@ -84,7 +84,7 @@ function printList() {
     console.log('Era keys:');
     [
         'earlyWeb', 'myspaceAim', 'aolDialup', 'win95', 'winXP',
-        'flash', 'web20', 'mobile', 'genZ', 'ai', 'retroArcade'
+        'flash', 'web20', 'mobile', 'genZ', 'ai', 'retroArcade', 'aiAgents'
     ].forEach(k => console.log('  ' + k));
     console.log('\nMechanism keys:');
     [
@@ -100,6 +100,8 @@ function printList() {
     console.log('  node preview.js ai:aiPicker');
     console.log('  node preview.js retroArcade:simonSays');
     console.log('  node preview.js retroArcade:simpleX:CHEAT');
+    console.log('  node preview.js aiAgents:simpleX');
+    console.log('  node preview.js aiAgents:simpleX:MoltBook');
     console.log('  node preview.js --list');
 }
 

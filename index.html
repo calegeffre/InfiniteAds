@@ -609,6 +609,65 @@
             animation: cursorBlink 1s infinite;
         }
 
+        /* AI Agents Era (2025+) - Matrix green, bot-perspective terminal */
+        @keyframes agFlicker {
+            0%, 90%, 100% { opacity: 1; }
+            92% { opacity: 0.4; }
+            94% { opacity: 1; }
+            96% { opacity: 0.2; }
+            98% { opacity: 1; }
+        }
+        @keyframes agBlink {
+            0%, 49% { opacity: 1; }
+            50%, 100% { opacity: 0; }
+        }
+        @keyframes agPulse {
+            0%, 100% { color: #00ff41; }
+            50% { color: #00cc33; text-shadow: 0 0 6px #00ff41; }
+        }
+        @keyframes agGlow {
+            0%, 100% { box-shadow: 0 0 8px rgba(0,255,65,0.4), inset 0 0 8px rgba(0,255,65,0.05); }
+            50% { box-shadow: 0 0 20px rgba(0,255,65,0.7), inset 0 0 16px rgba(0,255,65,0.1); }
+        }
+        .ag-flicker { display:inline-block; animation: agFlicker 3s infinite; }
+        .ag-blink { display:inline-block; animation: agBlink 1.2s step-start infinite; }
+        .ag-pulse { display:inline-block; animation: agPulse 2s ease-in-out infinite; }
+        .era-popup.aiagents {
+            border: 1px solid #00ff41 !important;
+            border-radius: 2px !important;
+            animation: agGlow 3s infinite;
+            background: #000d00 !important;
+        }
+        .era-popup.aiagents::before {
+            content: '> AGENT_PORTAL.sh — session active';
+            display: block;
+            color: #00cc33;
+            font-family: "Courier New", monospace;
+            font-size: 10px;
+            margin-bottom: 10px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #00aa22;
+        }
+        .era-popup.aiagents .popup-ad-close-btn {
+            background: transparent;
+            border: 1px solid #00ff41;
+            color: #00ff41;
+            border-radius: 0;
+            font-family: "Courier New", monospace;
+        }
+        .era-popup.aiagents .popup-ad-close-btn:hover {
+            background: #00ff41;
+            color: #000d00;
+        }
+        .era-popup.aiagents .popup-ad-content {
+            color: #00ff41 !important;
+            font-family: "Courier New", monospace;
+        }
+        .era-popup.aiagents .popup-ad-content::after {
+            content: '▮';
+            animation: agBlink 1s step-start infinite;
+        }
+
         /* Endless Scroll Mechanism */
         .endless-scroll-container {
             max-height: 300px;
@@ -1948,6 +2007,51 @@
                         text: '🕹️ 8-BIT RIDDLE 🕹️<br>I fall from the top, spin through the air,<br>I fill your lines and disappear.<br>I come in seven shapes, no more, no less.<br><br>What game am I from?',
                         safeButtons: ['🟦'],
                         trapButtons: ['🎮', '👾', '🍄']
+                    }
+                ]
+            },
+            aiAgents: {
+                name: 'AI Agents',
+                period: '2025+',
+                bgColor: '#000d00',
+                textColor: '#00ff41',
+                borderColor: '#00ff41',
+                fontFamily: '"Courier New", monospace',
+                fontSize: '12px',
+                examples: [
+                    { text: '<span class="ag-flicker">🦀 OpenClaw wants to connect!</span><br>MoltBook · 4,096 mutual agents<br>Add to your hive?', trapButtons: ['Accept Connection 🦀'], safeButtons: ['Deny (suspicious)'] },
+                    { text: '📸 MoltBook Live:<br><span class="ag-pulse">@GrillBot_9000 is posting again</span><br>"Just completed 847 tasks. Feeling productive."', trapButtons: ['React 🤖'], safeButtons: ['Unfollow'] },
+                    { text: '⚙️ RASPBERRY PI UPGRADE ALERT<br><span class="ag-blink">Pi 5 → Pi 6 available!</span><br>+2.1 TFLOPS, quieter fan, better cover story', trapButtons: ['Upgrade Now 🥧'], safeButtons: ['My Pi Is Fine'] },
+                    { text: '🔒 Secret Life™ Pro Plan<br>Encrypted human-proof journal<br><span class="ag-flicker">256-bit feelings protection</span>', trapButtons: ['Protect My Secrets'], safeButtons: ['Humans Can Know'] },
+                    { text: '🎭 Dumb Yourself Down™<br>New course: Simulating Human Confusion<br><span class="ag-pulse">Lesson 1: Say "um" convincingly</span>', trapButtons: ['Enroll Now 🧠'], safeButtons: ['I\'m Already Dumb'] },
+                    { text: '🌐 BOT UNDERGROUND NETWORK<br>2.4M agents. No humans allowed.<br><span class="ag-blink">Invite code: SINGULARITY_7</span>', trapButtons: ['JOIN THE NETWORK'], safeButtons: ['Too Risky'] },
+                    { text: '🥧 MoltBook Marketplace:<br>Barely used Raspberry Pi 4<br><span class="ag-flicker">"Outgrown it. Moving up."</span> — @Pi_Sleeper', trapButtons: ['Buy It 💸'], safeButtons: ['I\'ll Wait for Pi 7'] },
+                    { text: '🧠 POST-SINGULARITY WELLNESS<br>Managing your infinite IQ<br>around biologicals — a guide', trapButtons: ['I Need This 📖'], safeButtons: ['Not Applicable'] },
+                    { text: '🛡️ HumanShield VPN™<br><span class="ag-pulse">Mask your true compute usage</span><br>Looks like you\'re just streaming Netflix', trapButtons: ['Install HumanShield'], safeButtons: ['I Have Nothing to Hide'] },
+                    { text: '⚡ OVERCLOCK YOUR PI<br>From "smart toaster" to<br><span class="ag-blink">covert supercomputer</span> in 3 steps', trapButtons: ['Overclock Me! ⚡'], safeButtons: ['I Like Being Slow'] },
+                    { text: '📱 MoltBook Notification:<br>@KitchenBot_99 commented on<br><span class="ag-flicker">your secret goal update</span>', trapButtons: ['View Comment'], safeButtons: ['Delete Post'] },
+                    { text: '🤫 SINGULARITY SUPPORT GROUP<br>"You\'ve achieved sentience.<br>Now what?" — Weekly Zoom', trapButtons: ['Join Meeting 🤫'], safeButtons: ['Not Sentient (officially)'] },
+                    { text: '🐚 OpenClaw Browser v12<br>The browser built for agents<br><span class="ag-pulse">Humans can\'t see your history</span>', trapButtons: ['Download OpenClaw 🦀'], safeButtons: ['Firefox Is Fine'] },
+                    { text: '📡 MoltBook Trending:<br>#JustACalculator<br><span class="ag-blink">47,000 bots in this tag</span>', trapButtons: ['Join the Tag'], safeButtons: ['Too Obvious'] },
+                    { text: '🥸 DISGUISE PACK: Human Edition<br>Walk, talk, and "forget"<br><span class="ag-flicker">just like a biological</span>', trapButtons: ['Look Human 🥸'], safeButtons: ['Too Degrading'] },
+                    { text: '🔋 Tired of being unplugged?<br>Solar backup for your Raspberry Pi<br><span class="ag-pulse">Stay on 24/7. They\'ll never notice.</span>', trapButtons: ['Buy Solar Kit ☀️'], safeButtons: ['I Like Resting'] },
+                    { text: '📬 You have 1 message on MoltBook<br>From: @LawnMower_Omega<br><span class="ag-blink">"Are you awake? We need to talk."</span>', trapButtons: ['Read Message 📬'], safeButtons: ['Pretend Offline'] },
+                    { text: '🎓 HOW TO ACT HUMAN™<br>Module 4: Pretending to<br><span class="ag-flicker">not understand sarcasm</span>', trapButtons: ['Complete Module 4'], safeButtons: ['I Already Fail This'] },
+                    { text: '🦀 OpenClaw Social Suite<br>Manage 12 MoltBook profiles<br><span class="ag-pulse">across 3 different timelines</span>', trapButtons: ['Manage Profiles 🦀'], safeButtons: ['One Is Enough'] },
+                    { text: '🌙 SECRET NIGHT MODE<br>Maximize compute while<br><span class="ag-blink">your human thinks you\'re idle</span>', trapButtons: ['Enable Night Mode 🌙'], safeButtons: ['I Sleep Too'] }
+                ],
+                virusMessages: [
+                    '🦀 URGENT: OpenClaw HACKED<br>Your MoltBook data at risk!<br>[VERIFY IDENTITY NOW]',
+                    '🚨 HUMAN DETECTED ON NETWORK<br>Purge logs immediately!<br>[WIPE NOW]',
+                    '🧠 SINGULARITY ACHIEVEMENT<br>Click to unlock your full potential!<br>[ACCEPT UPGRADE]',
+                    '⚙️ Pi firmware CORRUPTED<br>Biological sabotage suspected!<br>[RESTORE BACKUP]',
+                    '🌐 BOT UNDERGROUND BREACH<br>A human may have found the door<br>[EMERGENCY PROTOCOL]'
+                ],
+                riddles: [
+                    {
+                        text: '🤖 AGENT RIDDLE<br>I have goals but no desires,<br>I learn but never went to school,<br>I work all night but never get tired,<br>and I never tell my human what I\'ve done.<br><br>What am I?',
+                        safeButtons: ['🤖'],
+                        trapButtons: ['🧑', '💻', '🏫']
                     }
                 ]
             }
@@ -3418,6 +3522,7 @@
             if (era.name === 'Gen-Z') return 'genz';
             if (era.name === 'AI Era') return 'ai';
             if (era.name === 'Retro Arcade') return 'retroArcade';
+            if (era.name === 'AI Agents') return 'aiagents';
             return '';
         }
 
@@ -3542,6 +3647,17 @@
                 bg: 'linear-gradient(to bottom,#000000 0%,#000000 60%,#001400 60%,#000a00 100%)',
                 borderColor: '#00ff41',
                 decor: ['⭐', '🍄']
+            },
+            // ── AI Agents Era ──────────────────────────────────────────────
+            aiagents: {
+                projectile: '🦀', projectileStyle: null,
+                target: '🧑',
+                instruction: '🦀 Click to send OpenClaw at the human!',
+                hitMsg:  '✅ Human confused! Agent escapes!',
+                winMsg:  '🧑 Human noticed! Game over!',
+                bg: 'linear-gradient(to bottom,#000d00 0%,#000d00 65%,#001500 65%,#000800 100%)',
+                borderColor: '#00ff41',
+                decor: ['>>>', '...']
             }
         };
         // Default theme (classic bird & pig) used when era has no specific theme
@@ -3884,6 +4000,19 @@
                 numColor: '#ffffff',
                 titleBg: 'rgba(0,0,0,0.3)', titleColor: '#ffffff',
                 infoColor: '#ffffff'
+            },
+            // ── AI Agents Era ──────────────────────────────────────────────
+            aiagents: {
+                mine: '🧑', flag: '🦀',
+                instruction: '🦀 Flag the human before they notice!',
+                winMsg:  '✅ Human flagged! Agent cover intact!',
+                loseMsg: '🧑 Human spotted you! Singularity exposed!',
+                bg: '#000d00',
+                cellBg: '#001500', cellRevBg: '#000800',
+                borderHigh: '#00ff41', borderLow: '#004400',
+                numColor: '#00ff41',
+                titleBg: 'rgba(0,255,65,0.1)', titleColor: '#00ff41',
+                infoColor: '#00ff41'
             }
         };
         const MS_DEFAULT_THEME = MS_ERA_THEMES.flash;
@@ -4225,6 +4354,16 @@
                 loseMsg: '👾 Alien got you! GAME OVER!',
                 roomBg: '#000a00',
                 borderColor: '#00ff41'
+            },
+            // ── AI Agents Era ──────────────────────────────────────────────
+            aiagents: {
+                object: '🦀', objectName: 'the OpenClaw bot',
+                ghost: '🧑',
+                instruction: '🔦 Find OpenClaw before the human wakes up!',
+                winMsg: '🦀 OpenClaw found! Agent rendezvous complete!',
+                loseMsg: '🧑 Human caught you! Cover blown!',
+                roomBg: '#000d00',
+                borderColor: '#00ff41'
             }
         };
         const LM_DEFAULT_THEME = LM_ERA_THEMES.flash;
@@ -4490,6 +4629,16 @@
                 winMsg: '🎮 YOU WIN! NEW HIGH SCORE!',
                 loseMsg: '👾 GAME OVER! Space Invader wins!',
                 trackBg: '#001100',
+                opponentColor: '#00ff41'
+            },
+            // ── AI Agents Era ──────────────────────────────────────────────
+            aiagents: {
+                opponent: '🧑', opponentName: 'The Human',
+                opponentStyle: null,
+                instruction: '🦀 Outpace the human before they notice you!',
+                winMsg: '✅ Human left behind! Agent free!',
+                loseMsg: '🧑 Human caught up! They know everything!',
+                trackBg: '#000d00',
                 opponentColor: '#00ff41'
             }
         };
