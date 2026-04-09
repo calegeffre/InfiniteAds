@@ -2174,7 +2174,8 @@
         const VIRUS_SPAWN_CHANCE = 0.15;
         let adSpawnDelay = 400; // Start fast
         let spawnTimeout = null;
-        let stuckAdTimeout = null; // Safety timer: spawn a new ad if 10s pass with no action
+        let stuckAdTimeout = null; // Safety timer: spawn a new ad if 10s pass since last spawn without it being closed
+        let lastSpawnedAd = null; // Tracks the most-recently spawned ad for stuck-ad cleanup
 
         function initializeGame() {
             document.getElementById('startButton').addEventListener('click', startGame);
@@ -2204,6 +2205,7 @@
             document.querySelectorAll('.era-popup').forEach(el => el.remove());
             if (spawnTimeout) clearTimeout(spawnTimeout);
             if (stuckAdTimeout) clearTimeout(stuckAdTimeout);
+            lastSpawnedAd = null;
             adSpawnDelay = 400; // Reset difficulty
             startGame();
         }
@@ -5744,6 +5746,7 @@
 
         function adClosed(popup, pointsEarned) {
             if (stuckAdTimeout) clearTimeout(stuckAdTimeout);
+            lastSpawnedAd = null;
             points += pointsEarned;
             updatePointsDisplay();
             popup.remove();
@@ -5768,6 +5771,7 @@
             gameActive = false;
             if (spawnTimeout) clearTimeout(spawnTimeout);
             if (stuckAdTimeout) clearTimeout(stuckAdTimeout);
+            lastSpawnedAd = null;
             document.getElementById('finalScore').textContent = points;
             document.getElementById('gameOverScreen').classList.add('active');
         }
@@ -5787,13 +5791,20 @@
             
             const ad = createAd(currentEra, mechanism, adData, isVirus);
             document.body.appendChild(ad);
+            lastSpawnedAd = ad;
 
             // Safety timer: if this ad gets stuck off-screen on mobile and the player
-            // can't interact with it for 10 seconds, spawn a fresh ad so they aren't
-            // permanently blocked.
+            // can't interact with it for 10 seconds, remove it and spawn a fresh ad so
+            // they aren't permanently blocked.
             if (stuckAdTimeout) clearTimeout(stuckAdTimeout);
             stuckAdTimeout = setTimeout(function() {
-                if (gameActive) spawnNextAd();
+                if (gameActive) {
+                    if (lastSpawnedAd && lastSpawnedAd.parentNode) {
+                        lastSpawnedAd.remove();
+                        lastSpawnedAd = null;
+                    }
+                    spawnNextAd();
+                }
             }, 10000);
             
             // Always schedule next ad so virus popups don't halt the game
