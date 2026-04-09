@@ -5798,11 +5798,9 @@
             // they aren't permanently blocked.
             if (stuckAdTimeout) clearTimeout(stuckAdTimeout);
             stuckAdTimeout = setTimeout(function() {
-                if (gameActive) {
-                    if (lastSpawnedAd && lastSpawnedAd.parentNode) {
-                        lastSpawnedAd.remove();
-                        lastSpawnedAd = null;
-                    }
+                if (gameActive && lastSpawnedAd && lastSpawnedAd.parentNode) {
+                    lastSpawnedAd.remove();
+                    lastSpawnedAd = null;
                     spawnNextAd();
                 }
             }, 10000);
