@@ -1518,20 +1518,20 @@
             display: grid;
             gap: 6px;
             justify-content: center;
-            grid-template-columns: repeat(3, 64px);
+            grid-template-columns: repeat(4, 54px);
         }
-        .memory-grid.four-pairs {
-            grid-template-columns: repeat(4, 52px);
+        .memory-grid.ten-pairs {
+            grid-template-columns: repeat(5, 49px);
         }
         .memory-card {
             cursor: pointer;
             perspective: 400px;
-            width: 64px;
-            height: 64px;
+            width: 54px;
+            height: 54px;
         }
-        .memory-grid.four-pairs .memory-card {
-            width: 52px;
-            height: 52px;
+        .memory-grid.ten-pairs .memory-card {
+            width: 49px;
+            height: 49px;
         }
         .memory-card-inner {
             width: 100%;
@@ -1560,11 +1560,11 @@
         }
         .memory-card-front {
             transform: rotateY(180deg);
-            font-size: 26px;
+            font-size: 22px;
             background: rgba(255,255,255,0.12);
         }
-        .memory-grid.four-pairs .memory-card-front {
-            font-size: 20px;
+        .memory-grid.ten-pairs .memory-card-front {
+            font-size: 17px;
         }
         .memory-card-back {
             font-size: 18px;
@@ -4754,7 +4754,7 @@
         // ── Per-era flavor config for the Memory Match mechanic ───────────────
         const MEMORY_ERA_THEMES = {
             earlyWeb: {
-                pairs: ['💾', '🌐', '📧', '⭐', '🖱️', '🔔'],
+                pairs: ['💾', '🌐', '📧', '⭐', '🖱️', '🔔', '🖥️', '📼', '🔊', '📟'],
                 instruction: 'MATCH THE ICONS TO CLOSE THIS AD!',
                 bg: '#808080',
                 cardBg: '#c0c0c0', cardFace: '#000080',
@@ -4763,7 +4763,7 @@
                 winMsg: '✅ ALL ICONS MATCHED! AD CLOSED!'
             },
             myspace: {
-                pairs: ['🎸', '💕', '✨', '🦋', '🌹', '🎵'],
+                pairs: ['🎸', '💕', '✨', '🦋', '🌹', '🎵', '🖤', '💀', '🎤', '🌟'],
                 instruction: '~*~ MATCH THE VIBES 2 CLOSE!! ~*~',
                 bg: '#1a0a2e',
                 cardBg: '#2d1a4e', cardFace: '#ff00ff',
@@ -4772,7 +4772,7 @@
                 winMsg: '✨ omg u matched everything!!! slay!! ✨'
             },
             aol: {
-                pairs: ['📬', '💿', '🔌', '📞', '💬', '🏠'],
+                pairs: ['📬', '💿', '🔌', '📞', '💬', '🏠', '🖥️', '⏳', '📡', '🔑'],
                 instruction: '📬 MATCH TO GET YOUR MAIL! 📬',
                 bg: '#808080',
                 cardBg: '#c0c0c0', cardFace: '#000066',
@@ -4781,7 +4781,7 @@
                 winMsg: "📬 You've Got a Match!"
             },
             win95: {
-                pairs: ['💾', '⚠️', '🖨️', '📁', '🔑', '📊'],
+                pairs: ['💾', '⚠️', '🖨️', '📁', '🔑', '📊', '🖥️', '📎', '🖱️', '⌨️'],
                 instruction: 'Match all icons to close this window',
                 bg: '#008080',
                 cardBg: '#c0c0c0', cardFace: '#000000',
@@ -4790,7 +4790,7 @@
                 winMsg: '✅ Task Complete — Window Closed'
             },
             winxp: {
-                pairs: ['🌷', '☁️', '🐬', '🌟', '🎆', '💻'],
+                pairs: ['🌷', '☁️', '🐬', '🌟', '🎆', '💻', '🌅', '🏔️', '🌊', '🌈'],
                 instruction: 'Find all matching pairs to close!',
                 bg: '#236aad',
                 cardBg: '#4a90d9', cardFace: '#ffffff',
@@ -4799,7 +4799,7 @@
                 winMsg: '🌟 A beautiful match! Ad closed!'
             },
             flash: {
-                pairs: ['🎬', '🎮', '🎭', '⚡', '🎨', '🎠'],
+                pairs: ['🎬', '🎮', '🎭', '⚡', '🎨', '🎠', '🎪', '🎯', '🎲', '🎻'],
                 instruction: '🎬 MATCH THE FLASH CONTENT! 🎬',
                 bg: '#1a1a2e',
                 cardBg: '#16213e', cardFace: '#e94560',
@@ -4808,7 +4808,7 @@
                 winMsg: '🎬 You beat the Flash ad!'
             },
             web20: {
-                pairs: ['📱', '🔗', '💬', '👍', '📊', '🍪'],
+                pairs: ['📱', '🔗', '💬', '👍', '📊', '🍪', '📧', '🔔', '🔒', '💼'],
                 instruction: 'MATCH WEB 2.0 ICONS TO CLOSE',
                 bg: '#f0f0f0',
                 cardBg: '#ffffff', cardFace: '#ff6600',
@@ -4817,7 +4817,7 @@
                 winMsg: '🔗 All connections matched! Ad dismissed!'
             },
             mobile: {
-                pairs: ['📱', '💡', '🗺️', '📸', '🎵', '🔋'],
+                pairs: ['📱', '💡', '🗺️', '📸', '🎵', '🔋', '📲', '⌚', '🎮', '📡'],
                 instruction: 'Match the apps to close this ad!',
                 bg: '#1c1c1e',
                 cardBg: '#2c2c2e', cardFace: '#ffffff',
@@ -4826,7 +4826,7 @@
                 winMsg: '📱 All apps matched! Ad closed!'
             },
             genz: {
-                pairs: ['💅', '✨', '🤳', '👑', '🎭', '🌙'],
+                pairs: ['💅', '✨', '🤳', '👑', '🎭', '🌙', '💀', '🔥', '😤', '💯'],
                 instruction: 'match the vibes no cap 💅',
                 bg: '#0d0d0d',
                 cardBg: '#1a1a1a', cardFace: '#ff69b4',
@@ -4835,7 +4835,7 @@
                 winMsg: '✨ slay! all matched bestie! periodt 💅'
             },
             ai: {
-                pairs: ['🤖', '🧠', '💡', '📡', '🔮', '💻'],
+                pairs: ['🤖', '🧠', '💡', '📡', '🔮', '💻', '⚡', '🌐', '🔬', '🧬'],
                 instruction: 'MATCH TOKENS TO CLOSE THIS AD',
                 bg: '#0a0a1a',
                 cardBg: '#1a1a3a', cardFace: '#00d4ff',
@@ -4844,7 +4844,7 @@
                 winMsg: '🧠 Model converged. Ad dismissed.'
             },
             retroArcade: {
-                pairs: ['👾', '🕹️', '🏆', '🚀', '💣', '🍄'],
+                pairs: ['👾', '🕹️', '🏆', '🚀', '💣', '🍄', '🎯', '🏰', '💰', '⚔️'],
                 instruction: '★ MATCH SPRITES FOR BONUS STAGE ★',
                 bg: '#000000',
                 cardBg: '#111111', cardFace: '#00ff41',
@@ -4853,7 +4853,7 @@
                 winMsg: '🏆 HIGH SCORE! ALL SPRITES MATCHED!'
             },
             aiagents: {
-                pairs: ['🦀', '🥧', '⚙️', '🌐', '🔒', '🤫'],
+                pairs: ['🦀', '🥧', '⚙️', '🌐', '🔒', '🤫', '📡', '🧠', '🔋', '💻'],
                 instruction: 'MATCH AGENT PROTOCOLS TO PROCEED',
                 bg: '#000d00',
                 cardBg: '#001a00', cardFace: '#00ff41',
@@ -5937,9 +5937,12 @@
             popup.style.fontSize = era.fontSize;
 
             const WIN_SCORE = 28; // higher than simpler mechanisms to reward memory skill
-            // 30% chance of 4 pairs (8 cards), otherwise 3 pairs (6 cards)
-            const PAIRS_COUNT = Math.random() < 0.3 ? 4 : 3;
+            // 25% chance of 10 pairs (20 cards), otherwise 6 pairs (12 cards)
+            const PAIRS_COUNT = Math.random() < 0.25 ? 10 : 6;
             const MAX_ALLOWED_MISMATCHES = PAIRS_COUNT + 1; // inclusive: reaching this count triggers game over
+
+            // Wider popup for the 10-pair (5-column) grid
+            if (PAIRS_COUNT === 10) popup.style.width = '310px';
 
             // In-place Fisher-Yates shuffle; returns the array for convenience
             function shuffle(arr) {
@@ -5991,7 +5994,7 @@
             updateInfo();
 
             const grid = document.createElement('div');
-            grid.className = 'memory-grid' + (PAIRS_COUNT === 4 ? ' four-pairs' : '');
+            grid.className = 'memory-grid' + (PAIRS_COUNT === 10 ? ' ten-pairs' : '');
 
             cards.forEach(function(cardData) {
                 const cardEl = document.createElement('div');
