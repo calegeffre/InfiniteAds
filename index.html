@@ -1484,6 +1484,107 @@
             font-family: "Courier New", monospace;
             min-height: 18px;
         }
+
+        /* ── Memory Match mechanism ──────────────────────────────────── */
+        .memory-popup { width: 280px; padding: 12px; }
+        .memory-game-area {
+            border-radius: 8px;
+            padding: 10px;
+            margin-top: 8px;
+            border: 2px solid rgba(255,255,255,0.15);
+            user-select: none;
+        }
+        .memory-title {
+            text-align: center;
+            font-size: 10px;
+            margin-bottom: 6px;
+            font-family: "Courier New", monospace;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            min-height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1.4;
+        }
+        .memory-info {
+            text-align: center;
+            font-size: 11px;
+            margin-bottom: 8px;
+            font-family: "Courier New", monospace;
+            opacity: 0.75;
+        }
+        .memory-grid {
+            display: grid;
+            gap: 6px;
+            justify-content: center;
+            grid-template-columns: repeat(4, 54px);
+        }
+        .memory-grid.ten-pairs {
+            grid-template-columns: repeat(5, 49px);
+        }
+        .memory-card {
+            cursor: pointer;
+            perspective: 400px;
+            width: 54px;
+            height: 54px;
+        }
+        .memory-grid.ten-pairs .memory-card {
+            width: 49px;
+            height: 49px;
+        }
+        .memory-card-inner {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.35s ease;
+            border-radius: 6px;
+        }
+        .memory-card.flipped .memory-card-inner,
+        .memory-card.matched .memory-card-inner {
+            transform: rotateY(180deg);
+        }
+        .memory-card-front,
+        .memory-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid rgba(255,255,255,0.18);
+        }
+        .memory-card-front {
+            transform: rotateY(180deg);
+            font-size: 22px;
+            background: rgba(255,255,255,0.12);
+        }
+        .memory-grid.ten-pairs .memory-card-front {
+            font-size: 17px;
+        }
+        .memory-card-back {
+            font-size: 18px;
+            font-weight: bold;
+            font-family: "Courier New", monospace;
+        }
+        .memory-card.matched .memory-card-front {
+            background: rgba(0, 200, 0, 0.28) !important;
+            border-color: #00cc00 !important;
+            box-shadow: 0 0 10px rgba(0, 200, 0, 0.40);
+        }
+        @keyframes memoryWrong {
+            0%, 100% { transform: rotateY(180deg) translateX(0); }
+            25%       { transform: rotateY(180deg) translateX(-5px); }
+            75%       { transform: rotateY(180deg) translateX(5px); }
+        }
+        .memory-card.memory-wrong .memory-card-inner {
+            animation: memoryWrong 0.4s ease;
+            filter: drop-shadow(0 0 6px rgba(255, 50, 50, 0.85));
+        }
     </style>
 </head>
 <body>
@@ -2100,7 +2201,8 @@
             bouncingX: '',
             spinX: '',
             rightClickX: '',
-            simonSays: ''
+            simonSays: '',
+            memoryMatch: ''
         };
         const CLOSE_MECHANISMS = {
             simpleX: 'simpleX',           // Red X button
@@ -2127,7 +2229,8 @@
             bouncingX: 'bouncingX',            // X bounces around the popup, must click it
             spinX: 'spinX',                    // X spins; click during the green stop-window
             rightClickX: 'rightClickX',        // Must right-click the X to close
-            simonSays: 'simonSays'             // Watch the color sequence and repeat it to close
+            simonSays: 'simonSays',            // Watch the color sequence and repeat it to close
+            memoryMatch: 'memoryMatch'         // Flip cards to find all matching pairs
         };
         
         // Personality button pairs - [accept (trap), decline (close)]
@@ -4648,6 +4751,119 @@
         };
         const MK_DEFAULT_THEME = MK_ERA_THEMES.flash;
 
+        // ── Per-era flavor config for the Memory Match mechanic ───────────────
+        const MEMORY_ERA_THEMES = {
+            earlyWeb: {
+                pairs: ['💾', '🌐', '📧', '⭐', '🖱️', '🔔', '🖥️', '📼', '🔊', '📟'],
+                instruction: 'MATCH THE ICONS TO CLOSE THIS AD!',
+                bg: '#808080',
+                cardBg: '#c0c0c0', cardFace: '#000080',
+                titleColor: '#000080',
+                loseMsg: '❌ TOO MANY MISTAKES! SYSTEM ERROR!',
+                winMsg: '✅ ALL ICONS MATCHED! AD CLOSED!'
+            },
+            myspace: {
+                pairs: ['🎸', '💕', '✨', '🦋', '🌹', '🎵', '🖤', '💀', '🎤', '🌟'],
+                instruction: '~*~ MATCH THE VIBES 2 CLOSE!! ~*~',
+                bg: '#1a0a2e',
+                cardBg: '#2d1a4e', cardFace: '#ff00ff',
+                titleColor: '#ff00ff',
+                loseMsg: '💔 ur profile got deleted omg GAME OVER!',
+                winMsg: '✨ omg u matched everything!!! slay!! ✨'
+            },
+            aol: {
+                pairs: ['📬', '💿', '🔌', '📞', '💬', '🏠', '🖥️', '⏳', '📡', '🔑'],
+                instruction: '📬 MATCH TO GET YOUR MAIL! 📬',
+                bg: '#808080',
+                cardBg: '#c0c0c0', cardFace: '#000066',
+                titleColor: '#000066',
+                loseMsg: '💿 CONNECTION LOST! GAME OVER!',
+                winMsg: "📬 You've Got a Match!"
+            },
+            win95: {
+                pairs: ['💾', '⚠️', '🖨️', '📁', '🔑', '📊', '🖥️', '📎', '🖱️', '⌨️'],
+                instruction: 'Match all icons to close this window',
+                bg: '#008080',
+                cardBg: '#c0c0c0', cardFace: '#000000',
+                titleColor: '#ffffff',
+                loseMsg: '❌ FATAL ERROR: Too many mismatches',
+                winMsg: '✅ Task Complete — Window Closed'
+            },
+            winxp: {
+                pairs: ['🌷', '☁️', '🐬', '🌟', '🎆', '💻', '🌅', '🏔️', '🌊', '🌈'],
+                instruction: 'Find all matching pairs to close!',
+                bg: '#236aad',
+                cardBg: '#4a90d9', cardFace: '#ffffff',
+                titleColor: '#ffffff',
+                loseMsg: '💥 Windows encountered a problem! GAME OVER!',
+                winMsg: '🌟 A beautiful match! Ad closed!'
+            },
+            flash: {
+                pairs: ['🎬', '🎮', '🎭', '⚡', '🎨', '🎠', '🎪', '🎯', '🎲', '🎻'],
+                instruction: '🎬 MATCH THE FLASH CONTENT! 🎬',
+                bg: '#1a1a2e',
+                cardBg: '#16213e', cardFace: '#e94560',
+                titleColor: '#e94560',
+                loseMsg: '💥 Flash crashed! GAME OVER!',
+                winMsg: '🎬 You beat the Flash ad!'
+            },
+            web20: {
+                pairs: ['📱', '🔗', '💬', '👍', '📊', '🍪', '📧', '🔔', '🔒', '💼'],
+                instruction: 'MATCH WEB 2.0 ICONS TO CLOSE',
+                bg: '#f0f0f0',
+                cardBg: '#ffffff', cardFace: '#ff6600',
+                titleColor: '#ff6600',
+                loseMsg: '❌ ENGAGEMENT FAILED! GAME OVER!',
+                winMsg: '🔗 All connections matched! Ad dismissed!'
+            },
+            mobile: {
+                pairs: ['📱', '💡', '🗺️', '📸', '🎵', '🔋', '📲', '⌚', '🎮', '📡'],
+                instruction: 'Match the apps to close this ad!',
+                bg: '#1c1c1e',
+                cardBg: '#2c2c2e', cardFace: '#ffffff',
+                titleColor: '#ffffff',
+                loseMsg: '📱 App crashed! GAME OVER!',
+                winMsg: '📱 All apps matched! Ad closed!'
+            },
+            genz: {
+                pairs: ['💅', '✨', '🤳', '👑', '🎭', '🌙', '💀', '🔥', '😤', '💯'],
+                instruction: 'match the vibes no cap 💅',
+                bg: '#0d0d0d',
+                cardBg: '#1a1a1a', cardFace: '#ff69b4',
+                titleColor: '#ff69b4',
+                loseMsg: "💀 it's giving massive L. GAME OVER!",
+                winMsg: '✨ slay! all matched bestie! periodt 💅'
+            },
+            ai: {
+                pairs: ['🤖', '🧠', '💡', '📡', '🔮', '💻', '⚡', '🌐', '🔬', '🧬'],
+                instruction: 'MATCH TOKENS TO CLOSE THIS AD',
+                bg: '#0a0a1a',
+                cardBg: '#1a1a3a', cardFace: '#00d4ff',
+                titleColor: '#00d4ff',
+                loseMsg: '🤖 Hallucination detected. GAME OVER.',
+                winMsg: '🧠 Model converged. Ad dismissed.'
+            },
+            retroArcade: {
+                pairs: ['👾', '🕹️', '🏆', '🚀', '💣', '🍄', '🎯', '🏰', '💰', '⚔️'],
+                instruction: '★ MATCH SPRITES FOR BONUS STAGE ★',
+                bg: '#000000',
+                cardBg: '#111111', cardFace: '#00ff41',
+                titleColor: '#00ff41',
+                loseMsg: '☠️ GAME OVER! INSERT COIN TO CONTINUE!',
+                winMsg: '🏆 HIGH SCORE! ALL SPRITES MATCHED!'
+            },
+            aiagents: {
+                pairs: ['🦀', '🥧', '⚙️', '🌐', '🔒', '🤫', '📡', '🧠', '🔋', '💻'],
+                instruction: 'MATCH AGENT PROTOCOLS TO PROCEED',
+                bg: '#000d00',
+                cardBg: '#001a00', cardFace: '#00ff41',
+                titleColor: '#00ff41',
+                loseMsg: '🚨 SECURITY BREACH. PURGING. GAME OVER.',
+                winMsg: '🤖 All protocols matched. Ad terminated.'
+            }
+        };
+        const MEMORY_DEFAULT_THEME = MEMORY_ERA_THEMES.retroArcade;
+
         function createMarioKartPopup(era, adData, isVirus = false) {
             const adText = adData.text;
             const popup = document.createElement('div');
@@ -5689,6 +5905,181 @@
             return popup;
         }
 
+        // MEMORY MATCH - Flip cards to find all matching pairs; too many mismatches = game over
+        function createMemoryMatchPopup(era, adData, isVirus = false) {
+            const adText = adData.text;
+            const popup = document.createElement('div');
+            const eraClass = getEraClass(era);
+            const theme = MEMORY_ERA_THEMES[eraClass] || MEMORY_DEFAULT_THEME;
+            popup.className = 'popup-ad era-popup memory-popup' + (eraClass ? ' ' + eraClass : '') + (isVirus ? ' virus-popup' : '');
+            const pos = getRandomPosition();
+            popup.style.left = pos.x + 'px';
+            popup.style.top = pos.y + 'px';
+
+            if (isVirus) {
+                popup.style.backgroundColor = '#ff6b6b';
+                popup.style.borderColor = '#cc0000';
+                popup.style.color = 'white';
+                popup.style.fontFamily = era.fontFamily;
+                popup.style.fontSize = era.fontSize;
+                const content = document.createElement('div');
+                content.className = 'popup-ad-content';
+                content.innerHTML = '<p>' + adText + '</p>';
+                content.appendChild(createTrapButtons(popup, Math.random() > 0.5 ? 2 : 1));
+                popup.appendChild(content);
+                return popup;
+            }
+
+            popup.style.backgroundColor = era.bgColor;
+            popup.style.borderColor = era.borderColor;
+            popup.style.color = era.textColor;
+            popup.style.fontFamily = era.fontFamily;
+            popup.style.fontSize = era.fontSize;
+
+            const WIN_SCORE = 28; // higher than simpler mechanisms to reward memory skill
+            // 25% chance of 10 pairs (20 cards), otherwise 6 pairs (12 cards)
+            const PAIRS_COUNT = Math.random() < 0.25 ? 10 : 6;
+            const MAX_ALLOWED_MISMATCHES = PAIRS_COUNT + 1; // inclusive: reaching this count triggers game over
+
+            // Wider popup for the 10-pair (5-column) grid
+            if (PAIRS_COUNT === 10) popup.style.width = '310px';
+
+            // In-place Fisher-Yates shuffle; returns the array for convenience
+            function shuffle(arr) {
+                for (let i = arr.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    const tmp = arr[i]; arr[i] = arr[j]; arr[j] = tmp;
+                }
+                return arr;
+            }
+
+            // Shuffle all available pairs and pick PAIRS_COUNT of them
+            const allEmojis = theme.pairs.slice();
+            shuffle(allEmojis);
+            const chosen = allEmojis.slice(0, PAIRS_COUNT);
+
+            // Build card array (2 of each emoji) and shuffle
+            const cards = [];
+            chosen.forEach(function(emoji, pairIndex) {
+                cards.push({ id: pairIndex, emoji: emoji });
+                cards.push({ id: pairIndex, emoji: emoji });
+            });
+            shuffle(cards);
+
+            let flippedCards = [];
+            let matchedPairs = 0;
+            let mismatches = 0;
+            let isLocked = false;
+
+            const content = document.createElement('div');
+            content.className = 'popup-ad-content';
+            content.innerHTML = '<p style="margin-bottom:4px;font-size:0.88em;">' + adText + '</p>';
+
+            const gameArea = document.createElement('div');
+            gameArea.className = 'memory-game-area';
+            gameArea.style.background = theme.bg;
+
+            const titleBar = document.createElement('div');
+            titleBar.className = 'memory-title';
+            titleBar.textContent = theme.instruction;
+            titleBar.style.color = theme.titleColor;
+
+            const infoBar = document.createElement('div');
+            infoBar.className = 'memory-info';
+            infoBar.style.color = theme.titleColor;
+
+            function updateInfo() {
+                infoBar.textContent = '\u2705 ' + matchedPairs + '/' + PAIRS_COUNT + '  \u274c ' + mismatches + '/' + MAX_ALLOWED_MISMATCHES;
+            }
+            updateInfo();
+
+            const grid = document.createElement('div');
+            grid.className = 'memory-grid' + (PAIRS_COUNT === 10 ? ' ten-pairs' : '');
+
+            cards.forEach(function(cardData) {
+                const cardEl = document.createElement('div');
+                cardEl.className = 'memory-card';
+
+                const inner = document.createElement('div');
+                inner.className = 'memory-card-inner';
+
+                const front = document.createElement('div');
+                front.className = 'memory-card-front';
+                front.textContent = cardData.emoji;
+
+                const back = document.createElement('div');
+                back.className = 'memory-card-back';
+                back.textContent = '?';
+                back.style.color = theme.cardFace;
+                back.style.background = theme.cardBg;
+                back.style.borderColor = theme.cardFace;
+
+                inner.appendChild(front);
+                inner.appendChild(back);
+                cardEl.appendChild(inner);
+
+                cardEl.addEventListener('click', function() {
+                    if (isLocked) return;
+                    if (cardEl.classList.contains('flipped') || cardEl.classList.contains('matched')) return;
+                    if (flippedCards.length >= 2) return;
+
+                    cardEl.classList.add('flipped');
+                    flippedCards.push({ el: cardEl, data: cardData });
+
+                    if (flippedCards.length < 2) return;
+
+                    // Two cards are now face-up — evaluate the pair
+                    isLocked = true;
+                    const first = flippedCards[0];
+                    const second = flippedCards[1];
+
+                    if (first.data.id === second.data.id) {
+                        // Match!
+                        matchedPairs++;
+                        first.el.classList.add('matched');
+                        second.el.classList.add('matched');
+                        flippedCards = [];
+                        isLocked = false;
+                        updateInfo();
+                        if (matchedPairs >= PAIRS_COUNT) {
+                            titleBar.textContent = theme.winMsg;
+                            setTimeout(function() { adClosed(popup, WIN_SCORE); }, 600);
+                        }
+                    } else {
+                        // Mismatch — shake and flip back
+                        mismatches++;
+                        updateInfo();
+                        first.el.classList.add('memory-wrong');
+                        second.el.classList.add('memory-wrong');
+                        setTimeout(function() {
+                            first.el.classList.remove('flipped', 'memory-wrong');
+                            second.el.classList.remove('flipped', 'memory-wrong');
+                            flippedCards = [];
+                            isLocked = false;
+                            if (mismatches >= MAX_ALLOWED_MISMATCHES) {
+                                // Fail — reveal all remaining cards then game over
+                                titleBar.textContent = theme.loseMsg;
+                                titleBar.style.color = '#ff4444';
+                                grid.querySelectorAll('.memory-card:not(.matched)').forEach(function(c) {
+                                    c.classList.add('flipped');
+                                });
+                                setTimeout(function() { endGame(); }, 900);
+                            }
+                        }, 900);
+                    }
+                });
+
+                grid.appendChild(cardEl);
+            });
+
+            gameArea.appendChild(titleBar);
+            gameArea.appendChild(infoBar);
+            gameArea.appendChild(grid);
+            content.appendChild(gameArea);
+            popup.appendChild(content);
+            return popup;
+        }
+
         function createAd(era, mechanism, adData, isVirus = false) {
             switch(mechanism) {
                 case CLOSE_MECHANISMS.simpleX:
@@ -5739,6 +6130,8 @@
                     return createRightClickXPopup(era, adData, isVirus);
                 case CLOSE_MECHANISMS.simonSays:
                     return createSimonSaysPopup(era, adData, isVirus);
+                case CLOSE_MECHANISMS.memoryMatch:
+                    return createMemoryMatchPopup(era, adData, isVirus);
                 default:
                     return createSimpleXPopup(era, adData, isVirus);
             }
