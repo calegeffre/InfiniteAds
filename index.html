@@ -5939,14 +5939,15 @@
             const WIN_SCORE = 28; // higher than simpler mechanisms to reward memory skill
             // 30% chance of 4 pairs (8 cards), otherwise 3 pairs (6 cards)
             const PAIRS_COUNT = Math.random() < 0.3 ? 4 : 3;
-            const MAX_MISMATCHES = PAIRS_COUNT + 1;
+            const MAX_ALLOWED_MISMATCHES = PAIRS_COUNT + 1; // inclusive: reaching this count triggers game over
 
-            // In-place Fisher-Yates shuffle
+            // In-place Fisher-Yates shuffle; returns the array for convenience
             function shuffle(arr) {
                 for (let i = arr.length - 1; i > 0; i--) {
                     const j = Math.floor(Math.random() * (i + 1));
                     const tmp = arr[i]; arr[i] = arr[j]; arr[j] = tmp;
                 }
+                return arr;
             }
 
             // Shuffle all available pairs and pick PAIRS_COUNT of them
@@ -5956,9 +5957,9 @@
 
             // Build card array (2 of each emoji) and shuffle
             const cards = [];
-            chosen.forEach(function(emoji, id) {
-                cards.push({ id: id, emoji: emoji });
-                cards.push({ id: id, emoji: emoji });
+            chosen.forEach(function(emoji, pairIndex) {
+                cards.push({ id: pairIndex, emoji: emoji });
+                cards.push({ id: pairIndex, emoji: emoji });
             });
             shuffle(cards);
 
@@ -5985,7 +5986,7 @@
             infoBar.style.color = theme.titleColor;
 
             function updateInfo() {
-                infoBar.textContent = '\u2705 ' + matchedPairs + '/' + PAIRS_COUNT + '  \u274c ' + mismatches + '/' + MAX_MISMATCHES;
+                infoBar.textContent = '\u2705 ' + matchedPairs + '/' + PAIRS_COUNT + '  \u274c ' + mismatches + '/' + MAX_ALLOWED_MISMATCHES;
             }
             updateInfo();
 
@@ -6052,7 +6053,7 @@
                             second.el.classList.remove('flipped', 'memory-wrong');
                             flippedCards = [];
                             isLocked = false;
-                            if (mismatches >= MAX_MISMATCHES) {
+                            if (mismatches >= MAX_ALLOWED_MISMATCHES) {
                                 // Fail — reveal all remaining cards then game over
                                 titleBar.textContent = theme.loseMsg;
                                 titleBar.style.color = '#ff4444';
