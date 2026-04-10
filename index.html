@@ -5936,17 +5936,22 @@
             popup.style.fontFamily = era.fontFamily;
             popup.style.fontSize = era.fontSize;
 
-            const WIN_SCORE = 28;
+            const WIN_SCORE = 28; // higher than simpler mechanisms to reward memory skill
             // 30% chance of 4 pairs (8 cards), otherwise 3 pairs (6 cards)
             const PAIRS_COUNT = Math.random() < 0.3 ? 4 : 3;
             const MAX_MISMATCHES = PAIRS_COUNT + 1;
 
+            // In-place Fisher-Yates shuffle
+            function shuffle(arr) {
+                for (let i = arr.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    const tmp = arr[i]; arr[i] = arr[j]; arr[j] = tmp;
+                }
+            }
+
             // Shuffle all available pairs and pick PAIRS_COUNT of them
             const allEmojis = theme.pairs.slice();
-            for (let i = allEmojis.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                const tmp = allEmojis[i]; allEmojis[i] = allEmojis[j]; allEmojis[j] = tmp;
-            }
+            shuffle(allEmojis);
             const chosen = allEmojis.slice(0, PAIRS_COUNT);
 
             // Build card array (2 of each emoji) and shuffle
@@ -5955,10 +5960,7 @@
                 cards.push({ id: id, emoji: emoji });
                 cards.push({ id: id, emoji: emoji });
             });
-            for (let i = cards.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                const tmp = cards[i]; cards[i] = cards[j]; cards[j] = tmp;
-            }
+            shuffle(cards);
 
             let flippedCards = [];
             let matchedPairs = 0;
@@ -6000,7 +6002,6 @@
                 const front = document.createElement('div');
                 front.className = 'memory-card-front';
                 front.textContent = cardData.emoji;
-                front.style.background = 'rgba(255,255,255,0.12)';
 
                 const back = document.createElement('div');
                 back.className = 'memory-card-back';
