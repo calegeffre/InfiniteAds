@@ -668,6 +668,84 @@
             animation: agBlink 1s step-start infinite;
         }
 
+        /* Apple/Mac Era - Clean minimal Apple design language */
+        @keyframes appleSheen {
+            0% { background-position: -200% center; }
+            100% { background-position: 200% center; }
+        }
+        @keyframes applePulse {
+            0%, 100% { box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(0,0,0,0.06); }
+            50% { box-shadow: 0 12px 40px rgba(0, 0, 0, 0.18), 0 0 0 1px rgba(0,0,0,0.08); }
+        }
+        .era-popup.apple {
+            border: 1px solid #d2d2d7 !important;
+            border-radius: 16px !important;
+            background: linear-gradient(180deg, #ffffff 0%, #f5f5f7 100%) !important;
+            animation: applePulse 3s ease-in-out infinite;
+            font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif !important;
+        }
+        .era-popup.apple::before {
+            content: '  Apple';
+            display: block;
+            color: #6e6e73;
+            font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+            margin-bottom: 10px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #e5e5ea;
+            text-transform: uppercase;
+        }
+        .era-popup.apple .popup-ad-close-btn {
+            background: #ff3b30;
+            border: none;
+            color: transparent;
+            border-radius: 50%;
+            width: 14px;
+            height: 14px;
+            min-width: 14px;
+            font-size: 0;
+            padding: 0;
+            top: 14px;
+            right: 14px;
+            box-shadow: none;
+        }
+        .era-popup.apple .popup-ad-close-btn:hover {
+            background: #ff3b30;
+            color: #5c1010;
+            font-size: 11px;
+        }
+        .era-popup.apple .popup-ad-content {
+            color: #1d1d1f !important;
+            font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        .era-popup.apple .popup-ad-content em {
+            color: #6e6e73;
+            font-style: italic;
+            font-size: 12px;
+        }
+        .era-popup.apple .trap-button.danger {
+            background: linear-gradient(180deg, #0071e3 0%, #0077ed 100%);
+            color: white;
+            border: none;
+            border-radius: 980px;
+            font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+            font-size: 13px;
+            font-weight: 500;
+            padding: 8px 18px;
+        }
+        .era-popup.apple .trap-button.secondary {
+            background: transparent;
+            color: #0071e3;
+            border: none;
+            font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+            font-size: 12px;
+            text-decoration: underline;
+        }
+
         /* Endless Scroll Mechanism */
         .endless-scroll-container {
             max-height: 300px;
@@ -2155,6 +2233,50 @@
                         trapButtons: ['🧑', '💻', '🏫']
                     }
                 ]
+            },
+            apple: {
+                name: 'Apple/Mac',
+                period: '1984-Present',
+                bgColor: '#f5f5f7',
+                textColor: '#1d1d1f',
+                borderColor: '#d2d2d7',
+                fontFamily: '-apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif',
+                fontSize: '14px',
+                examples: [
+                    { text: '💡 Your iPhone is 2 years old.<br>In tech years, that\'s ancient.<br>iPhone 17 Pro — starting at $1,299.', trapButtons: ['Upgrade Now ✨'], safeButtons: ['Mine still works'] },
+                    { text: '🔒 Privacy is a fundamental human right.<br>Apple never sells your data.<br><em>Unlike some companies we know.</em>', trapButtons: ['Learn More 🍎'], safeButtons: ['I know who you mean'] },
+                    { text: '💡 We obsessed over a 0.1mm gap<br>between your screen and your case<br>so you don\'t have to think about it.', trapButtons: ['Feel the Difference'], safeButtons: ['That\'s the same gap'] },
+                    { text: '🍎 The Mac. It just works.<br>Unlike that other computer<br>with the paperclip assistant.', trapButtons: ['Switch to Mac 💻'], safeButtons: ['My PC works fine'] },
+                    { text: '📺 On this day in 1984,<br>a hammer changed everything.<br>Big Brother never saw it coming.', trapButtons: ['Relive the Revolution 🎬'], safeButtons: ['Dramatic much'] },
+                    { text: '💡 "One more thing..."<br>The HomePod Mini is here.<br>Starting at $99.', trapButtons: ['Get One More Thing 🎶'], safeButtons: ['That\'s enough things'] },
+                    { text: '✏️ Apple Pencil Pro.<br>For people who take creativity<br>more seriously than their sleep schedule.', trapButtons: ['Create Something 🎨'], safeButtons: ['I doodle fine'] },
+                    { text: '🧲 Our MagSafe charger clicks<br>with a satisfying magnetic snap.<br>Yours just... plugs in.', trapButtons: ['Feel the Snap 🧲'], safeButtons: ['A plug is a plug'] },
+                    { text: '🍎 Here\'s to the crazy ones.<br>The rebels. The troublemakers.<br>The ones who Think Different.<br><em>Also, AirPods Pro: $249.</em>', trapButtons: ['Think Different 🎧'], safeButtons: ['Just sell the earbuds'] },
+                    { text: '⌚ Apple Watch detected<br>you\'ve been sitting for 47 minutes.<br>Stand up. Live longer. Buy Apple Watch.', trapButtons: ['Start Standing ⌚'], safeButtons: ['I\'m fine sitting'] },
+                    { text: '💻 MacBook Air. Machined from<br>a single block of aluminum.<br>Your laptop was assembled from whatever.', trapButtons: ['Own the Best 💻'], safeButtons: ['Mine has USB-A'] },
+                    { text: '📡 AirDrop: when sharing feels<br>like magic, not a file server.<br><em>Available exclusively on Apple devices.</em>', trapButtons: ['Get Apple 📱'], safeButtons: ['Email works too'] },
+                    { text: '📟 1993: The Apple Newton MessagePad.<br>Handwriting recognition so advanced...<br>it famously couldn\'t read handwriting.', trapButtons: ['Collector\'s Edition 🖊️'], safeButtons: ['Good one, Apple'] },
+                    { text: '🎵 2001: "1,000 songs in your pocket."<br>2024: 100 million songs in your pocket,<br>$10.99/month. Same energy.', trapButtons: ['Listen Now 🎵'], safeButtons: ['Keep my CDs'] },
+                    { text: '📱 Your current phone manufacturer:<br>tracks your location, reads your behavior,<br>sells your data to 847 partners.<br><em>We don\'t do that.</em>', trapButtons: ['Switch to iPhone 🔒'], safeButtons: ['I\'m watching my data'] },
+                    { text: '🛍️ Visit the Apple Store.<br>A Genius awaits.<br><em>No appointment needed. (Appointment required.)</em>', trapButtons: ['Book a Genius 🧠'], safeButtons: ['I can Google it'] },
+                    { text: '☁️ Your memories deserve<br>the most secure cloud on Earth.<br>iCloud+: 200GB for just $2.99/month.', trapButtons: ['Protect My Memories ☁️'], safeButtons: ['I\'ll use Google Photos'] },
+                    { text: '📸 Shot on iPhone.<br>Your professional camera is already<br>in your pocket. ($1,099)', trapButtons: ['Capture Everything 📸'], safeButtons: ['My phone has a camera too'] },
+                    { text: '🍎 We removed the headphone jack in 2016<br>to imagine a wireless future.<br><em>You\'re welcome, everyone.</em>', trapButtons: ['Embrace the Future 🎧'], safeButtons: ['I wanted my port back'] },
+                    { text: '💡 The iPad. What is a computer?<br>If you have to ask,<br>you haven\'t used one yet.', trapButtons: ['Discover iPad 💡'], safeButtons: ['I know what a computer is'] }
+                ],
+                virusMessages: [
+                    '🚨 CRITICAL: Apple ID verification required!<br>Your account may be compromised!<br>Verify immediately at apple-secure-login.net',
+                    '⚠️ iOS UPDATE REQUIRED IMMEDIATELY<br>Critical security vulnerability detected!<br>[Install Patch NOW]',
+                    '🎁 You\'ve been selected for Apple\'s<br>Customer Appreciation Program!<br>Claim your free MacBook Pro today!',
+                    '🔒 Two-Factor Authentication Failed!<br>Someone tried to access your iCloud!<br>[Secure My Account Now]'
+                ],
+                riddles: [
+                    {
+                        text: '🍎 APPLE RIDDLE 🍎<br>I was born in a garage,<br>a rainbow was my first coat.<br>I put 1,000 songs in your pocket<br>and always had "one more thing."<br><br>What company am I?',
+                        safeButtons: ['🍎'],
+                        trapButtons: ['🪟', '🤖', '📱']
+                    }
+                ]
             }
         };
 
@@ -2438,6 +2560,13 @@
                 'INSERT COIN', 'PLAYER 1', 'PLAYER 2', 'HI-SCORE', 'CONTINUE?',
                 'GAME OVER', 'PRESS START', '↑↑↓↓←→', 'WARP ZONE', 'CHEAT CODE',
                 'LEVEL UP!', 'EXTRA LIFE', '1-UP! 🍄', 'BONUS STAGE', 'POWER-UP!'
+            ],
+            apple: [
+                'Learn More', 'Shop Now', 'Trade In', 'Get Support',
+                'Book a Genius', 'Compare Models', 'Add to Cart 🛒',
+                'Try for Free', 'AppleCare+', 'Financing Available',
+                'AirDrop It', 'Open in App', 'Sign In with Apple 🍎',
+                'Enable iCloud', 'Check for Updates'
             ]
         };
 
@@ -3630,6 +3759,7 @@
             if (era.name === 'AI Era') return 'ai';
             if (era.name === 'Retro Arcade') return 'retroArcade';
             if (era.name === 'AI Agents') return 'aiagents';
+            if (era.name === 'Apple/Mac') return 'apple';
             return '';
         }
 
@@ -3765,6 +3895,17 @@
                 bg: 'linear-gradient(to bottom,#000d00 0%,#000d00 65%,#001500 65%,#000800 100%)',
                 borderColor: '#00ff41',
                 decor: ['>>>', '...']
+            },
+            // ── Apple/Mac Era ──────────────────────────────────────────────
+            apple: {
+                projectile: '🍎', projectileStyle: null,
+                target: '🪟',
+                instruction: '🍎 Hurl the Apple at the Windows PC!',
+                hitMsg:  '💡 Think Different! Mac wins again!',
+                winMsg:  '🪟 Windows blue-screened first! Game over!',
+                bg: 'linear-gradient(to bottom,#f5f5f7 0%,#f5f5f7 60%,#e8e8ed 60%,#d2d2d7 100%)',
+                borderColor: '#d2d2d7',
+                decor: ['💡', '✨']
             }
         };
         // Default theme (classic bird & pig) used when era has no specific theme
