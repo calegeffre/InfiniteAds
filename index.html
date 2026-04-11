@@ -1699,7 +1699,9 @@
     </div>
 
     <script>
-        // ERA DEFINITIONS - Phase 1: Architecture & Era Definitions
+        // ── ERA & AD DATA ────────────────────────────────────────────────────
+        // ERAS: one entry per internet era; each has styling (bgColor, font, etc.)
+        // and an examples[] array of ad objects ({ text, trapButtons?, safeButtons?, buttons? }).
         const ERAS = {
             earlyWeb: {
                 name: 'Early Web',
@@ -2280,6 +2282,13 @@
             }
         };
 
+        // ── GAME CONSTANTS ───────────────────────────────────────────────────
+        // TRAP_BUTTONS: buttons that cause game-over when clicked (virus popups).
+        // MECHANISM_HINTS: per-mechanism hint text (currently empty; hints disabled).
+        // CLOSE_MECHANISMS: canonical string keys for every close mechanic.
+        // BUTTON_PAIRS: accept/decline copy used by personality-style popups.
+        // ERA_FAKE_BUTTONS: era-themed distraction button labels (do nothing).
+
         // Trap button templates - these appear on virus popups
         const TRAP_BUTTONS = [
             { text: 'Claim My Prize! 🎁', style: 'danger' },
@@ -2392,6 +2401,10 @@
             { accept: 'gm frens ☀️', decline: 'gn forever 🌙' }
         ];
 
+        // ── GAME STATE & CORE LOOP ───────────────────────────────────────────
+        // Runtime state variables, plus initializeGame / startGame / restartGame,
+        // the tutorial first-popup flow, and random era/mechanism/ad-text pickers.
+
         let points = 0;
         let gameActive = false;
         let currentEra = null;
@@ -2485,6 +2498,11 @@
             // Support both old string format and new object format
             return typeof ad === 'object' ? ad : { text: ad, buttons: null };
         }
+
+        // ── BUTTON & POSITION HELPERS ────────────────────────────────────────
+        // Utilities for building the button sets attached to every popup:
+        // trap buttons (game-over), fake distraction buttons, safe/close buttons,
+        // and random screen-position placement.
 
         function getRandomTrapButton() {
             return TRAP_BUTTONS[Math.floor(Math.random() * TRAP_BUTTONS.length)];
@@ -2712,6 +2730,11 @@
             
             return container;
         }
+
+        // ── CLOSE MECHANICS — BASIC ──────────────────────────────────────────
+        // Each createXxxPopup() builds the full popup DOM for one close mechanic.
+        // Basic mechanics: simpleX, disabledX, movingX, fakeX, multipleX,
+        // keyboardTab, puzzle.
 
         function createSimpleXPopup(era, adData, isVirus = false) {
             const adText = adData.text;
@@ -3229,6 +3252,10 @@
             return popup;
         }
 
+        // ── CLOSE MECHANICS — INTERACTIVE ───────────────────────────────────
+        // Mechanics that require deliberate user interaction beyond a single click:
+        // holdX, doubleClick, typeX, declineBtn, endlessScroll, aiPicker.
+
         // HOLD X - Hold the X button for 1 second to close
         function createHoldXPopup(era, adData, isVirus = false) {
             const adText = adData.text;
@@ -3745,6 +3772,14 @@
             popup.appendChild(content);
             return popup;
         }
+
+        // ── MINIGAME MECHANICS ───────────────────────────────────────────────
+        // Full mini-game popups where the player must complete a challenge to close.
+        // Includes era-specific flavor themes (AB_ERA_THEMES, MS_ERA_THEMES, etc.)
+        // for each game: angryBird, minesweeper, luigisMansion, marioKart,
+        // riddleChoice, youtubeAd, adBlocker, bouncingX, spinX, rightClickX,
+        // simonSays, memoryMatch.
+        // getEraClass() maps an era object to its CSS class string.
 
         function getEraClass(era) {
             if (era.name === 'Early Web') return 'earlyWeb';
@@ -6220,6 +6255,13 @@
             popup.appendChild(content);
             return popup;
         }
+
+        // ── AD SPAWNING & SCORING ────────────────────────────────────────────
+        // createAd() dispatches to the right createXxxPopup() factory.
+        // adClosed() awards points and triggers the next spawn.
+        // virusClicked() / endGame() handle the lose condition.
+        // scheduleNextAd() / spawnNextAd() manage the difficulty-ramping spawn loop.
+        // updatePointsDisplay() keeps the HUD in sync.
 
         function createAd(era, mechanism, adData, isVirus = false) {
             switch(mechanism) {

@@ -14,13 +14,103 @@ Pull Requests are welcome to add in additional internet eras, jokes, or deceivin
 
 ---
 
-## 🖼️ Recent Ads
+## 🏗️ Project Structure
 
-| Ad | Preview |
+Everything lives in a single file: **`index.html`** — HTML, CSS, and all JavaScript together, no build step required.  
+The only dependency is `playwright` (a dev dependency used by `preview.js` for screenshot validation).
+
+### Key Concepts
+
+**Eras** are the visual and tonal themes of the popups, modeled after real periods of internet history.  
+**Mechanisms** are the close interactions the player must perform to dismiss each popup.  
+**Ad objects** are the individual popup instances, defined inside each era as an `examples[]` array entry with a `text` field and optional `trapButtons`, `safeButtons`, and `buttons` arrays.  
+**Virus popups** are special red popups where clicking any button is an instant game-over; the close mechanism is the only escape.
+
+---
+
+## 🌐 Eras
+
+Each era is a key in the `ERAS` object. To add a new era, add a new entry there.
+
+| Key | Name | Period |
+|---|---|---|
+| `earlyWeb` | Early Web | 1990s |
+| `myspaceAim` | MySpace/AIM | 2003–2010 |
+| `aolDialup` | AOL/Dial-up | Late 1990s |
+| `windows95` | 90s Windows | 1995–2005 |
+| `windowsXP` | Windows XP | 2001–2009 |
+| `flash` | Flash Era | 2000–2010 |
+| `mobile` | Mobile Era | 2010s |
+| `genZ` | Gen-Z | 2020s |
+| `ai` | AI Era | Present |
+| `retroArcade` | Retro Arcade | 1980s |
+| `aiAgents` | AI Agents | Near Future |
+| `apple` | Apple/Mac | All Time |
+
+---
+
+## 🎮 Close Mechanisms
+
+Each mechanism is a key in the `CLOSE_MECHANISMS` object and maps to a `createXxxPopup()` function. To add a new mechanic, add a key to `CLOSE_MECHANISMS` and write the corresponding `create` function.
+
+### Basic Mechanics
+Simple close interactions that require minimal extra UI:
+
+| Key | Description |
 |---|---|
-| 💳 Early Web — Credit Card Scam | ![Credit card scam ad](https://github.com/user-attachments/assets/5c13656e-d72b-4c6b-b973-074f1ce75f0d) |
-| 📸 Gen-Z — BeReal ALERT! | ![BeReal standalone ad](https://github.com/user-attachments/assets/b60f64d9-33e5-4aac-b023-7f66d8340bc3) |
-| 🏃 Gen-Z — Strava Feed (endless scroll) | ![Strava feed endless scroll](https://github.com/user-attachments/assets/c23bc8c7-18ca-428f-9859-83fbbc5a3aa8) |
+| `simpleX` | Red × button — just click it |
+| `disabledX` | The `(x)` is hidden inside the ad text |
+| `movingX` | × moves away when you hover |
+| `fakeX` | Fake × in the corner; real one is hidden |
+| `multipleX` | Multiple × buttons — click them all |
+| `keyboardTab` | Tab then Enter to close |
+| `puzzle` | Click a specific sequence to close |
+
+### Interactive Mechanics
+Require deliberate, multi-step interaction:
+
+| Key | Description |
+|---|---|
+| `holdX` | Hold the × button for 1 second |
+| `doubleClick` | Double-click the × |
+| `typeX` | Press the `x` key on your keyboard |
+| `declineBtn` | No ×; click the sassy "Decline" button |
+| `endlessScroll` | Scroll to the bottom of a feed |
+| `aiPicker` | Pick your favorite AI chatbot |
+
+### Minigame Mechanics
+Full mini-games that must be completed to close the popup:
+
+| Key | Description |
+|---|---|
+| `angryBird` | Shoot the pig with a bird |
+| `minesweeper` | Reveal all safe cells |
+| `luigisMansion` | Flashlight find-the-object game |
+| `marioKart` | Click-to-race mini-game |
+| `riddleChoice` | Answer the riddle with the correct emoji |
+| `youtubeAd` | Wait (or skip) a YouTube-style video ad |
+| `adBlocker` | An ad blocker installs and wipes all current ads |
+| `bouncingX` | × bounces around; click it |
+| `spinX` | × spins; click during the brief green window |
+| `rightClickX` | Right-click the × to close |
+| `simonSays` | Watch a color sequence, then repeat it |
+| `memoryMatch` | Flip cards to find all matching pairs |
+
+---
+
+## 🗺️ Code Sections
+
+All JavaScript is in the `<script>` tag near the bottom of `index.html`. Each major section starts with a clearly marked comment block — search for `// ──` to jump between them:
+
+- **`ERA & AD DATA`** — the `ERAS` object: one entry per era with styling and `examples[]`
+- **`GAME CONSTANTS`** — `TRAP_BUTTONS`, `CLOSE_MECHANISMS`, `BUTTON_PAIRS`, `ERA_FAKE_BUTTONS`
+- **`GAME STATE & CORE LOOP`** — runtime state, `startGame`, `restartGame`, random pickers
+- **`BUTTON & POSITION HELPERS`** — factories for trap, fake, safe, and distraction buttons
+- **`CLOSE MECHANICS — BASIC`** — `createSimpleXPopup` through `createPuzzlePopup`
+- **`CLOSE MECHANICS — INTERACTIVE`** — `createHoldXPopup` through `createAiPickerPopup`
+- **`MINIGAME MECHANICS`** — `createAngryBirdPopup` through `createMemoryMatchPopup`, plus per-era flavor theme tables
+- **`AD SPAWNING & SCORING`** — `createAd` dispatcher, `adClosed`, `endGame`, spawn loop
+- **`PREVIEW MODE`** — `?preview=eraKey:mechanism:adIndex` URL parameter handler
 
 ---
 
@@ -45,8 +135,8 @@ node preview.js --list
 
 | Argument | Description |
 |---|---|
-| `era` | Era key (see `--list`). Default: `earlyWeb` |
-| `mechanism` | Close-mechanism key (see `--list`). Default: `simpleX` |
+| `era` | Era key (see table above or `--list`). Default: `earlyWeb` |
+| `mechanism` | Close-mechanism key. Default: `simpleX` |
 | `adIndex` | Index number **or** keyword to search in ad text. Default: `0` |
 | `outputFile` | Output PNG path. Default: `screenshots/<era>-<mechanism>-<adIndex>.png` |
 
@@ -64,13 +154,9 @@ node preview.js earlyWeb:simpleX:2
 
 # Search for an ad by keyword in its text
 node preview.js earlyWeb:simpleX:credit
-node preview.js earlyWeb:simpleX:SSN
 
-# Gen-Z Strava endless-scroll feed (auto-clicks × to reveal the feed)
+# Gen-Z Strava endless-scroll feed
 node preview.js genZ:endlessScroll
-
-# BeReal standalone popup
-node preview.js genZ:simpleX:BeReal
 
 # AI era with the AI-picker close mechanism
 node preview.js ai:aiPicker
