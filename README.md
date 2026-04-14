@@ -40,12 +40,16 @@ Each era is a key in the `ERAS` object. To add a new era, add a new entry there.
 | `windows95` | 90s Windows | 1995–2005 |
 | `windowsXP` | Windows XP | 2001–2009 |
 | `flash` | Flash Era | 2000–2010 |
+| `web20` | Modern Web 2.0 | 2010–2020 |
 | `mobile` | Mobile Era | 2010s |
 | `genZ` | Gen-Z | 2020s |
 | `ai` | AI Era | Present |
 | `retroArcade` | Retro Arcade | 1980s |
 | `aiAgents` | AI Agents | Near Future |
 | `apple` | Apple/Mac | All Time |
+| `y2k` | Y2K Bug | 1999–2000 |
+
+> **Era balance note:** Most eras have 12–20 ad examples. The `genZ` era has ~58 — it's intentionally large to reflect how many subcultures Gen-Z content spawns.
 
 ---
 
