@@ -49,7 +49,7 @@ Each era is a key in the `ERAS` object. To add a new era, add a new entry there.
 | `apple` | Apple/Mac | All Time |
 | `y2k` | Y2K Bug | 1999–2000 |
 
-> **Era balance note:** Most eras have 12–20 ad examples. The `genZ` era has ~58 — it's intentionally large to reflect how many subcultures Gen-Z content spawns. `myspaceAim` (12 examples) is not overrepresented.
+> **Era balance note:** Most eras have 12–20 ad examples. The `genZ` era has ~58 — it's intentionally large to reflect how many subcultures Gen-Z content spawns.
 
 ---
 
