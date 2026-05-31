@@ -2453,6 +2453,21 @@
             simonSays: 'simonSays',            // Watch the color sequence and repeat it to close
             memoryMatch: 'memoryMatch'         // Flip cards to find all matching pairs
         };
+
+        // Interactive/game mechanisms that get higher spawn weight and extended timeout
+        const INTERACTIVE_MECHANISMS = [
+            CLOSE_MECHANISMS.angryBird,
+            CLOSE_MECHANISMS.minesweeper,
+            CLOSE_MECHANISMS.luigisMansion,
+            CLOSE_MECHANISMS.marioKart,
+            CLOSE_MECHANISMS.simonSays,
+            CLOSE_MECHANISMS.memoryMatch,
+            CLOSE_MECHANISMS.riddleChoice,
+            CLOSE_MECHANISMS.bouncingX,
+            CLOSE_MECHANISMS.spinX,
+            CLOSE_MECHANISMS.rightClickX,
+            CLOSE_MECHANISMS.youtubeAd
+        ];
         
         // Personality button pairs - [accept (trap), decline (close)]
         const BUTTON_PAIRS = [
@@ -2575,6 +2590,12 @@
 
         function getRandomMechanism() {
             const mechanisms = Object.values(CLOSE_MECHANISMS);
+            // Give interactive game mechanisms a higher spawn weight
+            const gameMechanisms = INTERACTIVE_MECHANISMS;
+            // 40% chance to pick a game/interactive mechanism, 60% normal pool
+            if (Math.random() < 0.4) {
+                return gameMechanisms[Math.floor(Math.random() * gameMechanisms.length)];
+            }
             return mechanisms[Math.floor(Math.random() * mechanisms.length)];
         }
 
@@ -2712,9 +2733,10 @@
             return container;
         }
 
-        function getRandomPosition() {
-            const maxX = window.innerWidth - 350;
-            const maxY = window.innerHeight - 250;
+        function getRandomPosition(popupHeight) {
+            const estimatedHeight = popupHeight || 450;
+            const maxX = Math.max(0, window.innerWidth - 350);
+            const maxY = Math.max(0, window.innerHeight - estimatedHeight);
             return {
                 x: Math.random() * maxX,
                 y: Math.random() * maxY
@@ -6514,9 +6536,12 @@
             document.body.appendChild(ad);
             lastSpawnedAd = ad;
 
-            // Safety timer: if this ad gets stuck off-screen on mobile and the player
-            // can't interact with it for 10 seconds, remove it and spawn a fresh ad so
+            // Safety timer: if this ad gets stuck off-screen and the player
+            // can't interact with it, remove it and spawn a fresh ad so
             // they aren't permanently blocked.
+            // Game/interactive mechanisms get a longer timeout since they require
+            // more time to complete.
+            const stuckDelay = INTERACTIVE_MECHANISMS.includes(mechanism) ? 30000 : 10000;
             if (stuckAdTimeout) clearTimeout(stuckAdTimeout);
             stuckAdTimeout = setTimeout(function() {
                 if (gameActive && lastSpawnedAd && lastSpawnedAd.parentNode) {
@@ -6524,7 +6549,7 @@
                     lastSpawnedAd = null;
                     spawnNextAd();
                 }
-            }, 10000);
+            }, stuckDelay);
             
             // Always schedule next ad so virus popups don't halt the game
             // For normal ads, only auto-spawn 25% of the time (the rest spawn on close)
